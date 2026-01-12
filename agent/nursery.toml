@@ -1,0 +1,10 @@
+[project]
+name = "agent"
+description = "Autonomous task execution with LLM + moss"
+
+[spore]
+entry = "init.lua"
+integrations = ["llm", "moss"]
+
+[spore.llm]
+default_provider = "anthropic"
