@@ -108,11 +108,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1768231619,
-        "narHash": "sha256-flM9yTzotHcWBkHlfTZ7daFXUqXAreYX2toD+Wwlxqs=",
+        "lastModified": 1768235893,
+        "narHash": "sha256-jqgDLPvtd0txOYnFv8dpyUZYa4Z9isoyduPyldbFbTI=",
         "owner": "rhizome-lab",
         "repo": "nursery",
-        "rev": "f87b271d5be3cc1704886e21b4d70d6884ab7bb6",
+        "rev": "ea7059b6cd3c8b09cf6b4992dc42e09619fccdce",
         "type": "github"
       },
       "original": {
@@ -135,11 +135,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1768232543,
-        "narHash": "sha256-0wLd3YKCInb/32zycd8SrhWRtx6m9OzLOltWFVqT0QA=",
+        "lastModified": 1768235882,
+        "narHash": "sha256-0vSQP1FKgizOA+ohFSorMm0kJRrT3QpV13yWgyr3VlI=",
         "owner": "rhizome-lab",
         "repo": "spore",
-        "rev": "bb7f58b38f001f0b3d2bc753343cca2066937946",
+        "rev": "4312f0f774afabdc23130591cab5f2d5d413f731",
         "type": "github"
       },
       "original": {
