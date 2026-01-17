@@ -6,9 +6,9 @@ Rhizome ecosystem monorepo: Lua-based tools, scaffolds, and orchestration.
 
 ```
 flora/
-├── agent/           # Autonomous task execution
+├── wisteria/        # Autonomous task execution
 │   ├── init.lua     # Entry point
-│   └── agent/       # Submodules
+│   └── wisteria/    # Submodules
 ├── seeds/           # Project templates for nursery
 │   ├── creation/    # New project from scratch
 │   ├── archaeology/ # Lift a legacy game
@@ -20,7 +20,7 @@ flora/
 
 | Project | Description |
 |---------|-------------|
-| agent | Autonomous task execution with LLM + moss |
+| wisteria | Autonomous task execution with LLM + moss |
 
 ## Usage
 
@@ -29,7 +29,7 @@ flora/
 Each Lua project is self-contained in its own directory. To run a project:
 
 ```bash
-cd agent
+cd wisteria
 spore init          # First time only - creates .spore/config.toml
 spore run .
 ```

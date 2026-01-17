@@ -1,5 +1,5 @@
--- Agent parsing utilities
--- Usage: local parser = require("agent.parser")
+-- Wisteria parsing utilities
+-- Usage: local parser = require("wisteria.parser")
 
 local M = {}
 

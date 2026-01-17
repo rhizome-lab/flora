@@ -1,11 +1,11 @@
--- Agent command execution utilities
--- Usage: local commands = require("agent.commands")
+-- Wisteria command execution utilities
+-- Usage: local commands = require("wisteria.commands")
 
-local parser = require("agent.parser")
+local parser = require("wisteria.parser")
 
 local M = {}
 
--- Execute batch edit from agent command string
+-- Execute batch edit from wisteria command string
 -- Format: "target1 action1 content1 | target2 action2 content2"
 -- Actions: delete, replace, insert
 function M.execute_batch_edit(edits_str)

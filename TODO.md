@@ -6,9 +6,7 @@
 
 ## Backlog
 
-- Rename `agent/` to `wisteria/` (climbing vine, tendrils reaching and exploring - fits autonomous task execution)
-  - Update nursery.toml, init.lua requires, CLAUDE.md references
-  - Lower priority: risks context rot if done mid-work
+(empty)
 
 ## Future Projects
 
@@ -19,7 +17,7 @@ Flora is a monorepo for Lua-based tools. Planned additions:
 ## Naming
 
 Botanical theme - apps are flowers:
-- agent -> wisteria (decided)
-- iris (new - agent insights/blogging)
+- wisteria - autonomous task execution
+- iris - agent insights/blogging
 - file browser -> ?
 - note editor -> ?

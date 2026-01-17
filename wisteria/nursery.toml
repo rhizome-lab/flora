@@ -1,5 +1,5 @@
 [project]
-name = "agent"
+name = "wisteria"
 description = "Autonomous task execution with LLM + moss"
 
 [spore]

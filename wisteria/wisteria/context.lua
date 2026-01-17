@@ -1,5 +1,5 @@
--- Agent context building functions
--- Usage: local context = require("agent.context")
+-- Wisteria context building functions
+-- Usage: local context = require("wisteria.context")
 
 local M = {}
 
@@ -107,7 +107,7 @@ function M.build_error_context(error_state)
     return table.concat(parts, "\n")
 end
 
--- Build context from working memory (for main agent loop)
+-- Build context from working memory (for main wisteria loop)
 -- working_memory: list of {type="output"|"note", cmd?, content, id}
 -- error_state: optional {cmd, retries, rolled_back, last_error}
 function M.build_context(task, working_memory, current_outputs, error_state)

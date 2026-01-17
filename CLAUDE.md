@@ -5,7 +5,7 @@ Behavioral rules for Claude Code in the flora repository.
 ## Project Overview
 
 Flora is a Rhizome ecosystem monorepo containing:
-- **Lua projects**: Standalone tools (agent, file browser, etc.)
+- **Lua projects**: Standalone tools (wisteria, file browser, etc.)
 - **Seeds**: Project templates for nursery scaffolding
 - **Docs**: VitePress documentation
 
@@ -13,9 +13,9 @@ Flora is a Rhizome ecosystem monorepo containing:
 
 ```
 flora/
-├── agent/           # Autonomous task execution
-│   ├── init.lua     # Entry point (require("agent"))
-│   └── agent/       # Submodules (agent.risk, agent.session, etc.)
+├── wisteria/        # Autonomous task execution
+│   ├── init.lua     # Entry point (require("wisteria"))
+│   └── wisteria/    # Submodules (wisteria.risk, wisteria.session, etc.)
 ├── seeds/           # Project templates
 │   ├── creation/    # seed.toml + template/
 │   ├── archaeology/
@@ -37,10 +37,10 @@ Each project is a directory with:
 - `init.lua` - Entry point (loaded via `require("project")`)
 - Submodules in a nested directory matching the project name
 
-Example for agent:
+Example for wisteria:
 ```lua
--- agent/init.lua
-local risk = require("agent.risk")  -- loads agent/agent/risk.lua
+-- wisteria/init.lua
+local risk = require("wisteria.risk")  -- loads wisteria/wisteria/risk.lua
 ```
 
 ### Seeds
@@ -60,7 +60,7 @@ nix develop        # Enter dev shell
 Each project is self-contained. Run from within the project directory:
 
 ```bash
-cd agent
+cd wisteria
 spore init          # First time only - creates .spore/config.toml
 spore run .
 ```

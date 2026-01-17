@@ -1,5 +1,5 @@
--- Agent role definitions and prompts
--- Usage: local roles = require("agent.roles")
+-- Wisteria role definitions and prompts
+-- Usage: local roles = require("wisteria.roles")
 
 local M = {}
 
@@ -262,7 +262,7 @@ function M.list_roles()
     }
 end
 
--- V1 agent prompts (for backwards compat)
+-- V1 wisteria prompts (for backwards compat)
 M.V1_SYSTEM_PROMPT = [[
 Respond with commands to accomplish the task.
 Conclude with $(done ANSWER) as soon as you have enough evidence.

@@ -1,7 +1,7 @@
--- Agent session management (checkpoints, logs)
--- Usage: local session = require("agent.session")
+-- Wisteria session management (checkpoints, logs)
+-- Usage: local session = require("wisteria.session")
 
-local parser = require("agent.parser")
+local parser = require("wisteria.parser")
 
 local M = {}
 
@@ -32,12 +32,12 @@ end
 
 -- Session checkpoint directory
 local function get_session_dir()
-    return _moss_root .. "/.moss/agent"
+    return _moss_root .. "/.moss/wisteria"
 end
 
 -- Session log directory
 local function get_log_dir()
-    return _moss_root .. "/.moss/agent/logs"
+    return _moss_root .. "/.moss/wisteria/logs"
 end
 
 -- Format a log entry as JSON

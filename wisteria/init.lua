@@ -1,28 +1,28 @@
--- Agent module: autonomous task execution with moss tools
+-- Wisteria module: autonomous task execution with moss tools
 local M = {}
 
 -- Submodules
-local risk = require("agent.risk")
-local parser = require("agent.parser")
-local session = require("agent.session")
-local context = require("agent.context")
-local commands = require("agent.commands")
-local roles = require("agent.roles")
+local risk = require("wisteria.risk")
+local parser = require("wisteria.parser")
+local session = require("wisteria.session")
+local context = require("wisteria.context")
+local commands = require("wisteria.commands")
+local roles = require("wisteria.roles")
 
 -- Seed random on load
 math.randomseed(os.time())
 
--- ID generation (delegated to agent.session module)
+-- ID generation (delegated to wisteria.session module)
 M.gen_id = session.gen_id
 M.gen_session_id = session.gen_session_id
 
--- Risk assessment (delegated to agent.risk module)
+-- Risk assessment (delegated to wisteria.risk module)
 M.RISK = risk.RISK
 M.assess_risk = risk.assess_risk
 M.should_auto_approve = risk.should_auto_approve
 M.detect_validator = risk.detect_validator
 
--- Session management (delegated to agent.session module)
+-- Session management (delegated to wisteria.session module)
 M.start_session_log = session.start_session_log
 M.json_log_entry = session.json_log_entry
 M.list_logs = session.list_logs
@@ -31,35 +31,35 @@ M.load_checkpoint = session.load_checkpoint
 M.parse_checkpoint_json = session.parse_checkpoint_json
 M.list_sessions = session.list_sessions
 
--- JSON utilities (delegated to agent.parser module)
+-- JSON utilities (delegated to wisteria.parser module)
 M.json_encode_string = parser.json_encode_string
 M.json_decode_string = parser.json_decode_string
 
--- Long-term memory (delegated to agent.session module)
+-- Long-term memory (delegated to wisteria.session module)
 M.memorize = session.memorize
 
--- Batch edit execution (delegated to agent.commands module)
+-- Batch edit execution (delegated to wisteria.commands module)
 M.execute_batch_edit = commands.execute_batch_edit
 
--- V1 prompts (delegated to agent.roles module)
+-- V1 prompts (delegated to wisteria.roles module)
 local SYSTEM_PROMPT = roles.V1_SYSTEM_PROMPT
 local BOOTSTRAP = roles.V1_BOOTSTRAP
 local BOOTSTRAP_ASSISTANT = roles.V1_BOOTSTRAP_ASSISTANT
 local BOOTSTRAP_USER = roles.V1_BOOTSTRAP_USER
 
--- Role prompts and state machine config (delegated to agent.roles module)
+-- Role prompts and state machine config (delegated to wisteria.roles module)
 M.classify_task = roles.classify_task
 local build_machine = roles.build_machine
 
 -- Default machine (for backwards compat)
 local MACHINE = build_machine("investigator")
 
--- Context building (delegated to agent.context module)
+-- Context building (delegated to wisteria.context module)
 M.build_planner_context = context.build_planner_context
 M.build_explorer_context = context.build_explorer_context
 M.build_evaluator_context = context.build_evaluator_context
 
--- State machine agent runner (v2)
+-- State machine runner (v2)
 function M.run_state_machine(opts)
     opts = opts or {}
     local task = opts.prompt or opts.task or "Help with this codebase"
@@ -70,9 +70,9 @@ function M.run_state_machine(opts)
     local role = opts.role
     if not role then
         if opts.auto_dispatch and task then
-            print("[agent-v2] Classifying task...")
+            print("[wisteria] Classifying task...")
             role = M.classify_task(task, provider, model)
-            print(string.format("[agent-v2] Auto-dispatch → %s", role))
+            print(string.format("[wisteria] Auto-dispatch → %s", role))
         else
             role = "investigator"
         end
@@ -86,16 +86,16 @@ function M.run_state_machine(opts)
     -- Initialize shadow worktree for safe editing (--shadow flag or auto for refactorer)
     local shadow_enabled = opts.shadow
     if shadow_enabled then
-        print("[agent-v2] Initializing shadow worktree for safe editing...")
+        print("[wisteria] Initializing shadow worktree for safe editing...")
         local ok, err = pcall(function()
             shadow.worktree.open()
             shadow.worktree.sync()
             shadow.worktree.enable()
         end)
         if ok then
-            print("[agent-v2] Shadow mode enabled - edits go to .moss/shadow/worktree/")
+            print("[wisteria] Shadow mode enabled - edits go to .moss/shadow/worktree/")
         else
-            print("[agent-v2] Warning: Failed to initialize shadow worktree: " .. tostring(err))
+            print("[wisteria] Warning: Failed to initialize shadow worktree: " .. tostring(err))
             shadow_enabled = false
         end
     end
@@ -107,7 +107,7 @@ function M.run_state_machine(opts)
         local detected_cmd, detected_type = M.detect_validator()
         if detected_cmd then
             opts.validate_cmd = detected_cmd
-            print("[agent-v2] Auto-detected validator: " .. detected_cmd .. " (" .. detected_type .. ")")
+            print("[wisteria] Auto-detected validator: " .. detected_cmd .. " (" .. detected_type .. ")")
         end
     end
 
@@ -132,7 +132,7 @@ function M.run_state_machine(opts)
             for file in diff_result.output:gmatch("[^\n]+") do
                 table.insert(diff_files, file)
             end
-            print("[agent-v2] Focusing on " .. #diff_files .. " changed files (vs " .. base .. ")")
+            print("[wisteria] Focusing on " .. #diff_files .. " changed files (vs " .. base .. ")")
             task = task .. "\n\nFOCUS: Only analyze these changed files:\n"
             for _, f in ipairs(diff_files) do
                 task = task .. "  - " .. f .. "\n"
@@ -156,7 +156,7 @@ function M.run_state_machine(opts)
     if opts.resume then
         local checkpoint, err = M.load_checkpoint(opts.resume)
         if checkpoint then
-            print("[agent-v2] Resuming session: " .. opts.resume)
+            print("[wisteria] Resuming session: " .. opts.resume)
             task = checkpoint.task or task
             start_turn = checkpoint.turn or 0
             resumed_state = checkpoint.state
@@ -165,19 +165,19 @@ function M.run_state_machine(opts)
             resumed_plan = checkpoint.plan
             role = checkpoint.role or role
             if checkpoint.progress then
-                print("[agent-v2] Previous progress: " .. checkpoint.progress)
+                print("[wisteria] Previous progress: " .. checkpoint.progress)
             end
             if checkpoint.open_questions then
-                print("[agent-v2] Open questions: " .. checkpoint.open_questions)
+                print("[wisteria] Open questions: " .. checkpoint.open_questions)
             end
         else
-            print("[agent-v2] Warning: " .. (err or "Failed to load checkpoint"))
-            print("[agent-v2] Starting fresh session")
+            print("[wisteria] Warning: " .. (err or "Failed to load checkpoint"))
+            print("[wisteria] Starting fresh session")
             session_id = M.gen_session_id()
         end
     end
 
-    print(string.format("[agent-v2:%s] Session: %s", role, session_id))
+    print(string.format("[wisteria:%s] Session: %s", role, session_id))
 
     -- Start session logging
     local session_log = M.start_session_log(session_id)
@@ -221,8 +221,8 @@ function M.run_state_machine(opts)
             context = M.build_evaluator_context(task, working_memory, last_outputs, notes)
         end
 
-        print(string.format("[agent-v2] Turn %d/%d (%s)", turn, max_turns, state))
-        io.write("[agent-v2] Thinking... ")
+        print(string.format("[wisteria] Turn %d/%d (%s)", turn, max_turns, state))
+        io.write("[wisteria] Thinking... ")
         io.flush()
 
         -- Log turn start
@@ -284,22 +284,22 @@ function M.run_state_machine(opts)
                     end
                     -- Handle shadow mode finalization
                     if shadow_enabled then
-                        print("[agent-v2] Finalizing shadow edits...")
+                        print("[wisteria] Finalizing shadow edits...")
                         local diff = shadow.worktree.diff()
                         if diff and #diff > 0 then
-                            print("[agent-v2] Changes in shadow worktree:")
+                            print("[wisteria] Changes in shadow worktree:")
                             print(diff)
 
                             -- Validate if validate_cmd is set
                             local should_apply = true
                             local validation_error = nil
                             if opts.validate_cmd then
-                                print("[agent-v2] Validating: " .. opts.validate_cmd)
+                                print("[wisteria] Validating: " .. opts.validate_cmd)
                                 local validation = shadow.worktree.validate(opts.validate_cmd)
                                 if validation.success then
-                                    print("[agent-v2] Validation passed ✓")
+                                    print("[wisteria] Validation passed ✓")
                                 else
-                                    print("[agent-v2] Validation FAILED:")
+                                    print("[wisteria] Validation FAILED:")
                                     validation_error = validation.stdout or validation.stderr or "Unknown error"
                                     print(validation_error)
                                     should_apply = false
@@ -307,13 +307,13 @@ function M.run_state_machine(opts)
                             end
 
                             if should_apply then
-                                print("[agent-v2] Applying shadow changes to real repo...")
+                                print("[wisteria] Applying shadow changes to real repo...")
                                 local applied = shadow.worktree.apply()
-                                print("[agent-v2] Applied " .. #applied .. " file(s)")
+                                print("[wisteria] Applied " .. #applied .. " file(s)")
 
                                 -- Auto-commit if --commit flag is set
                                 if opts.commit and #applied > 0 then
-                                    print("[agent-v2] Creating git commit...")
+                                    print("[wisteria] Creating git commit...")
                                     -- Stage all applied files
                                     for _, file in ipairs(applied) do
                                         shell("git add " .. file)
@@ -323,11 +323,11 @@ function M.run_state_machine(opts)
                                     if #task > 50 then
                                         commit_msg = commit_msg .. "..."
                                     end
-                                    local result = shell("git commit -m '[moss agent] " .. commit_msg:gsub("'", "'\\''") .. "'")
+                                    local result = shell("git commit -m '[moss wisteria] " .. commit_msg:gsub("'", "'\\''") .. "'")
                                     if result.success then
-                                        print("[agent-v2] Committed changes ✓")
+                                        print("[wisteria] Committed changes ✓")
                                     else
-                                        print("[agent-v2] Warning: git commit failed - " .. (result.output or ""))
+                                        print("[wisteria] Warning: git commit failed - " .. (result.output or ""))
                                     end
                                 end
                             else
@@ -335,7 +335,7 @@ function M.run_state_machine(opts)
                                 local max_retries = opts.retry_on_failure or 0
                                 if validation_retry_count < max_retries then
                                     validation_retry_count = validation_retry_count + 1
-                                    print("[agent-v2] Retrying (" .. validation_retry_count .. "/" .. max_retries .. ")...")
+                                    print("[wisteria] Retrying (" .. validation_retry_count .. "/" .. max_retries .. ")...")
                                     -- Reset shadow and inject error into working memory
                                     shadow.worktree.reset()
                                     shadow.worktree.sync()  -- Resync to clean state
@@ -347,25 +347,25 @@ function M.run_state_machine(opts)
                                     -- Don't return - continue the state machine
                                     goto continue
                                 else
-                                    print("[agent-v2] Discarding shadow changes (validation failed" ..
+                                    print("[wisteria] Discarding shadow changes (validation failed" ..
                                         (max_retries > 0 and ", max retries reached" or "") .. ")")
                                     shadow.worktree.reset()
                                 end
                             end
                         else
-                            print("[agent-v2] No shadow changes to apply")
+                            print("[wisteria] No shadow changes to apply")
                         end
                         shadow.worktree.disable()
                     end
 
-                    print("[agent-v2] Answer: " .. final_answer)
+                    print("[wisteria] Answer: " .. final_answer)
                     if session_log then
                         session_log:log("done", { answer = final_answer:sub(1, 200), turn = turn })
                         session_log:close()
                     end
                     return {success = true, answer = final_answer, turns = turn}
                 else
-                    print("[agent-v2] Warning: $(" .. cmd.name .. ") ignored in explorer state")
+                    print("[wisteria] Warning: $(" .. cmd.name .. ") ignored in explorer state")
                 end
             end
         end
@@ -374,7 +374,7 @@ function M.run_state_machine(opts)
         for _, cmd in ipairs(commands) do
             if cmd.name == "note" then
                 table.insert(notes, cmd.args)
-                print("[agent-v2] Noted: " .. cmd.args)
+                print("[wisteria] Noted: " .. cmd.args)
             end
         end
 
@@ -406,16 +406,16 @@ function M.run_state_machine(opts)
 
                 local saved_id, err = M.save_checkpoint(session_id, checkpoint_state)
                 if saved_id then
-                    print("[agent-v2] Session checkpointed: " .. saved_id)
-                    print("[agent-v2] Resume with: moss @agent --resume " .. saved_id)
+                    print("[wisteria] Session checkpointed: " .. saved_id)
+                    print("[wisteria] Resume with: moss @wisteria --resume " .. saved_id)
                     if progress ~= "" then
-                        print("[agent-v2] Progress: " .. progress)
+                        print("[wisteria] Progress: " .. progress)
                     end
                     if open_questions ~= "" then
-                        print("[agent-v2] Open questions: " .. open_questions)
+                        print("[wisteria] Open questions: " .. open_questions)
                     end
                 else
-                    print("[agent-v2] Failed to checkpoint: " .. (err or "unknown error"))
+                    print("[wisteria] Failed to checkpoint: " .. (err or "unknown error"))
                 end
 
                 if shadow_enabled then
@@ -437,13 +437,13 @@ function M.run_state_machine(opts)
                     for _, idx in ipairs(indices) do
                         if last_outputs[idx] then
                             table.insert(working_memory, last_outputs[idx])
-                            print("[agent-v2] Kept: " .. last_outputs[idx].cmd)
+                            print("[wisteria] Kept: " .. last_outputs[idx].cmd)
                         end
                     end
                 elseif cmd.name == "drop" then
                     local idx = tonumber(cmd.args)
                     if idx and working_memory[idx] then
-                        print("[agent-v2] Dropped: " .. working_memory[idx].cmd)
+                        print("[wisteria] Dropped: " .. working_memory[idx].cmd)
                         table.remove(working_memory, idx)
                     end
                 end
@@ -459,28 +459,28 @@ function M.run_state_machine(opts)
                     if cmd.name == "ask" then
                         -- Handle $(ask) command - request user input
                         if non_interactive then
-                            print("[agent-v2] BLOCKED: " .. cmd.args .. " (non-interactive mode)")
+                            print("[wisteria] BLOCKED: " .. cmd.args .. " (non-interactive mode)")
                             result = { output = "ERROR: Cannot ask user in non-interactive mode. Question was: " .. cmd.args, success = false }
                             if session_log then
                                 session_log:log("blocked_ask", { question = cmd.args, turn = turn })
                             end
                         else
-                            io.write("[agent-v2] " .. cmd.args .. "\n> ")
+                            io.write("[wisteria] " .. cmd.args .. "\n> ")
                             io.flush()
                             local answer = io.read("*l") or ""
                             result = { output = "User: " .. answer, success = true }
                         end
                     elseif cmd.name == "run" then
-                        print("[agent-v2] Running: " .. cmd.args)
+                        print("[wisteria] Running: " .. cmd.args)
                         result = shell(cmd.args)
                     elseif cmd.name == "view" or cmd.name == "text-search" or
                            cmd.name == "analyze" or cmd.name == "package" or
                            cmd.name == "edit" then
-                        print("[agent-v2] Running: " .. cmd.full)
+                        print("[wisteria] Running: " .. cmd.full)
                         result = shell(_moss_bin .. " " .. cmd.full)
                     else
                         -- Unknown command, skip
-                        print("[agent-v2] Skipping unknown: " .. cmd.name)
+                        print("[wisteria] Skipping unknown: " .. cmd.name)
                         result = nil
                     end
                     if result then
@@ -518,7 +518,7 @@ function M.run_state_machine(opts)
 
             -- Check for loops (same command 3+ times in a row)
             if M.is_looping(recent_cmds, 3) then
-                print("[agent-v2] Loop detected, auto-checkpointing...")
+                print("[wisteria] Loop detected, auto-checkpointing...")
                 local checkpoint_state = {
                     task = task,
                     turn = turn,
@@ -532,11 +532,11 @@ function M.run_state_machine(opts)
                 }
                 local saved_id, _ = M.save_checkpoint(session_id, checkpoint_state)
                 if saved_id then
-                    print("[agent-v2] Session checkpointed: " .. saved_id)
-                    print("[agent-v2] Resume with: moss @agent --resume " .. saved_id)
+                    print("[wisteria] Session checkpointed: " .. saved_id)
+                    print("[wisteria] Resume with: moss @wisteria --resume " .. saved_id)
                 end
                 if shadow_enabled then
-                    print("[agent-v2] Discarding shadow changes (loop detected)")
+                    print("[wisteria] Discarding shadow changes (loop detected)")
                     shadow.worktree.reset()
                     shadow.worktree.disable()
                 end
@@ -552,8 +552,8 @@ function M.run_state_machine(opts)
         if state == "evaluator" and state_config.next == "explorer" then
             evaluator_cycles = evaluator_cycles + 1
             if evaluator_cycles >= max_evaluator_cycles then
-                print(string.format("[agent-v2] Evaluator cycle limit reached (%d), forcing conclusion", max_evaluator_cycles))
-                -- Force the agent to conclude by switching to final evaluator prompt
+                print(string.format("[wisteria] Evaluator cycle limit reached (%d), forcing conclusion", max_evaluator_cycles))
+                -- Force conclusion by switching to final evaluator prompt
                 local forced_context = M.build_evaluator_context(task, working_memory, last_outputs, notes)
                 forced_context = forced_context .. "\n\nIMPORTANT: You have explored enough. You MUST now provide $(done YOUR_ANSWER) with your best answer based on available information. Do not request more exploration."
 
@@ -567,7 +567,7 @@ function M.run_state_machine(opts)
                                 local after = forced_response:match('%$%(done%s+ANSWER%)%s*[-:]?%s*(.+)')
                                 if after then final_answer = after:gsub('\n.*', '') end
                             end
-                            print("[agent-v2] Forced answer: " .. final_answer)
+                            print("[wisteria] Forced answer: " .. final_answer)
                             if session_log then
                                 session_log:log("done", { answer = final_answer:sub(1, 200), turn = turn, forced = true })
                                 session_log:close()
@@ -577,7 +577,7 @@ function M.run_state_machine(opts)
                     end
                 end
                 -- If still no answer, checkpoint and bail
-                print("[agent-v2] Could not force conclusion, checkpointing...")
+                print("[wisteria] Could not force conclusion, checkpointing...")
                 local checkpoint_state = {
                     task = task, turn = turn, state = state, notes = notes,
                     working_memory = working_memory, plan = plan, role = role,
@@ -586,8 +586,8 @@ function M.run_state_machine(opts)
                 }
                 local saved_id, _ = M.save_checkpoint(session_id, checkpoint_state)
                 if saved_id then
-                    print("[agent-v2] Session checkpointed: " .. saved_id)
-                    print("[agent-v2] Resume with: moss @agent --resume " .. saved_id)
+                    print("[wisteria] Session checkpointed: " .. saved_id)
+                    print("[wisteria] Resume with: moss @wisteria --resume " .. saved_id)
                 end
                 if session_log then
                     session_log:log("cycle_limit", { cycles = evaluator_cycles, turn = turn })
@@ -608,7 +608,7 @@ function M.run_state_machine(opts)
     end
 
     -- Auto-checkpoint on max turns reached
-    print("[agent-v2] Max turns reached, auto-checkpointing...")
+    print("[wisteria] Max turns reached, auto-checkpointing...")
     local checkpoint_state = {
         task = task,
         turn = turn,
@@ -622,14 +622,14 @@ function M.run_state_machine(opts)
     }
     local saved_id, err = M.save_checkpoint(session_id, checkpoint_state)
     if saved_id then
-        print("[agent-v2] Session auto-checkpointed: " .. saved_id)
-        print("[agent-v2] Resume with: moss @agent --resume " .. saved_id)
+        print("[wisteria] Session auto-checkpointed: " .. saved_id)
+        print("[wisteria] Resume with: moss @wisteria --resume " .. saved_id)
     else
-        print("[agent-v2] Warning: Failed to auto-checkpoint: " .. (err or "unknown error"))
+        print("[wisteria] Warning: Failed to auto-checkpoint: " .. (err or "unknown error"))
     end
 
     if shadow_enabled then
-        print("[agent-v2] Discarding shadow changes (max turns)")
+        print("[wisteria] Discarding shadow changes (max turns)")
         shadow.worktree.reset()
         shadow.worktree.disable()
     end
@@ -655,17 +655,17 @@ function M.is_looping(recent_cmds, n)
     return true
 end
 
--- Context building continued (delegated to agent.context module)
+-- Context building continued (delegated to wisteria.context module)
 M.build_error_context = context.build_error_context
 M.build_context = context.build_context
 
--- Command parsing (delegated to agent.parser module)
+-- Command parsing (delegated to wisteria.parser module)
 M.parse_commands = parser.parse_commands
 M.parse_keep = parser.parse_keep
 
--- Main agent loop
+-- Main entry point
 function M.show_help()
-    print([[Usage: moss @agent [options] <task>
+    print([[Usage: moss @wisteria [options] <task>
 
 Options:
   --provider <name>   LLM provider (gemini, openrouter, ollama)
@@ -692,18 +692,18 @@ Options:
   -h, --help          Show this help message
 
 Examples:
-  moss @agent "add error handling to parse_config"
-  moss @agent --refactor --validate "cargo check" "extract helper function"
-  moss @agent --refactor --shadow "rename foo to bar safely"
-  moss @agent --audit "review security of auth module"
-  moss @agent --resume abc123
+  moss @wisteria "add error handling to parse_config"
+  moss @wisteria --refactor --validate "cargo check" "extract helper function"
+  moss @wisteria --refactor --shadow "rename foo to bar safely"
+  moss @wisteria --audit "review security of auth module"
+  moss @wisteria --resume abc123
 ]])
 end
 
--- CLI argument parsing (delegated to agent.parser module)
+-- CLI argument parsing (delegated to wisteria.parser module)
 M.parse_args = parser.parse_args
 
--- When run as script (moss @agent), execute directly
+-- When run as script (moss @wisteria), execute directly
 -- When required as module, return M
 if args and #args >= 0 then
     local opts = M.parse_args(args)
@@ -737,13 +737,13 @@ if args and #args >= 0 then
         else
             print("Available session logs:")
             for _, id in ipairs(logs) do
-                local log_path = _moss_root .. "/.moss/agent/logs/" .. id .. ".jsonl"
+                local log_path = _moss_root .. "/.moss/wisteria/logs/" .. id .. ".jsonl"
                 local handle = io.popen("wc -l < " .. log_path .. " 2>/dev/null")
                 local line_count = handle and handle:read("*n") or 0
                 if handle then handle:close() end
                 print(string.format("  %s  (%d events)", id, line_count))
             end
-            print("\nView with: cat .moss/agent/logs/<session-id>.jsonl | jq")
+            print("\nView with: cat .moss/wisteria/logs/<session-id>.jsonl | jq")
         end
         os.exit(0)
     end
@@ -756,11 +756,11 @@ if args and #args >= 0 then
         print("  refactorer    Make code changes with validation")
         print("")
         print("Usage:")
-        print("  moss @agent 'how does X work?'")
-        print("  moss @agent --audit 'find unwrap on user input'")
-        print("  moss @agent --refactor 'rename foo to bar'")
-        print("  moss @agent --refactor --shadow 'rename foo to bar'  # safe editing via shadow worktree")
-        print("  moss @agent --auto 'task'  # LLM picks the role")
+        print("  moss @wisteria 'how does X work?'")
+        print("  moss @wisteria --audit 'find unwrap on user input'")
+        print("  moss @wisteria --refactor 'rename foo to bar'")
+        print("  moss @wisteria --refactor --shadow 'rename foo to bar'  # safe editing via shadow worktree")
+        print("  moss @wisteria --auto 'task'  # LLM picks the role")
         os.exit(0)
     end
 

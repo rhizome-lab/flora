@@ -1,7 +1,5 @@
 # Wisteria
 
-> Currently named `agent/` in the codebase. Rename pending.
-
 Autonomous task execution agent for the Rhizome ecosystem.
 
 ## Overview
@@ -29,11 +27,11 @@ Wisteria is a multi-role agent system with:
 ## Usage
 
 ```bash
-cd agent
+cd wisteria
 spore init          # First time only
 spore run .
 ```
 
 ## Source
 
-Located at `/agent` in the flora repository.
+Located at `/wisteria` in the flora repository.

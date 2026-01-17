@@ -4,7 +4,7 @@ Flora contains full-stack Lua applications for the Rhizome ecosystem.
 
 ## Wisteria
 
-Autonomous task execution agent. Multi-role system with planning, exploration, and evaluation loops. Currently named `agent/` in the codebase (rename pending).
+Autonomous task execution agent. Multi-role system with planning, exploration, and evaluation loops.
 
 [View Wisteria](/projects/wisteria)
 

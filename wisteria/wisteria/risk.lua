@@ -1,5 +1,5 @@
--- Agent risk assessment and validation detection
--- Usage: local risk = require("agent.risk")
+-- Wisteria risk assessment and validation detection
+-- Usage: local risk = require("wisteria.risk")
 
 local M = {}
 
