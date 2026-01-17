@@ -1,6 +1,6 @@
 [project]
 name = "wisteria"
-description = "Autonomous task execution with LLM + moss"
+description = "Autonomous task execution agent"
 
 [spore]
 entry = "init.lua"

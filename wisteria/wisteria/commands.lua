@@ -55,7 +55,7 @@ function M.execute_batch_edit(edits_str)
         end
     end
 
-    -- Fallback: generate JSON and pipe to moss edit --batch -
+    -- Fallback: generate JSON and pipe to moss edit via CLI
     local json_edits = {}
     for _, e in ipairs(edits) do
         local json_edit = string.format('{"target": %s, "action": "%s"',
@@ -68,7 +68,7 @@ function M.execute_batch_edit(edits_str)
     end
     local json = '{"edits": [' .. table.concat(json_edits, ", ") .. ']}'
 
-    -- Execute via moss CLI
+    -- Execute via moss CLI (provided by spore-moss integration)
     local cmd = string.format("echo '%s' | %s edit --batch -", json:gsub("'", "'\\''"), _moss_bin)
     return shell(cmd)
 end

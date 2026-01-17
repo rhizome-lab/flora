@@ -30,14 +30,19 @@ function M.gen_session_id()
     return id
 end
 
+-- Project root helper (falls back if _moss_root unavailable)
+local function get_project_root()
+    return _moss_root or os.getenv("PWD") or "."
+end
+
 -- Session checkpoint directory
 local function get_session_dir()
-    return _moss_root .. "/.moss/wisteria"
+    return get_project_root() .. "/.wisteria"
 end
 
 -- Session log directory
 local function get_log_dir()
-    return _moss_root .. "/.moss/wisteria/logs"
+    return get_project_root() .. "/.wisteria/logs"
 end
 
 -- Format a log entry as JSON
@@ -95,7 +100,7 @@ function M.start_session_log(session_id)
     logger.file:write(M.json_log_entry("session_start", {
         session_id = session_id,
         timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ"),
-        moss_root = _moss_root
+        project_root = get_project_root()
     }) .. "\n")
     logger.file:flush()
 
@@ -244,10 +249,10 @@ function M.list_sessions()
     return sessions
 end
 
--- Memorize a fact to long-term memory (.moss/memory/facts.md)
+-- Memorize a fact to long-term memory (.wisteria/memory/facts.md)
 -- Returns: true on success, false + error message on failure
 function M.memorize(fact)
-    local memory_dir = _moss_root .. "/.moss/memory"
+    local memory_dir = get_project_root() .. "/.wisteria/memory"
     local facts_file = memory_dir .. "/facts.md"
 
     -- Ensure directory exists

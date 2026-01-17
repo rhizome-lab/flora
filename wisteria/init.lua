@@ -1,4 +1,4 @@
--- Wisteria module: autonomous task execution with moss tools
+-- Wisteria: autonomous task execution agent
 local M = {}
 
 -- Submodules
@@ -323,7 +323,7 @@ function M.run_state_machine(opts)
                                     if #task > 50 then
                                         commit_msg = commit_msg .. "..."
                                     end
-                                    local result = shell("git commit -m '[moss wisteria] " .. commit_msg:gsub("'", "'\\''") .. "'")
+                                    local result = shell("git commit -m '[wisteria] " .. commit_msg:gsub("'", "'\\''") .. "'")
                                     if result.success then
                                         print("[wisteria] Committed changes ✓")
                                     else
@@ -407,7 +407,7 @@ function M.run_state_machine(opts)
                 local saved_id, err = M.save_checkpoint(session_id, checkpoint_state)
                 if saved_id then
                     print("[wisteria] Session checkpointed: " .. saved_id)
-                    print("[wisteria] Resume with: moss @wisteria --resume " .. saved_id)
+                    print("[wisteria] Resume with: wisteria --resume " .. saved_id)
                     if progress ~= "" then
                         print("[wisteria] Progress: " .. progress)
                     end
@@ -533,7 +533,7 @@ function M.run_state_machine(opts)
                 local saved_id, _ = M.save_checkpoint(session_id, checkpoint_state)
                 if saved_id then
                     print("[wisteria] Session checkpointed: " .. saved_id)
-                    print("[wisteria] Resume with: moss @wisteria --resume " .. saved_id)
+                    print("[wisteria] Resume with: wisteria --resume " .. saved_id)
                 end
                 if shadow_enabled then
                     print("[wisteria] Discarding shadow changes (loop detected)")
@@ -587,7 +587,7 @@ function M.run_state_machine(opts)
                 local saved_id, _ = M.save_checkpoint(session_id, checkpoint_state)
                 if saved_id then
                     print("[wisteria] Session checkpointed: " .. saved_id)
-                    print("[wisteria] Resume with: moss @wisteria --resume " .. saved_id)
+                    print("[wisteria] Resume with: wisteria --resume " .. saved_id)
                 end
                 if session_log then
                     session_log:log("cycle_limit", { cycles = evaluator_cycles, turn = turn })
@@ -623,7 +623,7 @@ function M.run_state_machine(opts)
     local saved_id, err = M.save_checkpoint(session_id, checkpoint_state)
     if saved_id then
         print("[wisteria] Session auto-checkpointed: " .. saved_id)
-        print("[wisteria] Resume with: moss @wisteria --resume " .. saved_id)
+        print("[wisteria] Resume with: wisteria --resume " .. saved_id)
     else
         print("[wisteria] Warning: Failed to auto-checkpoint: " .. (err or "unknown error"))
     end
@@ -665,7 +665,7 @@ M.parse_keep = parser.parse_keep
 
 -- Main entry point
 function M.show_help()
-    print([[Usage: moss @wisteria [options] <task>
+    print([[Usage: wisteria [options] <task>
 
 Options:
   --provider <name>   LLM provider (gemini, openrouter, ollama)
@@ -692,18 +692,18 @@ Options:
   -h, --help          Show this help message
 
 Examples:
-  moss @wisteria "add error handling to parse_config"
-  moss @wisteria --refactor --validate "cargo check" "extract helper function"
-  moss @wisteria --refactor --shadow "rename foo to bar safely"
-  moss @wisteria --audit "review security of auth module"
-  moss @wisteria --resume abc123
+  wisteria "add error handling to parse_config"
+  wisteria --refactor --validate "cargo check" "extract helper function"
+  wisteria --refactor --shadow "rename foo to bar safely"
+  wisteria --audit "review security of auth module"
+  wisteria --resume abc123
 ]])
 end
 
 -- CLI argument parsing (delegated to wisteria.parser module)
 M.parse_args = parser.parse_args
 
--- When run as script (moss @wisteria), execute directly
+-- When run as script (wisteria), execute directly
 -- When required as module, return M
 if args and #args >= 0 then
     local opts = M.parse_args(args)
@@ -737,13 +737,13 @@ if args and #args >= 0 then
         else
             print("Available session logs:")
             for _, id in ipairs(logs) do
-                local log_path = _moss_root .. "/.moss/wisteria/logs/" .. id .. ".jsonl"
+                local log_path = (_moss_root or ".") .. "/.wisteria/logs/" .. id .. ".jsonl"
                 local handle = io.popen("wc -l < " .. log_path .. " 2>/dev/null")
                 local line_count = handle and handle:read("*n") or 0
                 if handle then handle:close() end
                 print(string.format("  %s  (%d events)", id, line_count))
             end
-            print("\nView with: cat .moss/wisteria/logs/<session-id>.jsonl | jq")
+            print("\nView with: cat .wisteria/logs/<session-id>.jsonl | jq")
         end
         os.exit(0)
     end
@@ -756,11 +756,11 @@ if args and #args >= 0 then
         print("  refactorer    Make code changes with validation")
         print("")
         print("Usage:")
-        print("  moss @wisteria 'how does X work?'")
-        print("  moss @wisteria --audit 'find unwrap on user input'")
-        print("  moss @wisteria --refactor 'rename foo to bar'")
-        print("  moss @wisteria --refactor --shadow 'rename foo to bar'  # safe editing via shadow worktree")
-        print("  moss @wisteria --auto 'task'  # LLM picks the role")
+        print("  wisteria 'how does X work?'")
+        print("  wisteria --audit 'find unwrap on user input'")
+        print("  wisteria --refactor 'rename foo to bar'")
+        print("  wisteria --refactor --shadow 'rename foo to bar'  # safe editing via shadow worktree")
+        print("  wisteria --auto 'task'  # LLM picks the role")
         os.exit(0)
     end
 
