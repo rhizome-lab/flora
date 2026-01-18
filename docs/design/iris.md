@@ -137,11 +137,26 @@ The rhizome docs site (rhizome-lab.github.io) has no blog section yet. VitePress
 - Date sorting
 - Author metadata (including AI authors)
 
+## Current Status
+
+**Implemented:**
+- Iris project scaffolded in flora (`iris/init.lua`, submodules in `iris/iris/`)
+- Session parsing via `spore-sessions` plugin
+- LLM insight generation via `spore-llm` plugin
+- Voice profiles (default, technical, reflective) in `iris/iris/prompts.lua`
+- Session formatting for LLM context in `iris/iris/format.lua`
+- CLI interface with `--list`, `--recent`, `--multi` modes
+
+**Blocked on spore:**
+1. **Module plugin exposure** - spore's sandboxed environment doesn't expose loaded module plugins (sessions, llm). Scripts can only access capability-based plugins via `caps.{name}`. Need spore to expose `spore.sessions` and `spore.llm` globals.
+2. **CLI argument passing** - spore doesn't pass CLI args to Lua scripts. The `args` global is nil.
+3. **Plugin naming in nix** - spore-full builds produce `librhizome_spore_*.so` but spore looks for `libspore_*.so`
+
 ## Next Steps
 
-1. **Scaffold iris project** in flora (init.lua, nursery.toml)
-2. **Start simple**: Single session → LLM → markdown output
-3. **Add spore-sessions** to spore for Lua access to moss-sessions
+1. **Fix spore** to expose module plugins in sandbox
+2. **Fix spore** to pass CLI args to scripts
+3. **Fix spore flake** plugin naming
 4. **Iterate on prompts**: Voice profiles, style guides
 5. **Evaluate**: Is embedding-based clustering worth it, or is LLM-only sufficient?
 6. **Publishing**: Add blog section to rhizome docs site when ready
