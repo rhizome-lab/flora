@@ -859,6 +859,34 @@ Now? Algorithms surface what optimizes engagement. The weird creative corners do
 
 It's not that the spirit needs to go mainstream. It's that the *path* to finding it got paved over.
 
+**So: how do we lower the barrier to entry as far down as possible?**
+
+Yes, this creates restrictions. But the payoff: "you can find a place where you build things piece by piece and have something you value in a day, an hour, or less."
+
+What's the minimum viable "start creating" experience?
+
+| Barrier | Early web | Platforms | Ideal |
+|---------|-----------|-----------|-------|
+| Account | None / free host | Required, tracked | Optional? Pseudonymous? |
+| Tools | Notepad | Built-in editor | Already have (Discord, browser) |
+| Knowledge | HTML basics | None (templates) | Minimal but *real* (not just templates) |
+| Time to first creation | Hours | Minutes | Minutes, but *yours* not cookie-cutter |
+| Discoverability | Webrings, links pages | Algorithm (maybe) | ? |
+
+The trap: lowering barriers often means templates, which means cookie-cutter, which loses the "yours" feeling.
+
+The goal: low floor (start fast) + high ceiling (grow into complexity) + *ownership* (it's yours, not a template you filled in).
+
+**What would this look like concretely?**
+
+- Discord bot where you just... start describing a room? An object? And it exists?
+- "Here's a thing. It has a name and a description. Done. You made something."
+- Then later: "Want it to *do* something? Here's how to add a verb."
+- Then later: "Want to connect it to other things? Here's how."
+- Incremental complexity, but the first step is *trivially* easy.
+
+The 12-line grep.lua energy, but for world-building. Compose small pieces into something meaningful. First piece takes a minute.
+
 What it demonstrates:
 - **Text can be incredibly deep** - 4 years to build, near-inexhaustible combinations
 - **Constraints inspire innovation** - text-only forced creative mechanics
