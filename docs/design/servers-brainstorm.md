@@ -1021,6 +1021,26 @@ The tragic loop: people don't create → communities stay small → communities 
 
 Breaking the loop probably requires: lowering real barriers (not "just"), making communities visible, providing paths from consuming to creating, and somehow competing with platform dopamine.
 
+**The (unfortunate) exception: Roblox**
+
+Roblox actually got millions of kids creating. It proves the model *can* work at scale:
+- Low floor (visual scripting, templates)
+- High ceiling (Lua scripting, full games)
+- Built-in audience (your friends are already there)
+- Path from player to creator is visible
+- Social reward loop (people play your thing!)
+
+But the "unfortunate" part:
+- Exploitative revenue share (creators get pennies)
+- Robux economy designed to extract money from kids
+- Child labor concerns (kids making content, platform profits)
+- Walled garden (you don't own what you make)
+- Enshittification trajectory (ads, monetization pressure)
+
+Roblox proves it's *possible* to get mass creation. It also proves you can do it in deeply exploitative ways. The question: can you get the good parts (low floor, visible path, social rewards) without the extractive business model?
+
+Maybe the answer is: not at Roblox scale, because that scale requires VC money, which requires extraction. The good version might only work smaller.
+
 What it demonstrates:
 - **Text can be incredibly deep** - 4 years to build, near-inexhaustible combinations
 - **Constraints inspire innovation** - text-only forced creative mechanics
