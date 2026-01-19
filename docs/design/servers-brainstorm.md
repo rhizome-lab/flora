@@ -1494,6 +1494,48 @@ The structure *is* the moderation. Not "rules + enforcers" but "the system doesn
 
 **Unsolved doesn't mean hopeless.** Build systems where the 90% case is handled by structure, and human intervention is only needed for the edge cases.
 
+**What about bad actors?**
+
+Structure-as-moderation handles casual abuse. But what about adversarial attackers? People actively trying to break things?
+
+**Case study: why Matrix failed (in some ways)**
+
+Matrix federation has serious issues:
+- Faking room state is too easy
+- DoS attacks are trivial
+- Trusts other servers too much
+- State resolution is complex and exploitable
+
+The protocol assumed good-faith participation. Adversarial actors found the cracks.
+
+**Hypha's answer: authoritative handoff**
+
+Instead of "everyone has a copy of state, resolve conflicts" (Matrix), Hypha says: **one server is authoritative at a time.**
+
+- No conflicting state to resolve - there's one source of truth
+- Handoff is explicit - you know who's authoritative
+- Don't have to trust everyone's version
+- DoS one server ≠ DoS the whole network
+
+This is a different federation model. Not "everyone equals" but "clear ownership with transfer protocol."
+
+| Model | Trust assumption | Failure mode |
+|-------|-----------------|--------------|
+| Matrix | All servers are good-faith | Bad server poisons state |
+| Hypha | Authoritative server is canonical | Need handoff if server dies |
+| Centralized | One server forever | Single point of failure |
+
+Hypha trades "everyone can contribute state" for "clear authority prevents poisoning." Different tradeoff.
+
+**The broader point:** architecture matters for adversarial resistance. "Self-moderating" isn't just about casual abuse - it's about making attacks structurally difficult.
+
+Capabilities help here too:
+- Can't forge capabilities (unforgeable tokens)
+- Can't escalate beyond what you were granted
+- Attacker with limited caps can only do limited damage
+
+Defense in depth. Structure resists casual abuse. Architecture resists adversarial attacks. Human intervention for the truly novel.
+
 **How do you fight it?**
 
 - **Intentional constraints** - gives permission to be limited
