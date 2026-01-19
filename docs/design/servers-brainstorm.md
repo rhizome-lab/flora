@@ -55,6 +55,21 @@ Not everything needs immediate personal utility. Sometimes "this should exist, s
 
 Things don't have single reasons. burn-models was practical (need image gen), but learning happened along the way. The motivations stack.
 
+**Projects spin out of projects:**
+
+```
+rhizome (ecosystem)
+└→ cambium (format→format, neat to have even if not strictly needed)
+   └→ rescribe (like pandoc - but pandoc isn't perfect, missing binary = failure mode)
+      └→ ooxml (where is Rust's ooxml support?!)
+```
+
+Each step is: "wait, we need X for Y, and X doesn't exist / has problems."
+
+Why not pandoc? Opus 4.5 pointed out it's not perfect. Also: missing a binary is a failure mode. Dependencies you don't control can break.
+
+Why ooxml? Because it doesn't exist in Rust. Genuine gap.
+
 ---
 
 ## Backpropagating Insights
