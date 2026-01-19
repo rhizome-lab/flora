@@ -181,6 +181,21 @@ The formula bar is a single-line text box. No syntax highlighting. No bracket ma
 
 The tradeoff was "text is universal" but the cost is "text is hostile to non-programmers (and even programmers)."
 
+**Excel goes deeper:**
+- Freeform grid. Why? Now tables can be *anywhere*.
+- "Why is the table here and not there?"
+- Dollar sign syntax for absolute references (`$A$1`). Two different syntaxes.
+- People build Cthulhu-like spreads of references for tracking things Excel was never made for.
+- Sticky headers help, but then there's another table floating to the right...
+- "It should be in its own sheet" but:
+  - Who has mental capacity to keep 5 sheet names + contents in mind?
+  - Tab bar is **horizontal** - bye bye that other sheet you needed
+  - Navigating sheets is janky
+
+Freeform seemed like flexibility. It created chaos. Sheets seemed like organization. The UI makes them impossible to navigate.
+
+What if: tables were first-class, not cell ranges? What if: sheets had real navigation, not a tiny horizontal tab bar?
+
 This is what the minimal entity substrate enables:
 - Small pieces (just `{ id } & Record<string, unknown>`)
 - Conventions (property names everyone understands)
