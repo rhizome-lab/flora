@@ -1680,8 +1680,28 @@ The thing we actually want might not be "source" but **inspectability** - seeing
 | MOO | Examine objects in-world, read verbs, modify and see |
 | Web (old) | View source, copy, modify |
 | Web (2026) | lol good luck, it's minified webpack |
+| **Resin / node graphs** | See the graph, tweak nodes, watch output change |
 
-"Source" is a file-based concept. Maybe the better question is: **how do you make systems inspectable?** Source is one answer. Live objects are another. Programmable worlds are another.
+**Resin is another inspectability paradigm.**
+
+Procedural media: the "source" is a graph/recipe that produces output. Node graphs in Houdini, Substance Designer, Blender geometry nodes, shader graphs, modular synth patches (Max/MSP, Pure Data).
+
+You see the structure. You poke at it. Output updates live. The "source" is the graph, and it's always running.
+
+This is inspectability for *media generation*:
+- Not reading static code
+- Not imagining execution
+- See the recipe, tweak a parameter, watch the texture/mesh/sound change
+
+Resin should have this property. Composable procedural primitives where:
+- You see how they compose
+- You tweak them
+- Results update
+- The graph *is* the understanding
+
+That's "view source → learn" for procedural media. Different domain, same principle.
+
+"Source" is a file-based concept. Maybe the better question is: **how do you make systems inspectable?** Source is one answer. Live objects are another. Programmable worlds are another. Node graphs are another.
 
 **What's actually interesting right now?**
 
