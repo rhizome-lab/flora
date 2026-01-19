@@ -803,6 +803,23 @@ The pattern: **technical merit gets you in the door, but staying power is often 
 
 **Implication for Rhizome**: Doesn't matter. We're not here to compete or make money. We're here to explore. If something useful falls out of it, great. If not, we learned something.
 
+**Honest self-assessment: if we were optimizing for adoption, we picked literally the worst niches**
+
+| Project | Market reality |
+|---------|---------------|
+| MOO | "What is that?" |
+| Resin (procgen) | "Just use Godot's tooling/plugins" |
+| Rescribe | "Pandoc is pretty solid" |
+| OOXML | "Who parses docx? Just read them. Also other languages have decent support" |
+| Canopy | "It's like Postman but different and too general - would it even be usable?" |
+| Frond (game primitives) | "Too general. Everyone writes their own because they *want* to optimize for their usecase" |
+| Reed (transpiler) | "Why? Just learn the other language" |
+| Cambium (format conversion) | "ffmpeg/pandoc/imagemagick exist" |
+
+Customer base: three people and their dog.
+
+**But that's fine.** These are explored because they're *interesting*, not because they're marketable. The goal is understanding, not adoption.
+
 **But wait - things that DID take off without corp funding:**
 
 | Project | Creator(s) | Why it worked |
