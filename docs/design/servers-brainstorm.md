@@ -320,6 +320,18 @@ Language→IR→language compiler. Key insights:
 ### LambdaMOO
 The original MOO. Single-server, custom language. Still running after 30+ years.
 
+**Key insight**: LambdaMOO is simple, arguably trivial, *because* it's fully programmable.
+- The implementation is just the substrate (entities, props, verbs, persistence)
+- The entire "game" is the LambdaMOO "core" - user-space code
+- Same philosophy as Lisp/Smalltalk: minimal substrate, everything built on top
+- The "complexity" lives in user-space, not the implementation
+
+**Implication for our MOO**:
+- Don't bake features into the core
+- Build the substrate: entities, props, verbs, persistence, capabilities
+- Let user-written code (or a "core" db) define the actual application
+- Notes, FS, inventory, roleplay - all user-space, not implementation features
+
 ### CouchDB
 Document database. HTTP API, JSON documents. Multi-master replication.
 
