@@ -1873,6 +1873,47 @@ The successful modern tools are quietly moving beyond WIMP even while wearing it
 
 50 years of scattered progress. Not in mainstream OS design, but in specific tools that cared enough to try. Worth mining for patterns.
 
+---
+
+**Meta-question: doing things well is hard and non-obvious. Is this solvable?**
+
+Good design is invisible. Copying is hard. Knowing what to copy is hard. Even recognizing good design is hard (because it's invisible). Every domain has this problem.
+
+Is there hope? Or is "most things are mediocre" just... the default state?
+
+**Probably not "solvable" in the sense of making it easy.** But maybe addressable:
+
+| Approach | What it helps |
+|----------|--------------|
+| **Deliberate practice** | Build intuition over time |
+| **Documentation of decisions** | Make the invisible visible (for yourself, for others) |
+| **Deep study of prior art** | Not just copying surface - understanding why |
+| **Testing with real users** | See where your mental model diverges from reality |
+| **Iteration** | Get it wrong, learn, try again |
+| **Apprenticeship/pairing** | Tacit knowledge transfer |
+
+**The tacit knowledge problem:**
+
+Experts know things they can't articulate. "It just feels wrong" - but why? They can't always say. This is tacit knowledge.
+
+Some domains have tried to codify:
+- Architecture: Christopher Alexander's pattern language
+- Software: Design patterns (GoF), principles
+- UX: Nielsen's heuristics, various principles
+
+But codified knowledge is often surface-level. The deep stuff stays tacit. Pattern languages help but don't replace apprenticeship.
+
+**Maybe the honest answer:**
+
+1. Accept that most things will be mediocre (including your own work)
+2. Recognize when something is great, even if you don't know why
+3. Protect great things from being "fixed" by people who don't understand them
+4. Try to learn deeply, not just copy
+5. Document decisions so future-you (and others) know why
+6. Iterate. Get it wrong. Learn. Try again.
+
+"Doing well" may never be easy. But it can be practiced. And the trying matters.
+
 **What's actually interesting right now?**
 
 Hard to say. Depends on mood, energy, what's frustrating at the moment. The honest answer: probably whatever's in front of you when you sit down to code.
