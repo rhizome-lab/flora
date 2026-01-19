@@ -146,7 +146,9 @@ Cursed but illustrative example: `~/git/lua/example/http_chatx.lua` (197 lines)
 
 This is what's possible when composition is good enough.
 
-**The goal isn't impressive LOC counts. It's having things to reach for and combine.**
+**The goal isn't impressive LOC counts.** If anything, lower is better - more understandable, better separation.
+
+But: don't split until you need to read N files to understand a single subsystem. There's a balance. The goal is **things to reach for and combine**, not minimum LOC for its own sake.
 
 This is what the minimal entity substrate enables:
 - Small pieces (just `{ id } & Record<string, unknown>`)
