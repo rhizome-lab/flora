@@ -1374,6 +1374,12 @@ Pinterest is... not great for various reasons. But the *interface pattern* - sho
 
 **Google Images does this too.** Grid of results, you scan, you pick. Not a feed exactly, but the same principle: multiple options visible at once, you choose. Search results in general are more "grid of options" than "linear sequence" - and that's probably why search feels more agentic than feeds.
 
+And: Google Images has **per-image recommendations**. Click an image, see related images. Both patterns in one interface:
+1. Grid of options (non-linear feed)
+2. Per-item recommendations (graph navigation)
+
+You can rabbit-hole through related images the same way you profile-hop on Twitter. Browsing (grid) + exploration (recommendations) coexisting.
+
 **Why don't more feeds do this?**
 
 Possible reasons:
