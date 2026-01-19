@@ -369,6 +369,38 @@ Why they didn't win:
 
 But: they proved *alternatives exist*. The current way isn't the only way.
 
+### Where Did HyperCard Go?
+
+HyperCard (1987) - **39 years ago**. "Anyone can make interactive things."
+
+It worked. Regular people made things. Then Apple killed it.
+
+And in 39 years, where did its paradigm go? **Nowhere.**
+
+| Attempt | What it is | Why it's not HyperCard |
+|---------|-----------|----------------------|
+| Flash | Multimedia authoring | Dead, was proprietary, web-only |
+| Scratch | Visual programming for kids | "For kids" - ceiling too low |
+| PowerPoint | Slides with interactions | Seriously? |
+| No-code tools | Bubble, Webflow, etc. | Vendor-locked, web-only, limited |
+| Notion | Blocks + databases | Closer, but not programmable |
+| Excel | Everyone's accidental programming | Not interactive artifacts |
+
+We've had **39 years** to reinvent it. To stand on shoulders of giants. To make something *better*.
+
+Instead: professional developers vs everyone else. The gap widened, not narrowed.
+
+**Why?**
+- Apple killed it (business reasons)
+- Web won, but web is for *consuming* not *creating*
+- "Real programming" gatekeeping?
+- No financial incentive (users as creators don't pay subscription fees?)
+- Complexity creep (modern apps are too complex to build simply?)
+
+**This is a failure.** Not a technical impossibility. A collective failure of imagination or will.
+
+Is this something rhizome should care about? "Anyone can make interactive things" as a goal?
+
 ---
 
 ## Reality Check: Why Doesn't This Exist?
