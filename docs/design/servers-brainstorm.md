@@ -1119,7 +1119,11 @@ Alternative: shared substrate with good primitives. Niche tools become thin laye
 
 This is the Bevy/Godot insight applied more broadly. They're substrates for games. What's the substrate for... everything?
 
-(Probably impossible. But the question is fun.)
+(Actually not impossible - see [thi.ng/umbrella](https://github.com/thi-ng/umbrella). It's a substrate for... basically everything computational/generative. 190+ packages, all composable.)
+
+The real constraint isn't "can you build a general substrate" - it's "can you expect to become *the* thing people use for everything." No. You can't. The ecosystem will stay fragmented.
+
+But you can build a good substrate, use it yourself, let others use it if they want. It doesn't have to win. It just has to exist and be useful.
 
 What it demonstrates:
 - **Text can be incredibly deep** - 4 years to build, near-inexhaustible combinations
