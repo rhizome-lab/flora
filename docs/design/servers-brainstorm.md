@@ -1372,6 +1372,8 @@ Grid:       [A] [B] [C]
 
 Pinterest is... not great for various reasons. But the *interface pattern* - showing options simultaneously instead of sequentially - might be underexplored.
 
+**Google Images does this too.** Grid of results, you scan, you pick. Not a feed exactly, but the same principle: multiple options visible at once, you choose. Search results in general are more "grid of options" than "linear sequence" - and that's probably why search feels more agentic than feeds.
+
 **Why don't more feeds do this?**
 
 Possible reasons:
