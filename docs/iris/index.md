@@ -138,6 +138,7 @@ Iris is composed of several modules:
 
 ## See Also
 
-- [Design Document](../design/iris.md) - Architecture and future directions
+- [Design Document](../design/iris.md) - Architecture and decisions
+- [Brainstorm](../design/iris-brainstorm.md) - Raw ideas and exploration
 - [spore](https://github.com/rhizome-lab/spore) - Lua runtime for iris
 - [moss-sessions](https://github.com/rhizome-lab/moss) - Session parsing
