@@ -1030,6 +1030,41 @@ The old web worked partly because there were no metrics. Nobody was optimizing f
 
 Maybe the answer is: **stop measuring.** Or at least: measure different things. Or: be small enough that measurement doesn't matter.
 
+**But wait: do people actually *want* to be doomscrolling?**
+
+Probably not. The behavior looks more like addiction than choice:
+- People report feeling *worse* after social media use
+- They keep doing it anyway
+- "I spent 3 hours scrolling and now I feel bad" is universal
+- Nobody plans to doomscroll - it just happens
+
+This suggests platforms aren't serving preferences - they're **exploiting psychological vulnerabilities**. Variable reward schedules (maybe this scroll will have something good). Social validation (likes as dopamine). Fear of missing out. Outrage as engagement.
+
+People don't *want* to be angry and anxious. They're being manipulated into states that generate engagement. The "want" is manufactured.
+
+**So "unsolvable" doesn't mean "give up."**
+
+You can't fix Twitter. You probably can't fix the attention economy. But:
+- You can build things that *don't* exploit those vulnerabilities
+- You can create spaces with different incentive structures
+- You can opt out, personally and by building alternatives
+- Small doesn't need to become big - three people and their dog is enough
+
+The early web wasn't "solved" - it just had different incentives (none). The answer might not be "fix platforms" but "don't be a platform."
+
+**The uncomfortable question: is "don't be a platform" enough?**
+
+If the doomscroll machines keep running, most people stay trapped. Building a nice garden doesn't help the people who don't know gardens exist.
+
+But also: you can't save everyone. The best you can do is:
+1. Build the alternative
+2. Make it discoverable (but not algorithmic)
+3. Let people find it when they're ready
+
+Maybe that's defeatist. Or maybe it's realistic. The platforms have billions of dollars and armies of engineers optimizing for engagement. Competing head-on is futile. Building something *different* - with different values, for different people - might actually work.
+
+Not everyone. Just: some people. The ones who want out.
+
 **How do you fight it?**
 
 - **Intentional constraints** - gives permission to be limited
