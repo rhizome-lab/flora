@@ -1536,6 +1536,54 @@ Capabilities help here too:
 
 Defense in depth. Structure resists casual abuse. Architecture resists adversarial attacks. Human intervention for the truly novel.
 
+**Chat moderation specifically is hard.**
+
+Real-time, high-volume, low-latency. By the time moderation kicks in, the damage is done. Someone says something horrible, 50 people saw it, now what?
+
+**User-moderation is a partial solution:**
+
+| System | How it works | Limitations |
+|--------|-------------|-------------|
+| Stack Overflow | Votes, flags, reputation gates privileges | Still reactive. Toxic comment exists until flagged. |
+| VRChat | Block, personal space, vote-kick | Only protects you. Others still affected. |
+| Discord | User mods, bots, automod | Mods are labor. Bots have false positives. |
+| Twitch | User mods, automod, slow mode | Same issues. Scale makes it worse. |
+
+Common problem: **reactive, not proactive**. The harm happens, *then* moderation responds.
+
+**What would faster/proactive look like?**
+
+| Approach | Tradeoff |
+|----------|----------|
+| Rate limiting | Slows everyone, not just bad actors |
+| Reputation gates | New users punished, cold start problem |
+| Personal blocking | You're safe, others aren't |
+| Escalating trust | Earn capabilities over time - slow but maybe fair? |
+| Pre-filtering | Censorship concerns, false positives, latency |
+| Small spaces by default | Limits blast radius, but also limits reach |
+
+**Maybe the answer isn't "solve moderation" but "limit blast radius."**
+
+If your message can only reach 10 people before trust is established, the worst case is 10 people see something bad. Not 10,000.
+
+| Reach model | Blast radius |
+|-------------|--------------|
+| Broadcast (Twitter) | Millions potentially |
+| Followers-only | Hundreds to thousands |
+| Room-based (Discord) | Room size |
+| Small-by-default + escalation | Starts tiny, grows with trust |
+
+MOO naturally has limited blast radius - you can only affect the room you're in, the objects you own. You can't broadcast to the whole world by default.
+
+**Not solved. But maybe 80% addressable through structure:**
+- Limited reach by default
+- Escalating trust
+- Clear ownership
+- Easy blocking/muting
+- Small spaces
+
+The 20% that remains: determined bad actors, novel attacks, edge cases. That still needs humans. But 80% handled by structure is better than 0%.
+
 **How do you fight it?**
 
 - **Intentional constraints** - gives permission to be limited
