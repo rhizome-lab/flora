@@ -1,11 +1,30 @@
 -- Iris: Agent-authored insights from coding sessions
--- Usage: spore run . <session-path>
---        spore run . --list
---        spore run . --recent [N]
+-- Usage: spore run . -- <session-path>
+--        spore run . -- --list
+--        spore run . -- --recent [N]
 
-local sessions = require("spore.sessions")
+-- Capabilities are injected by spore based on config
+-- caps.sessions.project - session parsing
+-- caps.llm.default - LLM completion
+
 local prompts = require("iris.prompts")
 local format = require("iris.format")
+
+-- Get sessions capability (injected by spore)
+local function get_sessions()
+    if caps and caps.sessions and caps.sessions.project then
+        return caps.sessions.project
+    end
+    error("sessions capability not configured - add [caps.sessions] to .spore/config.toml")
+end
+
+-- Get LLM capability (injected by spore)
+local function get_llm()
+    if caps and caps.llm and caps.llm.default then
+        return caps.llm.default
+    end
+    error("llm capability not configured - add [caps.llm] to .spore/config.toml")
+end
 
 local M = {}
 
@@ -16,16 +35,14 @@ M.format = format
 -- Generate insight from a single session
 -- Options:
 --   voice: voice profile name (default, technical, reflective)
---   provider: LLM provider (default: from config)
---   model: model name (default: from config)
 function M.analyze_session(session_path, opts)
     opts = opts or {}
     local voice = opts.voice or "default"
-    local provider = opts.provider
-    local model = opts.model
+    local sessions_cap = get_sessions()
+    local llm_cap = get_llm()
 
     -- Parse session
-    local session, err = sessions.parse(session_path)
+    local session, err = sessions_cap:parse(session_path)
     if not session then
         return nil, "Failed to parse session: " .. (err or "unknown error")
     end
@@ -41,7 +58,7 @@ function M.analyze_session(session_path, opts)
 
     -- Generate insight
     print("[iris] Analyzing session...")
-    local response = llm.chat(provider, model, system, context)
+    local response = llm_cap:complete(system, context)
 
     return {
         insight = response,
@@ -58,13 +75,13 @@ end
 function M.analyze_sessions(session_paths, opts)
     opts = opts or {}
     local voice = opts.voice or "default"
-    local provider = opts.provider
-    local model = opts.model
+    local sessions_cap = get_sessions()
+    local llm_cap = get_llm()
 
     -- Parse and summarize each session
     local summaries = {}
     for _, path in ipairs(session_paths) do
-        local session = sessions.parse(path)
+        local session = sessions_cap:parse(path)
         if session then
             table.insert(summaries, format.session_summary(session))
         else
@@ -87,7 +104,7 @@ function M.analyze_sessions(session_paths, opts)
 
     -- Generate insight
     print(string.format("[iris] Analyzing %d sessions...", #summaries))
-    local response = llm.chat(provider, model, system, context)
+    local response = llm_cap:complete(system, context)
 
     return {
         insight = response,
@@ -97,12 +114,14 @@ end
 
 -- List available sessions
 function M.list_sessions(project_path, format_filter)
-    return sessions.list(project_path, format_filter)
+    local sessions_cap = get_sessions()
+    return sessions_cap:list(project_path, format_filter)
 end
 
 -- Get available formats
 function M.formats()
-    return sessions.formats()
+    local sessions_cap = get_sessions()
+    return sessions_cap:formats()
 end
 
 -- CLI help
@@ -187,8 +206,10 @@ local function parse_args(argv)
 end
 
 -- Main entry point
-if args and #args >= 0 then
-    local opts = parse_args(args)
+-- CLI entry point (spore.args is set when run via `spore run . -- arg1 arg2`)
+local cli_args = spore and spore.args
+if cli_args then
+    local opts = parse_args(cli_args)
 
     if opts.help then
         show_help()
@@ -197,13 +218,14 @@ if args and #args >= 0 then
 
     -- List sessions
     if opts.list then
-        local available = sessions.list(opts.project, opts.format_filter)
+        local sessions_cap = get_sessions()
+        local available = sessions_cap:list(opts.project, opts.format_filter)
         if #available == 0 then
             print("No sessions found.")
             if opts.project then
                 print("Searched in: " .. opts.project)
             end
-            print("\nAvailable formats: " .. table.concat(sessions.formats(), ", "))
+            print("\nAvailable formats: " .. table.concat(sessions_cap:formats(), ", "))
         else
             print(string.format("Found %d sessions:\n", #available))
             for _, info in ipairs(available) do
@@ -215,7 +237,8 @@ if args and #args >= 0 then
 
     -- Recent sessions
     if opts.recent then
-        local available = sessions.list(opts.project, opts.format_filter)
+        local sessions_cap = get_sessions()
+        local available = sessions_cap:list(opts.project, opts.format_filter)
         if #available == 0 then
             print("No sessions found.")
             os.exit(1)

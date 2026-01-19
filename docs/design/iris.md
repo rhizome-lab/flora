@@ -147,19 +147,92 @@ The rhizome docs site (rhizome-lab.github.io) has no blog section yet. VitePress
 - Session formatting for LLM context in `iris/iris/format.lua`
 - CLI interface with `--list`, `--recent`, `--multi` modes
 
-**Blocked on spore:**
-1. **Module plugin exposure** - spore's sandboxed environment doesn't expose loaded module plugins (sessions, llm). Scripts can only access capability-based plugins via `caps.{name}`. Need spore to expose `spore.sessions` and `spore.llm` globals.
-2. **CLI argument passing** - spore doesn't pass CLI args to Lua scripts. The `args` global is nil.
-3. **Plugin naming in nix** - spore-full builds produce `librhizome_spore_*.so` but spore looks for `libspore_*.so`
+**Spore blockers resolved:**
+- Module plugins now accessible via `require("spore.sessions")` with `[sandbox] require_plugins = true`
+- CLI args now available via `spore.args` table with `spore run . -- arg1 arg2`
+- Plugin naming fixed to match nix build output (`librhizome_spore_*.so`)
 
 ## Next Steps
 
-1. **Fix spore** to expose module plugins in sandbox
-2. **Fix spore** to pass CLI args to scripts
-3. **Fix spore flake** plugin naming
+1. **Temporal coherence** - Track what's been written about to avoid repetition
+2. **Session splitting** - Handle multi-day sessions by splitting at time gaps
+3. **Domain clustering** - Group insights by theme (like ablogger) for concise, comprehensive output
 4. **Iterate on prompts**: Voice profiles, style guides
 5. **Evaluate**: Is embedding-based clustering worth it, or is LLM-only sufficient?
 6. **Publishing**: Add blog section to rhizome docs site when ready
+
+## Temporal Coherence
+
+A core goal is feeling "temporally coherent" - like a practitioner sharing knowledge over time, not repeating what's already been said. rue-lang.dev/blog achieves this naturally through human curation.
+
+### The Problem
+
+Without tracking, iris would repeat itself:
+- "I learned about the module system" (week 1)
+- "I discovered how modules work" (week 2)
+- Same insight, different words
+
+### Approaches
+
+**1. Progress State File**
+Track what's been written about in a state file (`.iris/history.json`):
+```json
+{
+  "topics_covered": ["module-system", "error-handling", "api-design"],
+  "sessions_processed": ["abc123", "def456"],
+  "last_run": "2026-01-19T..."
+}
+```
+Include this in the LLM context: "You've already written about: X, Y, Z. Focus on what's new."
+
+**2. Session Splitting**
+Sessions spanning multiple days may have natural breakpoints:
+- Time gaps > N hours suggest context switches
+- Different working directories suggest different tasks
+- Tool usage patterns may indicate phase changes
+
+Split long sessions into logical "work units" for analysis.
+
+**3. Domain Clustering (ablogger approach)**
+Instead of chronological output, cluster by theme:
+- All auth-related insights → one coherent piece
+- All testing insights → another piece
+- Reduces repetition naturally through aggregation
+
+**4. Incremental vs Full Analysis**
+- **Incremental**: "What's new since last time?" - requires state
+- **Full**: "Analyze everything, dedupe at output" - stateless but may miss connections
+
+### Proposed Design
+
+Each approach is **optional and independent** - users enable what they need:
+
+```bash
+iris --recent 10                           # Basic: just analyze
+iris --recent 10 --track-progress          # Enable state tracking
+iris --recent 10 --split-sessions          # Enable session splitting
+iris --recent 10 --cluster-domains         # Enable domain clustering
+iris --recent 10 --track-progress --cluster-domains  # Combine as needed
+```
+
+**1. State tracking** (`--track-progress`)
+- Maintains `.iris/history.json` with topics covered
+- Injects "you've written about X, Y, Z" into prompt
+- Simple, lets LLM do natural deduplication
+
+**2. Session splitting** (`--split-sessions`)
+- Detects time gaps > N hours, directory changes
+- Splits into logical "work units"
+- Useful for multi-day sessions
+
+**3. Domain clustering** (`--cluster-domains`)
+- Groups insights by theme before output
+- Produces multiple focused pieces instead of chronological dump
+- Inspired by ablogger approach
+
+**4. Temporal markers** (always on when state tracking enabled)
+- Adds phrases like "Last week I mentioned X, and now..."
+- Creates narrative continuity
 
 ## Open Questions
 
