@@ -1209,6 +1209,8 @@ Vue is bigger than Preact but still fast because the *model* is smarter. React i
 
 The lesson: architectural decisions matter more than micro-optimizations. A smart small thing beats a dumb big thing with a compiler bolted on.
 
+(Vue considered "Vapor mode" - compile-away like Svelte - but it became low priority. Why? Because Vue's reactivity is already good enough that the gains would be marginal. Good architecture upfront = less heroics needed later.)
+
 **Other examples**:
 - Moment.js (~300KB) vs day.js (~2KB)
 - Lodash (~70KB) vs native JS + tiny helpers
