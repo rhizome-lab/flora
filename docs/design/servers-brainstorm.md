@@ -137,6 +137,15 @@ Which builds on luajitsocket (~1k lines) for platform-agnostic sockets. But that
 
 **Fractal composition:** each layer is small, they compose together.
 
+Cursed but illustrative example: `~/git/lua/example/http_chatx.lua` (197 lines)
+- Full-stack chat app
+- Server HTML/CSS via Lua DSL
+- Client-side Lua that **compiles to JavaScript**
+- WebSocket server, file drag-drop, MIME detection
+- One language, both sides, under 200 lines
+
+This is what's possible when composition is good enough.
+
 **The goal isn't impressive LOC counts. It's having things to reach for and combine.**
 
 This is what the minimal entity substrate enables:
