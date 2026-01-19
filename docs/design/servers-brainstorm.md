@@ -430,6 +430,34 @@ Common threads:
 
 Maybe the pattern: **build infrastructure that becomes indispensable**, not apps that compete for users.
 
+**Where is MOO's equivalent today?**
+
+LambdaMOO, ChatMUD - they exist, they're neat. But:
+- Text-based is a high barrier
+- Even for "okayish programmers" it's manageable, but for everyone else?
+- Where's the modern equivalent?
+
+| Platform | Programmable? | Shared worlds? | Barrier |
+|----------|--------------|----------------|---------|
+| LambdaMOO | Yes (verbs) | Yes | High (text, programming) |
+| Roblox | Yes (Lua) | Yes | Medium (visual, but still code) |
+| Minecraft | Kinda (redstone, mods) | Yes | Low base, high for creation |
+| VRChat | Yes (Unity/Udon) | Yes | High (Unity knowledge) |
+| Second Life | Yes (LSL) | Yes | Medium-high |
+| Rec Room | Limited | Yes | Low |
+
+Roblox is maybe the closest to "programmable shared worlds for everyone" - and it's massive. But:
+- Game-focused (not general purpose)
+- Corporate, proprietary
+- Kid-oriented aesthetic
+- You're building *on* their platform, not *with* general tools
+
+**Is there interest?** Roblox proves yes. TikTok proves people want to *create* (short-form, but still). The interest exists.
+
+**What's missing**: Open, general-purpose, low-barrier programmable object system. MOO philosophy + modern accessibility + not corporate-owned.
+
+Is that what lotus/MOO-in-flora should be?
+
 **This is a failure.** Not a technical impossibility. A collective failure of imagination or will.
 
 Is this something rhizome should care about? "Anyone can make interactive things" as a goal?
