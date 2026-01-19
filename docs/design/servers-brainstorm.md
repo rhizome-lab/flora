@@ -78,6 +78,14 @@ And while building ooxml, invented *more* work:
 
 This is "scope creep that's actually good" - while solving immediate problem, notice meta-problem that would help the whole ecosystem.
 
+**Reality check though:**
+- OOXML is a 5,000+ *page* spec
+- Look at how stc (TypeScript typechecker by dudykr) went - "only" ~30k lines, still massive
+- Even with LLM support, actually finishing? Good luck. Your bank account is already crying.
+- Some things are just too big.
+
+But: partial solutions have value. "Can read/write basic docx" beats "nothing exists." The machine-readable specs might help someone else finish what you can't.
+
 ---
 
 ## Backpropagating Insights
