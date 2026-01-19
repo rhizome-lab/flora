@@ -997,6 +997,39 @@ Probably both. Some people are just mean. But the environment takes normal human
 
 The problem might not be human nature. It might be capitalism optimizing for engagement at any cost.
 
+**Drama sells. Outrage is engagement.**
+
+Platforms don't distinguish *good* engagement from *bad* engagement:
+- Argument in comments? Engagement. Algorithm boosts it.
+- Hate-watching? Engagement. Recommended to more people.
+- Rage-clicking? Engagement. Ad impressions go up.
+- Dunking on someone? Engagement. Both sides keep coming back.
+
+The metric is "time on platform" and "interactions," not "did this make anyone's life better?"
+
+**This is a choice platforms make.** They *could* optimize for satisfaction. They *could* downrank conflict. They *could* measure "did users leave feeling good?" Some have tried (YouTube's "break reminders," Instagram hiding likes briefly). But they don't stick with it, because engagement metrics win internal arguments.
+
+The cruelty isn't human nature leaking through. It's **cruelty as a business model, because conflict is profitable.**
+
+Consider:
+- A supportive comment gets a like. One interaction.
+- A hostile comment gets a reply, then a counter-reply, then a pile-on, then screenshots, then a whole discourse. Dozens of interactions.
+
+From the platform's perspective, the hostile comment was *more valuable*. That's the incentive structure.
+
+**Implication for alternatives:**
+
+If engagement-maximization creates toxicity, then alternatives need *different metrics*:
+- Not "time on platform" but maybe "things created"
+- Not "interactions" but "collaborations"
+- Not "daily active users" but "people who made something they're proud of"
+
+Or: no metrics at all. Small communities don't need growth. Three people and their dog don't need engagement analytics.
+
+The old web worked partly because there were no metrics. Nobody was optimizing for anything. You made a page because you wanted to. The absence of measurement was freedom from optimization pressure.
+
+Maybe the answer is: **stop measuring.** Or at least: measure different things. Or: be small enough that measurement doesn't matter.
+
 **How do you fight it?**
 
 - **Intentional constraints** - gives permission to be limited
