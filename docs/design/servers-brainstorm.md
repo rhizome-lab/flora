@@ -466,6 +466,19 @@ Honest answers (partial, can't think of everything at once):
 
 Maybe the core value is: **make things findable and structured so you don't have to hold everything in your head**
 
+**Tags, not hierarchies**:
+- Manual tagging is fine. LLM/embedding-assisted doesn't hurt either.
+- The key insight: **tags should be first-class**, not an afterthought
+- Even Obsidian/Dendron have hierarchies baked in. Filesystems are innately hierarchical.
+- That's fundamentally the wrong mental model for how things relate
+- Hierarchies force single-parent relationships. Tags allow many-to-many.
+
+**Thinking style**:
+- Contrarian not to be different, but because "what if?" is interesting
+- NIH not because "I can do better", but to avoid "let's just use this because everyone does"
+- Also: NIH to understand things deeply (you learn by building)
+- This explains the ecosystem scope: not hubris, but exploration
+
 **If the AI bubble bursts and LLMs disappear, what are we left with?**
 
 | Project | LLM-dependent? | Residual value |
