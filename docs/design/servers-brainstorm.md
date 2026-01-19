@@ -808,7 +808,9 @@ This is the MOO/MUD spirit alive in 2026. Small, weird, intentional, atmospheric
 
 **Also: [Counterfeit Monkey](https://ifdb.org/viewgame?id=aearuuxv83plclpl) by Emily Short**
 
-Interactive fiction, 2012, consistently ranked #1 on IFDB. Set in Anglophone Atlantis where linguistic manipulation reshapes reality. Core mechanic: a letter-remover that transforms objects by removing letters from their names. Apple → ale. It's wordplay as world-mechanic.
+Interactive fiction, **2012** - not ancient history, not brand new. Consistently ranked #1 on IFDB. Set in Anglophone Atlantis where linguistic manipulation reshapes reality. Core mechanic: a letter-remover that transforms objects by removing letters from their names. Apple → ale. It's wordplay as world-mechanic.
+
+Importantly: made *during* the "platforms ate everything" era. The IF community kept producing excellent work while the mainstream web was being consumed by Facebook and Twitter. Proof that the spirit never fully died - it just went underground.
 
 What it demonstrates:
 - **Text can be incredibly deep** - 4 years to build, near-inexhaustible combinations
