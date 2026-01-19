@@ -1611,35 +1611,55 @@ After all this philosophy - what's the concrete thing?
 - Discord frontend (or other entry points)
 - Example world (reference implementation)
 
-**Minimal viable MOO:**
+**Not necessarily a MOO.**
+
+MOO is one model. It's appealing (objects, verbs, rooms, persistence). But it's not the only way to do "social with artifacts." Don't get too attached.
+
+Other shapes this could take:
+- Wiki-like (pages, links, edits)
+- Graph-based (nodes, edges, properties)
+- Card-based (SillyTavern-ish - characters, worlds, items as cards)
+- Hybrid (entities that can be any of the above)
+
+The core value is: **persistent structured state you can interact with**. MOO is one way to structure that. Not the only way.
+
+**On frontends: Discord is actually MORE complex, not less.**
+
+Original lotus plan: server core, multiple thin frontends. That's cleaner.
+
+Discord complications:
+- Per-channel state associations (which channel maps to which location?)
+- Different mapping strategies (one channel = one variable location vs one channel per room)
+- Bot has to proxy/sudo for all users connected through it
+- Discord API quirks, rate limits, permissions
+- Can't do rich interactions (buttons/modals only go so far)
+
+A simple server with HTTP API + basic web client might actually be *simpler* than Discord-first.
 
 ```
-Discord ←→ spore ←→ MOO core ←→ libsql
-              ↓
-         Lua verbs
+Web/CLI ←→ HTTP API ←→ core ←→ libsql
+                ↓
+           Lua scripts
 ```
 
-1. **Entities with props** - objects that have key-value data
-2. **Verbs** - Lua functions attached to objects
-3. **Rooms/containment** - objects can be inside other objects
-4. **Basic permissions** - who can call what verbs
-5. **Discord bridge** - type in Discord, things happen in MOO
+Discord can be *a* frontend later. Not necessarily the first one.
 
-**First milestone:** "I can create a room, put a thing in it, give it a description, and look at it from Discord."
+**What's the actual minimal thing?**
 
-That's not a platform. That's not even a community. It's a tool you can poke. But it's usable, demonstrable, and buildable-upon.
+1. **Persistent structured state** - entities with properties, stored in libsql
+2. **Operations on state** - create, read, update, delete, plus custom operations
+3. **Some kind of scripting** - Lua for extensibility
+4. **Some kind of interface** - CLI? Web? Doesn't have to be fancy.
 
-**From there:**
-- Add more verbs (move, take, drop, say)
-- Add example world (a few interesting rooms)
-- Add AI context injection (the original itch)
-- Add federation later (Hypha) if it makes sense
+First milestone: "I can create a thing, give it properties, save it, retrieve it, run a script that modifies it."
+
+That's not MOO-specific. It's just... persistent programmable objects. The MOO-ness (rooms, containment, verbs-on-objects) can come later if it makes sense.
 
 **What NOT to build (yet):**
-- Web UI (Discord is enough for now)
 - Perfect moderation (structure first, polish later)
 - Scale (three people and their dog)
 - Everything (scope creep is death)
+- Discord (unless we decide it's actually simpler)
 
 **How do you fight it?**
 
