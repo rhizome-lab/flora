@@ -528,6 +528,12 @@ Counter-arguments:
 - Rhizome's decomposition (pith, spore, reed, etc.) aims for this too
 - MOO's "substrate only, user-space everything else" is the same idea
 
+**Fractal modularity: the pattern repeats at every level**
+- Rhizome ecosystem: pith, spore, reed, moss, etc. - pick what you need
+- Each monorepo: same structure internally (core + modules)
+- Each module: small, focused, composable
+- It's turtles all the way down
+
 **Unresolved**: Is there a way to make programmable systems *actually* simple, not just LLM-assisted? Or is complexity irreducible and the best we can do is better interfaces to it?
 
 **Other experiments in "making programming easier":**
