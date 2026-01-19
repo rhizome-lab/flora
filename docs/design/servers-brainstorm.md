@@ -461,6 +461,15 @@ The pattern: **LLM-assisted lets you explore domains you don't have deep experti
 
 Whether this produces *good* code or just *working* code is an open question.
 
+**But:** the same is true for "naturally programmed" codebases. Arguably even *more* true:
+- Tech debt accumulates over time
+- "The way we've always done it" calcifies
+- Humans make the same mistakes repeatedly
+- Organic growth → inconsistent architecture
+- LLM-assisted might actually avoid some tech debt by not knowing the baggage
+
+The bar isn't "is this perfect?" - it's "is this better than the alternative?"
+
 **Where is MOO's equivalent today?**
 
 LambdaMOO, ChatMUD - they exist, they're neat. But:
