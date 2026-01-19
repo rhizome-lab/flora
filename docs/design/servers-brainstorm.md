@@ -826,6 +826,26 @@ Customer base: three people and their dog.
 
 The honest answer: mostly exploration. If improvement falls out of it, bonus. But "Excel is bad" isn't the *motivation* - it's an *observation* that informs the exploration.
 
+**So what IS the actual motivation?**
+
+Trying to articulate it honestly:
+
+1. **"What if?"** - Contrarian questioning. What if interaction was structured? What if notes/files/objects were the same thing? What if we didn't accept these tradeoffs?
+
+2. **Understanding by building** - NIH not for pride, but for learning. Can't truly understand something until you've built it (or tried).
+
+3. **Composition** - The joy of small pieces that snap together. `grep.lua` is 12 lines because the libraries exist. That feeling of "take this + this + this = working thing."
+
+4. **Scratching itches** - MOO exists because of wanting inventory in Tavern cards. Rescribe exists because pandoc isn't perfect. Real needs, even if niche.
+
+5. **"Should exist"** - Some things just *should* exist and don't. So make them exist.
+
+6. **The moonshot** - Subsume all computer interaction. Absurd, probably impossible, but it's the north star that gives direction.
+
+None of these are "make money" or "get users" or "beat the competition." They're all intrinsic.
+
+**The meta-motivation**: Enjoying the process of exploring ideas and building things. The destination matters less than the journey being interesting.
+
 **But wait - things that DID take off without corp funding:**
 
 | Project | Creator(s) | Why it worked |
