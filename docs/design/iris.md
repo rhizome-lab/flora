@@ -271,11 +271,15 @@ Configurable patterns to extract specific sentiments/patterns:
 - Successful patterns - approaches that worked well
 - Q&A pairs - user questions + agent answers/suggestions (for FAQs/docs)
 - Decisions made - architectural choices, trade-offs discussed
+- Plans/todos - what was planned vs what was executed
+- Code patterns - reusable snippets, common solutions
+- Option presentations - "Option A/B/C" style choices offered + what was chosen
 
 Could feed into:
 - Improvement tracking over time
 - Auto-generated FAQ/documentation
 - Pattern libraries for future sessions
+- Correctness evaluation - was the agent right? (via user feedback or later verification)
 
 ## Open Questions
 
