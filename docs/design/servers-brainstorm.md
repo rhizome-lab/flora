@@ -1522,6 +1522,14 @@ Possible answers (guesses, being realistic):
 
    The point isn't "this code is perfect" - it's "this code *exists* and can be iterated on."
 
+   **Another superpower: parallel development**
+
+   Traditional solo dev: one thread of execution. You work on one thing, then the next.
+
+   LLM-assisted: spin up multiple contexts. One session works on the parser, another on the renderer, another on tests. You switch between them, review, steer. Effectively multiplying your throughput.
+
+   It's not "10x developer" - it's "1 developer running 5 parallel workstreams." Different skill. More like project management than pure coding. But it works.
+
    **Counter-caveats**:
    - Human-written code has the same issues (untested, needs iteration)
    - "You're one of *those*" / AI hype skepticism is valid, but so is pragmatism
