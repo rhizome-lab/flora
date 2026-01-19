@@ -1234,7 +1234,13 @@ Each JS addition makes:
 
 Lua's barren stdlib is a *feature* - you add what you need via FFI/C, not via spec committee. JS's stdlib is a historical accident that keeps growing.
 
-QuickJS is impressive (~80k lines for near-full ES2023) but it's fighting uphill against a spec designed by committee for browsers. LuaJIT is small because Lua is small.
+QuickJS is impressive (~80k lines for near-full ES2023) but it's an **interpreter** - no JIT. And it's still fighting uphill against a spec designed for browsers.
+
+Corrections though:
+- Lua is *also* designed by committee (PUC-Rio team) - but a small one with clear vision, not TC39 with a hundred stakeholders
+- LuaJIT being small isn't *just* because Lua is small - it's a **feat of engineering** by Mike Pall. Lua helps, but the JIT itself is remarkable work
+
+The difference might be: small focused committee (Lua) vs large stakeholder-driven committee (JS). And: one genius (Mike Pall) vs teams of hundreds (V8, SpiderMonkey).
 
 **Other examples**:
 - Moment.js (~300KB) vs day.js (~2KB)
