@@ -19,3 +19,6 @@ docs/.vitepress/dist/
 .spore/plugins/
 .spore/cache/
 .spore/*.log
+
+# Iris - user-local state
+.iris/

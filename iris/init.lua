@@ -9,6 +9,7 @@
 
 local prompts = require("iris.prompts")
 local format = require("iris.format")
+local history = require("iris.history")
 
 -- Get sessions capability (injected by spore)
 local function get_sessions()
@@ -31,20 +32,39 @@ local M = {}
 -- Re-export submodules
 M.prompts = prompts
 M.format = format
+M.history = history
 
 -- Generate insight from a single session
 -- Options:
 --   voice: voice profile name (default, technical, reflective)
+--   track_progress: boolean - enable history tracking for deduplication
+--   project_root: string - root for .iris/history.json (default: cwd)
 function M.analyze_session(session_path, opts)
     opts = opts or {}
     local voice = opts.voice or "default"
+    local track = opts.track_progress
+    local project_root = opts.project_root
     local sessions_cap = get_sessions()
     local llm_cap = get_llm()
+
+    -- Load history if tracking enabled
+    local state = track and history.load(project_root) or nil
 
     -- Parse session
     local session, err = sessions_cap:parse(session_path)
     if not session then
         return nil, "Failed to parse session: " .. (err or "unknown error")
+    end
+
+    -- Get session ID for tracking
+    local session_id = session.metadata and session.metadata.session_id
+        or session_path:match("([^/]+)%.jsonl?$")
+        or session_path
+
+    -- Skip if already processed (when tracking)
+    if state and history.is_processed(state, session_id) then
+        print("[iris] Session already processed: " .. session_id)
+        return nil, "session already processed"
     end
 
     -- Format session for LLM
@@ -53,12 +73,30 @@ function M.analyze_session(session_path, opts)
         include_thinking = false,
     })
 
+    -- Add history context if tracking
+    if state then
+        local history_context = history.format_for_prompt(state)
+        if history_context then
+            context = history_context .. "\n---\n\n" .. context
+        end
+    end
+
     -- Build prompt
     local system = prompts.system_prompt(prompts.SINGLE_SESSION, voice)
 
     -- Generate insight
     print("[iris] Analyzing session...")
     local response = llm_cap:complete(system, context)
+
+    -- Update history if tracking
+    if state then
+        local topics = history.extract_topics(response)
+        history.add_topics(state, topics)
+        history.mark_session(state, session_id)
+        history.touch(state)
+        history.save(state, project_root)
+        print("[iris] Updated history: " .. #topics .. " topics extracted")
+    end
 
     return {
         insight = response,
@@ -67,34 +105,64 @@ function M.analyze_session(session_path, opts)
             format = session.format,
             turns = #(session.turns or {}),
             messages = session.message_count,
-        }
+        },
+        topics_extracted = state and history.extract_topics(response) or nil,
     }
 end
 
 -- Analyze multiple sessions for patterns
+-- Options:
+--   voice: voice profile name
+--   track_progress: boolean - enable history tracking
+--   project_root: string - root for .iris/history.json
 function M.analyze_sessions(session_paths, opts)
     opts = opts or {}
     local voice = opts.voice or "default"
+    local track = opts.track_progress
+    local project_root = opts.project_root
     local sessions_cap = get_sessions()
     local llm_cap = get_llm()
 
-    -- Parse and summarize each session
+    -- Load history if tracking enabled
+    local state = track and history.load(project_root) or nil
+
+    -- Parse and summarize each session (skip already processed if tracking)
     local summaries = {}
+    local processed_ids = {}
     for _, path in ipairs(session_paths) do
         local session = sessions_cap:parse(path)
         if session then
-            table.insert(summaries, format.session_summary(session))
+            local session_id = session.metadata and session.metadata.session_id
+                or path:match("([^/]+)%.jsonl?$")
+                or path
+
+            if state and history.is_processed(state, session_id) then
+                print("[iris] Skipping already processed: " .. session_id)
+            else
+                table.insert(summaries, format.session_summary(session))
+                table.insert(processed_ids, session_id)
+            end
         else
             print("[iris] Warning: Failed to parse " .. path)
         end
     end
 
     if #summaries == 0 then
-        return nil, "No valid sessions to analyze"
+        return nil, "No new sessions to analyze"
     end
 
     -- Build context
-    local context = "# Sessions to Analyze\n\n"
+    local context = ""
+
+    -- Add history context if tracking
+    if state then
+        local history_context = history.format_for_prompt(state)
+        if history_context then
+            context = history_context .. "\n---\n\n"
+        end
+    end
+
+    context = context .. "# Sessions to Analyze\n\n"
     for i, summary in ipairs(summaries) do
         context = context .. string.format("## Session %d\n%s\n\n", i, summary)
     end
@@ -106,9 +174,22 @@ function M.analyze_sessions(session_paths, opts)
     print(string.format("[iris] Analyzing %d sessions...", #summaries))
     local response = llm_cap:complete(system, context)
 
+    -- Update history if tracking
+    if state then
+        local topics = history.extract_topics(response)
+        history.add_topics(state, topics)
+        for _, sid in ipairs(processed_ids) do
+            history.mark_session(state, sid)
+        end
+        history.touch(state)
+        history.save(state, project_root)
+        print("[iris] Updated history: " .. #topics .. " topics extracted")
+    end
+
     return {
         insight = response,
         session_count = #summaries,
+        topics_extracted = state and history.extract_topics(response) or nil,
     }
 end
 
@@ -137,16 +218,18 @@ Usage:
 
 Options:
   --voice <name>      Voice profile: default, technical, reflective
-  --provider <name>   LLM provider
-  --model <name>      Model name
   --format <name>     Filter by session format (claude-code, gemini-cli, etc.)
   --output <file>     Write output to file instead of stdout
   -h, --help          Show this help
 
+Temporal Coherence:
+  --track-progress    Track topics to avoid repetition (.iris/history.json)
+  --show-history      Show what topics have been covered
+  --clear-history     Clear the history state
+
 Examples:
-  iris ~/.claude/projects/myproject/sessions/abc123.jsonl
-  iris --list ~/git/myproject
   iris --recent 5 --voice technical
+  iris --recent 10 --track-progress    # Track what's been written
   iris --multi session1.jsonl session2.jsonl
 ]])
 end
@@ -183,18 +266,19 @@ local function parse_args(argv)
         elseif arg == "--voice" then
             i = i + 1
             opts.voice = argv[i]
-        elseif arg == "--provider" then
-            i = i + 1
-            opts.provider = argv[i]
-        elseif arg == "--model" then
-            i = i + 1
-            opts.model = argv[i]
         elseif arg == "--format" then
             i = i + 1
             opts.format_filter = argv[i]
         elseif arg == "--output" or arg == "-o" then
             i = i + 1
             opts.output = argv[i]
+        -- Temporal coherence options
+        elseif arg == "--track-progress" then
+            opts.track_progress = true
+        elseif arg == "--show-history" then
+            opts.show_history = true
+        elseif arg == "--clear-history" then
+            opts.clear_history = true
         elseif not arg:match("^%-") then
             table.insert(opts.paths, arg)
         end
@@ -213,6 +297,35 @@ if cli_args then
 
     if opts.help then
         show_help()
+        os.exit(0)
+    end
+
+    -- Show history
+    if opts.show_history then
+        local state = history.load()
+        print("Iris History State:")
+        print("  Topics covered: " .. #(state.topics_covered or {}))
+        for _, topic in ipairs(state.topics_covered or {}) do
+            print("    - " .. topic)
+        end
+        print("  Sessions processed: " .. #(state.sessions_processed or {}))
+        print("  Run count: " .. (state.run_count or 0))
+        if state.last_run then
+            print("  Last run: " .. state.last_run)
+        end
+        os.exit(0)
+    end
+
+    -- Clear history
+    if opts.clear_history then
+        local state = {
+            topics_covered = {},
+            sessions_processed = {},
+            last_run = nil,
+            run_count = 0,
+        }
+        history.save(state)
+        print("[iris] History cleared")
         os.exit(0)
     end
 
