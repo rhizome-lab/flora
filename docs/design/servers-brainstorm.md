@@ -967,6 +967,24 @@ Big frameworks are powerful but opaque. Small pieces are limited but transparent
 
 Maybe the answer is: **layers of small transparent pieces**, where each layer is understandable on its own. You don't need to understand all 442 lines to use the HTTP client - just the 17 lines of client.lua. But if you want to go deeper, you can.
 
+**100 Rabbits follows this philosophy too.** Uxn/Varvara is intentionally constrained and transparent - you can understand the whole thing. It's a choice to optimize for comprehensibility over power.
+
+**Related: [todepond's "Just"](https://www.todepond.com/wikiblogarden/better-computing/just/)**
+
+A piece critiquing "just" as a word that hides complexity:
+- "Just use the command line"
+- "Just rent a server"
+- "Just use a framework"
+
+Each "just" masks layers of prerequisite knowledge. What seems simple to experts is a learning cliff for others. The word is accidental gatekeeping.
+
+The piece argues: instead of false reassurance ("just do X"), actually make things genuinely accessible. Acknowledge the barriers. Work to remove them, don't pretend they don't exist.
+
+This connects to everything:
+- "Just make a website" hides DNS, hosting, HTML, CSS, deployment...
+- "Just write a character card" hides format knowledge, LLM quirks, prompt engineering...
+- Low barriers should be *real* low barriers, not "just" hiding the cliff
+
 What it demonstrates:
 - **Text can be incredibly deep** - 4 years to build, near-inexhaustible combinations
 - **Constraints inspire innovation** - text-only forced creative mechanics
