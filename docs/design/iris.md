@@ -234,6 +234,35 @@ iris --recent 10 --track-progress --cluster-domains  # Combine as needed
 - Adds phrases like "Last week I mentioned X, and now..."
 - Creates narrative continuity
 
+**5. Temporal perspective** (`--as-of <date>` or `--batch-by-week`)
+Write from the perspective of when work actually happened, not today:
+
+```bash
+# Generate one post per week, dated appropriately
+iris --recent 100 --batch-by-week --output-dir ./drafts/
+
+# Write as if it's Jan 5th, only using sessions up to that date
+iris --recent 50 --as-of 2026-01-05
+```
+
+This enables:
+- **Authentic timestamps** - Posts dated when work happened
+- **Queued publishing** - Generate a month of posts, publish over time
+- **No spam** - Avoid dumping 100 posts in one day
+- **Narrative authenticity** - "I just finished X" when X actually just happened
+
+Implementation:
+- Group sessions by time period (day/week)
+- Filter sessions to only those before `--as-of` date
+- Inject temporal context: "Today is Jan 5th, 2026"
+- Output includes suggested publish date in frontmatter
+
+**6. Draft queue** (`--queue`)
+Instead of outputting directly, append to a draft queue for review:
+- `.iris/drafts/2026-01-05-insights.md`
+- `.iris/queue.json` tracks pending drafts
+- Separate publish step after human review
+
 ## Open Questions
 
 - Where does the agent draft live before publishing? PR-based review? Staging area?
