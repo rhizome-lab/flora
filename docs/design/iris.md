@@ -274,6 +274,9 @@ Configurable patterns to extract specific sentiments/patterns:
 - Plans/todos - what was planned vs what was executed
 - Code patterns - reusable snippets, common solutions
 - Option presentations - "Option A/B/C" style choices offered + what was chosen
+- Tool call sequences - common workflows, repeated patterns of tool usage
+- Struggle signals - lots of searches in a row, repeated failures, backtracking
+- Research patterns - heavy web search/fetch usage (knowledge gaps, external deps)
 
 Could feed into:
 - Improvement tracking over time
