@@ -573,6 +573,23 @@ The web won partly because "installing things" is broken. Fix installation and t
 
 Nothing stops us from making web apps with better interaction models. The transport is orthogonal to the paradigm.
 
+**Case studies in "learning curve"**:
+
+| App | Power | Problem |
+|-----|-------|---------|
+| vim | Extremely powerful | "Learning curve" (but: once learned, very fast) |
+| blender | Industry-grade 3D | "Learning curve" (modal, dense UI) |
+| krita/gimp/photoshop | Professional tools | "Learning curve" (toolbox overload) |
+| SillyTavern | Feature-rich | Architectural mess: no SQL (everything is files), each card is a PNG, each chat is JSONL, search takes 15s to load taglist on 5GB/s NVMe |
+
+The pattern: power requires learning, but also: maybe the interaction model itself creates unnecessary friction?
+
+**Maybe it's unsolvable. But:**
+- That won't stop us from trying
+- At minimum we can *diagnose* - if it's unsolvable, understand *why*
+- Negative results are still results
+- "This is hard because X" is valuable knowledge
+
 **Vibe-coding style**:
 - "Holding reins loosely" - but *not* zero technical knowledge (contrast with "pure vibe coders")
 - Background: years of golfing, language design/impl (not compilers), frontend, Rust for AoC
