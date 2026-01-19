@@ -989,6 +989,38 @@ This connects to everything:
 
 **Prior art collection moved to [prior-art.md](./prior-art.md)** - a living document of things worth knowing about.
 
+---
+
+**Why don't people just... spontaneously do these things?**
+
+The tools exist. The communities exist. Why isn't everyone making things?
+
+Possible answers (probably all true to some degree):
+
+1. **Don't know it exists** - Discoverability. You can't join what you've never heard of.
+
+2. **"I'm not a [creator/programmer/artist]"** - Identity barrier. People sorted themselves into "creators" and "consumers" and don't cross.
+
+3. **Barriers are higher than they look** - The "just" problem. Looks easy until you try.
+
+4. **No time/energy** - Attention economy ate everything. People are exhausted. Creating takes surplus.
+
+5. **Social risk** - "That's weird." Embarrassment. What if it's bad? What if people judge?
+
+6. **No path from consumer to creator** - Platforms have "post" buttons, not "build" buttons. The affordances aren't there.
+
+7. **Reward loop mismatch** - Platforms give instant dopamine (likes, notifications). Creation takes time before payoff. Hard to compete.
+
+8. **Learned helplessness** - "I tried once and it was hard/bad, so I'm not a creator." One bad experience closes the door.
+
+9. **No community** - Creating alone is hard. The communities exist but are invisible (see #1).
+
+10. **It's not the default** - You have to actively seek it out. The default is consumption.
+
+The tragic loop: people don't create → communities stay small → communities stay invisible → people don't know they could create → ...
+
+Breaking the loop probably requires: lowering real barriers (not "just"), making communities visible, providing paths from consuming to creating, and somehow competing with platform dopamine.
+
 What it demonstrates:
 - **Text can be incredibly deep** - 4 years to build, near-inexhaustible combinations
 - **Constraints inspire innovation** - text-only forced creative mechanics
