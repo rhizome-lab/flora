@@ -389,6 +389,11 @@ Possible answers (guesses, being realistic):
 
    The point isn't "this code is perfect" - it's "this code *exists* and can be iterated on."
 
+   **Counter-caveats**:
+   - Human-written code has the same issues (untested, needs iteration)
+   - "You're one of *those*" / AI hype skepticism is valid, but so is pragmatism
+   - Environmental impact is real, but compare with the environmental impact of a human doing the same work over months/years
+
 2. **AI agents are real** - The "agent" usecase now has concrete demand (Claude Code, etc.)
 
 3. **Decomposition** - Not one monolith (lotus learned this). Independent pieces that compose.
