@@ -1293,6 +1293,45 @@ Radicalization pipelines work exactly this way. You click one "interesting" vide
 
 It's a collaboration between your existing tendencies and a system designed to maximize engagement by exploiting them.
 
+**But linearity is also a weakness.**
+
+Linear feeds are effective *for algorithms*. But what if you break the linearity?
+
+**Case study: Pixiv recommendations**
+
+When you click an artist, Pixiv suggests multiple other artists. When you follow one, it gets replaced with more artists in a similar direction.
+
+```
+Linear feed:     A → B → C → D → E (no choice, just scroll)
+
+Pixiv style:     A → [B, C, D]
+                      ↓ (you pick C)
+                     [E, F, G]
+                      ↓ (you pick F)
+                     [H, I, J]
+                      ...
+```
+
+Key differences:
+- **Multiple options at once** - you see branches, not a single stream
+- **You choose direction** - agency at each step
+- **Algorithm responds to choices** - but you steered it there
+- **Tree/graph, not line** - exploration has shape
+
+The algorithm still recommends. But you're navigating, not being conveyed. The control dynamic shifts.
+
+| Model | Who steers? | User agency |
+|-------|------------|-------------|
+| Linear feed | Algorithm | None (just scroll) |
+| Pixiv branching | Both | Choice points at each step |
+| Pure exploration (MOO/wiki) | User | Full (you choose what to look at) |
+
+**Design principle: break linearity, introduce branching.**
+
+If linear feeds enable algorithmic control, then non-linear interfaces might resist it. Give users choice points. Show options, not a stream. Let them navigate rather than scroll.
+
+This doesn't eliminate recommendation algorithms - it changes the power dynamic. Algorithm suggests, user chooses. Collaboration rather than control.
+
 **How do you fight it?**
 
 - **Intentional constraints** - gives permission to be limited
