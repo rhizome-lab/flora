@@ -4,13 +4,32 @@ Backend services for the flora ecosystem. UI handled by canopy (~/git/canopy); t
 
 ## Overview
 
-Several potential server projects, possibly related:
+Three distinct projects that could relate:
 
-1. **MOO-style object system** - Persistent programmable objects (its own thing)
-2. **Notes / Knowledge base** - Could be standalone OR built on MOO
-3. **Filesystem service** - Could be standalone OR built on MOO
+1. **MOO-style object system** - Persistent programmable object database. Standalone value.
+2. **Notes / Knowledge base** - Standalone OR as a MOO app
+3. **Filesystem service** - Standalone OR as a MOO app
 
-The MOO architecture is attractive but should be evaluated separately for each use case.
+Each has value independently. But if MOO exists, notes/fs become natural apps within it - built using objects/verbs, getting persistence and programmability for free, with interop (a note could reference a file, etc.).
+
+```
+Option A: Standalone servers          Option B: MOO as platform
+┌─────────┐ ┌─────────┐ ┌────┐       ┌─────────────────────────┐
+│  Notes  │ │   FS    │ │MOO │       │          MOO            │
+│ Server  │ │ Server  │ │    │       │  ┌─────┐ ┌────┐ ┌───┐  │
+└─────────┘ └─────────┘ └────┘       │  │Notes│ │ FS │ │...│  │
+                                      │  └─────┘ └────┘ └───┘  │
+                                      └─────────────────────────┘
+```
+
+Not mutually exclusive - could have standalone notes server AND notes-as-MOO-app.
+
+**Key distinction**:
+- **Standalone Notes/FS** - "Real" implementations for people who just want notes/files
+- **MOO** - Programmable object platform, interesting in its own right
+- **Notes/FS in MOO** - Fun MOO-native apps, showcasing the paradigm ("look what you can build with programmable objects + verbs + inheritance")
+
+The MOO versions aren't wrappers around standalone versions. They're different paradigms that happen to solve similar problems. MOO-native apps are toys/demos/explorations.
 
 ## Architecture (Common)
 
@@ -31,13 +50,26 @@ Options to consider:
 
 ### Language Choice
 
-| Use Case | Candidate | Rationale |
-|----------|-----------|-----------|
-| Notes/knowledge | Lua | Schema flexibility, rapid iteration |
-| FS operations | Rust | Performance, safety |
-| MOO object DB | Rust core + Lua verbs | Persistence needs perf, scripting needs flexibility |
+**Prior art**: lotus (MOO-style system), reed (language→IR→language), spore (Lua runtime)
 
-**Principle**: Lua for rapid iteration, Rust when performance matters.
+The stack:
+```
+TypeScript (author verbs here - great DX, types, LLM-familiar)
+    ↓ reed (compile)
+Restricted IR (safe, serializable, no dangerous primitives)
+    ↓ reed (emit)
+Lua (executes on spore with native plugin capabilities)
+```
+
+| Layer | Language | Rationale |
+|-------|----------|-----------|
+| Verb authoring | TypeScript | Type safety, IDE support, LLMs know it |
+| IR | S-expressions | Universal, serializable, inspectable |
+| Execution | Lua on spore | Fast (LuaJIT), sandboxed, plugin ecosystem |
+| Plugins | Rust | Performance, safety, native capabilities |
+| Core DB | Rust | Persistence needs perf |
+
+**Extensibility**: MOO core is minimal (entities + verbs + capabilities). Domain features (notes, fs, AI) are spore plugins that expose capabilities. TypeScript SDKs wrap those capabilities with types.
 
 ---
 
@@ -84,13 +116,22 @@ What to reconsider:
 
 **To decide**: What operations matter most? Rename? Move? Link? Copy?
 
+### Answers from Lotus
+
+| Question | Lotus Answer |
+|----------|--------------|
+| Storage backend | SQLite (libSQL) - simple, embedded, sufficient |
+| Object references | Numeric IDs internally, prototype chain for inheritance |
+| Permissions | Capability-based - unforgeable tokens checked by verbs |
+| Schema | Free-form JSON props - no migrations needed |
+| Verbs | S-expressions stored in DB, executed by kernel |
+
 ### Open Questions (MOO)
 
-- Storage backend: SQLite? Custom? Distributed?
-- Authentication: How do multi-user systems handle identity?
-- Permissions: Object-level? Verb-level? Both?
-- Versioning: Do objects have history?
-- Schema: Typed properties or free-form?
+- **Versioning**: Do objects have history? (Lotus: no, but could add)
+- **Distribution**: Single-server or multi-node? (Lotus: single)
+- **Authentication**: Identity tied to what? (Lotus: entity ownership)
+- **What's different from Lotus?**: Is this just "lotus v2" or something new?
 
 ---
 
@@ -146,6 +187,52 @@ Or project-specific names (more flowers).
 ---
 
 ## Prior Art
+
+### Lotus (~/git/lotus) - Decomposed
+Was a MOO-style monolith. Removed from ecosystem and decomposed into parts.
+
+**Has comprehensive docs** at `~/git/lotus/docs/` - worth carefully evaluating for lessons learned.
+
+Decomposed into:
+- **pith** - Capability-based interface libraries (fs, sql, http, etc.)
+- **spore** - Lua runtime with plugin system
+- **reed** - TS → IR → Lua compiler
+
+Key lessons (not implementation details, lotus had churn):
+- Capability-based security works well
+- TS → IR → Lua is a good stack
+- Prototype inheritance is useful for entities
+- JSON props = no schema migrations
+- Monolith bad, composition good
+
+**Lotus layering** (good):
+```
+App logic (notes: backlinks, search, linking)
+    ↓ built on
+Primitives (fs, sql, etc.)
+    ↓ provided by
+Plugins
+```
+
+**The monolith trap** (bad): The app logic layer *had* to be MOO objects. MOO was the only host → everything depended on MOO → monolith.
+
+**Decomposed philosophy**: Keep the layering, remove the host requirement:
+```
+App logic (host-agnostic library)
+    ↓ built on
+pith-* (primitives)
+    ↓ hosted by
+MOO / standalone server / CLI / WASM / whatever
+```
+
+The "built up functionality" layer exists independently. Hosts are thin wrappers.
+
+### Reed (~/git/reed)
+Language→IR→language compiler. Key insights:
+- **Intentionally restricted IR**: No classes, async, metaprogramming
+- **Domain ops are function calls**: Runtime (spore) resolves them
+- **TypeScript reader, Lua writer**: Best of both worlds
+- **S-expr serialization**: Same format as lotus verbs
 
 ### LambdaMOO
 The original MOO. Single-server, custom language. Still running after 30+ years.

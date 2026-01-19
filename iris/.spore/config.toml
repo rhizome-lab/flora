@@ -13,7 +13,7 @@ require_project = true
 
 # Capabilities - injected as caps.{plugin}.{name}
 [caps.sessions]
-project = {}  # No special config needed
+project = { root = "." }  # Project root for session discovery
 
 [caps.llm]
-default = {}  # Uses default provider from environment
+default = { providers = ["anthropic"] }
