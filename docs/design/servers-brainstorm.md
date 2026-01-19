@@ -187,6 +187,8 @@ The tradeoff was "text is universal" but the cost is "text is hostile to non-pro
 - Dollar sign syntax for absolute references (`$A$1`). Two different syntaxes.
   - (Not even counting R1C1 notation - who even uses that?)
 - Cells can have **rich text** - technically - but good luck editing it in the formula bar
+  - Conventional method: type → apply formatting → remember what you did → type next section → apply different formatting → repeat
+  - A careful dance for something that should be trivial
 - People build Cthulhu-like spreads of references for tracking things Excel was never made for.
 - Sticky headers help, but then there's another table floating to the right...
 - "It should be in its own sheet" but:
