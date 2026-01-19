@@ -1463,6 +1463,37 @@ You need to build high enough that:
 
 **The realistic version:** we build the reference implementations ourselves, use them ourselves, and if others find them useful, great. If not, we still have tools we use.
 
+**Actually: building *a* community is fine.**
+
+The problem isn't "community" - it's being responsible for **the** singular destination. An unmoderated community? Fine. A self-moderating community? Even better.
+
+"Moderation is unsolved" - okay, and? The halting problem is unsolved. Doesn't mean you can't solve 50%, 90%, 99% of cases. "Technically unsolvable" ≠ "can't make massive progress."
+
+**What would fundamentally self-moderating tooling look like?**
+
+Not human moderators at scale. Systems/structures that make bad behavior hard or undesirable by design:
+
+| Approach | How it helps |
+|----------|-------------|
+| **Capability-based permissions** | You can only do what you've been granted. No ambient authority. |
+| **Small isolated spaces by default** | Toxicity can't spread. Your space, your rules. |
+| **No algorithmic amplification** | Bad content doesn't get boosted. Drama doesn't "sell." |
+| **Technical limits on reach** | Can't spam 1000 people. Broadcasting is expensive/earned. |
+| **Ownership is clear** | Objects have owners. You can't mess with what isn't yours. |
+| **Federation with boundaries** | Connect to others, but with firewalls. Authoritative handoff (Hypha). |
+
+**MOO already does some of this:**
+- Objects have owners
+- Verbs have permissions
+- Capabilities are explicit
+- You can't do what you haven't been granted
+
+The structure *is* the moderation. Not "rules + enforcers" but "the system doesn't let you do bad things easily."
+
+**This is why capability-based security matters.** Not as an abstract security model - as a moderation strategy. If you can't do something without the capability, you can't abuse it.
+
+**Unsolved doesn't mean hopeless.** Build systems where the 90% case is handled by structure, and human intervention is only needed for the edge cases.
+
 **How do you fight it?**
 
 - **Intentional constraints** - gives permission to be limited
