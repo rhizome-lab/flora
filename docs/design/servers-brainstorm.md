@@ -443,6 +443,24 @@ Hypothesis: How many people could actually pull a Bellard, Pall, Torvalds, Gerga
 
 This isn't defeatist - it's realistic. The question isn't "why hasn't someone built X" but "who specifically would have built X, and why didn't they?"
 
+**Maybe: human insight + LLM volume = ambitious things without singular genius?**
+
+Or maybe that's cope. Time will tell.
+
+**Honest self-assessment:**
+- Not a novice programmer, but not deeply experienced in any one domain
+- Contrarian exploration = broad exposure, shallow depth in many areas
+- No time/motivation to go deep everywhere - so what to focus on?
+- Don't believe in "talent" - but experience? Absolutely limited.
+- burn-models: vibe coded, don't actually know NN architectures
+- resin: vibe coded, don't know blender/houdini/demoscene/procgen
+- lotus: built on the backs of SO many failed prototypes
+  - Some weren't even failures - just didn't match the vision
+
+The pattern: **LLM-assisted lets you explore domains you don't have deep expertise in**. You bring the vision + general programming sense, LLM brings domain knowledge at a basic level. Iterate until it works.
+
+Whether this produces *good* code or just *working* code is an open question.
+
 **Where is MOO's equivalent today?**
 
 LambdaMOO, ChatMUD - they exist, they're neat. But:
