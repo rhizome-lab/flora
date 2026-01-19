@@ -1061,9 +1061,22 @@ But also: you can't save everyone. The best you can do is:
 2. Make it discoverable (but not algorithmic)
 3. Let people find it when they're ready
 
-Maybe that's defeatist. Or maybe it's realistic. The platforms have billions of dollars and armies of engineers optimizing for engagement. Competing head-on is futile. Building something *different* - with different values, for different people - might actually work.
+Maybe that's defeatist. Or maybe it's realistic.
 
-Not everyone. Just: some people. The ones who want out.
+**But actually: "competing" is the wrong frame entirely.**
+
+"Competing head-on is futile" assumes you're playing the same game - trying to get users, market share, engagement. That's only true from a capitalist perspective. If you're not trying to "win" in that sense, there's no competition.
+
+The platforms aren't competitors. They're a different thing. You're not building "Twitter but better" - you're building something with different values for different reasons. Success isn't measured in user counts.
+
+This reframes everything:
+- Not "how do we beat the platforms" but "what do we want to exist?"
+- Not "how do we get users" but "who is this for, and will they find it?"
+- Not "market share" but "does this serve the people who use it?"
+
+The platforms can keep running. That's fine. They're not the enemy to defeat - they're just... not what we're building. Coexistence, not competition.
+
+Not everyone. Just: some people. The ones who want something different.
 
 **How do you fight it?**
 
