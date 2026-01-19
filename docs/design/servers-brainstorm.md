@@ -786,12 +786,25 @@ What the early web had (the *spirit*):
 What killed it wasn't technology - it was **incentives**:
 - Platforms centralized attention (easier to post *on* something than *make* something)
 - Professionalism expectations ("your site looks amateur")
-- Mobile shifted to apps (walled gardens)
+- Mobile shifted to apps (walled gardens) - though PWAs exist, not a full paradigm shift
 - Attention economy rewards feeds, not exploration
 
 The tools exist. Static hosting is free. The *culture* shifted.
 
 **The question isn't "how do we make websites easy again"** - that's solved. The question is: **what would make people *want* to create their own spaces instead of posting on platforms?**
+
+**Fascinating prior art: [nightfall.city](https://nightfall.city/)**
+
+A text-based community structured as a fictional metropolis. Accessible via telnet (`nc nightfall.city 1900`). Districts like "Writers-Lane" (cafes and bookstores), "Dusk's End" (contemplative hilltop), "Shore" (waterfront). Community features wrapped in narrative fiction - citizenship, classifieds, postal services, subway.
+
+What it gets right:
+- **Atmosphere over technology** - telnet is ancient, but the *vibe* is intentional
+- **Narrative structure** - it's not "a forum," it's "a city you explore"
+- **Intentional retreat** - explicitly stepping away from mainstream web
+- **Low-tech accessibility** - if you have a terminal, you're in
+- **Community functions disguised as world elements** - classifieds are classifieds, but they're *in* the city
+
+This is the MOO/MUD spirit alive in 2026. Small, weird, intentional, atmospheric.
 
 **What would Rhizome's angle be?**
 - Not "make a website" but "make a *world*"
