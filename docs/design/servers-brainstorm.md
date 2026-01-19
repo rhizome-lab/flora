@@ -150,6 +150,23 @@ This is what's possible when composition is good enough.
 
 But: don't split until you need to read N files to understand a single subsystem. There's a balance. The goal is **things to reach for and combine**, not minimum LOC for its own sake.
 
+**More thinking: are existing tradeoffs the right ones?**
+
+Lots of software makes tradeoffs. Some do things well (Procreate). But in general:
+
+| Pain point | Why? |
+|-----------|------|
+| Multi-app workflows | Use X then Y then Z for one task. Why not integrated? |
+| Twine, RPG Maker, Renpy | Authoring tools that kinda suck |
+| Settings sprawl | MS Word, SillyTavern - dialog after dialog after dialog |
+| Notion dying on 100 rows | Ctrl+C 100 rows → freeze. It's just data! |
+| Notes ≠ todos ≠ calendar | Why are they different apps? (Notion tried, kinda worked?) |
+| Excel formulas vs visual | Text formulas vs pillboxes + dropdowns - which is right? |
+
+These are all "accepted" tradeoffs that maybe shouldn't be accepted.
+
+The question isn't "can we make software" - it's "can we make software that doesn't make these tradeoffs?" Or at least makes *different* ones.
+
 This is what the minimal entity substrate enables:
 - Small pieces (just `{ id } & Record<string, unknown>`)
 - Conventions (property names everyone understands)
