@@ -430,6 +430,19 @@ Common threads:
 
 Maybe the pattern: **build infrastructure that becomes indispensable**, not apps that compete for users.
 
+**Question: "It's 2026, why don't tons of things exist yet?"**
+
+Hypothesis: How many people could actually pull a Bellard, Pall, Torvalds, Gerganov?
+
+- Before LLMs: vanishingly small pool of "single genius" builders
+- These people are rare, busy, or working on other things
+- Even *with* LLMs: how many can really build ambitious infrastructure?
+- Gerganov (ggml, llama.cpp) is recent - proves it's still possible
+- But the list of people who *can* is still very short
+- Maybe things don't exist because the people who could build them are occupied elsewhere
+
+This isn't defeatist - it's realistic. The question isn't "why hasn't someone built X" but "who specifically would have built X, and why didn't they?"
+
 **Where is MOO's equivalent today?**
 
 LambdaMOO, ChatMUD - they exist, they're neat. But:
