@@ -1167,6 +1167,37 @@ The Lua monorepo is small because:
 
 Maybe most software is big because *small doesn't pay*.
 
+**Case study: React vs Preact**
+
+| Library | Size | What it does |
+|---------|------|-------------|
+| React | ~40KB+ (core) | Virtual DOM, components, hooks |
+| Preact | ~3KB | ...basically the same thing |
+
+Preact is 10-15x smaller and covers 95% of use cases. So why is React 40KB?
+
+- More edge cases handled
+- More features (concurrent mode, suspense, etc.)
+- More abstraction layers
+- Facebook scale requirements
+- Legacy compatibility
+- "Enterprise" needs
+
+For most apps, Preact is fine. But React is the default because:
+- It's what people know
+- More tutorials/Stack Overflow answers
+- "Nobody got fired for choosing React"
+- Network effects
+
+The 3KB version exists. People choose the 40KB version anyway. Size isn't the deciding factor. Ecosystem, familiarity, and safety are.
+
+**Other examples**:
+- Moment.js (~300KB) vs day.js (~2KB)
+- Lodash (~70KB) vs native JS + tiny helpers
+- Express (~200 deps) vs bare http module
+
+The small alternatives exist. They're often good enough. But "good enough and small" loses to "big and familiar."
+
 What it demonstrates:
 - **Text can be incredibly deep** - 4 years to build, near-inexhaustible combinations
 - **Constraints inspire innovation** - text-only forced creative mechanics
