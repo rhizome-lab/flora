@@ -946,6 +946,18 @@ That's harder to fight. It's not just internalized comparison - it's actual crue
 
 Communities matter here. Some spaces are supportive. Some are brutal. Choosing where to share is part of the battle.
 
+**The early web had more natural isolation.** Your corner was *your* corner. Harder for random people to butt in. You had to actively find a site to see it. No algorithm pushing content to people who'd hate it.
+
+That isolation was a feature:
+- Safe spaces existed because they were hard to find
+- Trolls had to work to discover you
+- "Going viral" wasn't really a thing (blessing and curse)
+- Communities could be weird without constant outside scrutiny
+
+Platforms destroyed that. Everything's in the feed. Anyone can find anything. "Discoverability" also means "discoverable by the worst people."
+
+The small web / federation / Discord servers - maybe they're recreating that isolation? Private by default. You have to be invited or seek it out. The trolls don't find you because the algorithm isn't pointing them at you.
+
 **How do you fight it?**
 
 - **Intentional constraints** - gives permission to be limited
