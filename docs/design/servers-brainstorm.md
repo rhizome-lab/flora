@@ -459,6 +459,36 @@ Roblox is maybe the closest to "programmable shared worlds for everyone" - and i
 
 Is that what lotus/MOO-in-flora should be?
 
+**Can LLMs be the accessibility bridge?**
+
+The dream:
+```
+User → "I want a chest that only I can open"
+       ↓
+LLM → generates verb, explains what it did
+       ↓
+User → tweaks if needed
+       ↓
+Working thing
+```
+
+**But: is this a bandaid?**
+
+Honest concern. Reed exists partly for this - write TS (familiar), compile to Lua (runtime). But:
+- Hiding complexity ≠ removing complexity
+- LLM generates wrong code sometimes → debugging something you didn't write
+- Dependent on external services (API costs, availability)
+- "Describe what you want" works until it doesn't, then you're stuck
+- Doesn't solve fundamental complexity, just masks it
+
+Counter-arguments:
+- Even bandaids are useful (people ship with bandaids all the time)
+- LLM + human review > human alone for many tasks
+- The alternative is... what? Hope people learn to code?
+- Maybe masking complexity IS solving it for 80% of cases
+
+**Unresolved**: Is there a way to make programmable systems *actually* simple, not just LLM-assisted? Or is complexity irreducible and the best we can do is better interfaces to it?
+
 **This is a failure.** Not a technical impossibility. A collective failure of imagination or will.
 
 Is this something rhizome should care about? "Anyone can make interactive things" as a goal?
