@@ -479,6 +479,19 @@ Maybe the core value is: **make things findable and structured so you don't have
 - Also: NIH to understand things deeply (you learn by building)
 - This explains the ecosystem scope: not hubris, but exploration
 
+**Vibe-coding style**:
+- "Holding reins loosely" - limited technical knowledge, so focus on architecture
+- Prefer discussing SRP, generality, decomposition into fundamental concepts
+- Hyper-modularity as a design goal
+- Let the AI handle implementation details, steer on structure
+
+**Revisiting Notes/FS in MOO**:
+- This insight (notes/fs as views into tag-based entity store) was already explored in lotus design phases
+- That's why "notes-in-MOO" and "fs-in-MOO" felt appealing
+- Standalone notes/fs = just another app, low ecosystem value
+- Notes/FS-in-MOO = demonstrates the paradigm, higher value
+- The standalone versions were always lower priority - they don't prove anything new
+
 **If the AI bubble bursts and LLMs disappear, what are we left with?**
 
 | Project | LLM-dependent? | Residual value |
