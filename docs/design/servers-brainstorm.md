@@ -625,8 +625,14 @@ This is the interaction graph becoming explicit. WIMP hides commands in menus. C
 - MOO requires buying into the object model (everything is an entity)
 - Learning curve to write verbs
 - Single-server traditionally (distribution is hard)
-- Text-centric heritage (GUIs are bolted on)
+- *Traditional* MOO is text-centric (GUIs bolted on)
 - "Everything is an object" can be forced/awkward for some domains
+
+**Note**: Lotus wasn't text-centric! It was **structure/object-centric** precisely because:
+- Multi-frontend from the start (web, discord, tui, cli)
+- Different frontends want to expose detail *gradually*
+- Web especially needs structured data to render progressively
+- Text is one projection; structure is the source of truth
 
 Other approaches to explicit interaction graphs:
 - **Datalog/query-based** - affordances as facts, query what's possible
