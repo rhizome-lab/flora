@@ -2003,11 +2003,40 @@ Drag file to folder = move. Obvious. Spatial. No search required.
 
 Compare to: "open command palette, type 'move file', get dialog, pick destination."
 
-**The problem with command palettes:**
+**The problem with command palettes (as typically implemented):**
 
 They're universal solvent. Everything dissolves into "type keywords, find action." But universality is also flattening - you lose context, spatial relationships, object-action binding.
 
 They're a fallback for when you *don't* have better organization. Not a goal.
+
+**Important nuance:** These problems aren't *fundamental* to command palettes as a concept. A palette *could* be:
+- Context-aware (filter by what's relevant to current selection/mode)
+- Priority-ranked (show likely actions first based on context)
+- Object-scoped (palette on this object shows this object's actions)
+
+But it doesn't come free. You have to:
+- Know what context you're in
+- Define relevance rules
+- Build the ranking system
+- Make scoping work
+
+**VSCode does this.** Commands filter by active editor type, extension context, current mode. Git commands appear when you're in a repo. Language-specific commands appear for that language. Plus frecency - recently/frequently used commands bubble up. It's not perfect but it's context-aware.
+
+And honestly? The extra effort is marginal. You already have context (what's selected, what's active, what mode). Filtering by it is straightforward. The real cost is *deciding* relevance rules, not implementing them. Most implementations don't bother not because it's hard, but because they don't think about it.
+
+**Personally curated is theoretically optimal.**
+
+Frecency + favorites + pinned items. See: Discord emoji picker, browser omnibars. The system learns what *you* use. On paper, can't beat it.
+
+But: creates divergence between setups. "Just open the X panel" - "what X panel?" Collaboration friction when everyone's interface is different.
+
+Command palette bridges this gap - it's a common vocabulary even when personalized. You can always type the canonical name even if it's not in your frecency top 10.
+
+**What about initial discoverability?**
+
+Personalization doesn't help day-one users. Frecency is empty. Favorites are unset.
+
+But honestly? Initial discoverability isn't rocket science. Just *dogfood the software*. Use it yourself. Notice what's hard to find. Surface it. The problem isn't that discoverability is hard to design - it's that developers don't actually use their own tools as real users do.
 
 **What's actually interesting right now?**
 
@@ -2975,11 +3004,13 @@ Why this matters:
 
 This is the interaction graph becoming explicit. WIMP hides commands in menus. Command palettes surface them.
 
-**What's missing from command palettes?**
+**What's missing from command palettes (typically)?**
 - Still app-specific (each app has its own palette)
 - No cross-app composition
 - No persistent state (can't "save this sequence of commands")
 - No context-awareness (same commands everywhere, not object-dependent)
+
+Note: context-awareness isn't *fundamental* to lack - a palette could be context-filtered and priority-ranked. VSCode does this. The extra implementation effort is marginal; the real cost is deciding what "relevant" means for your domain.
 
 **MOO verbs as "command palettes taken further"?**
 
@@ -2988,7 +3019,7 @@ This is the interaction graph becoming explicit. WIMP hides commands in menus. C
 | Queryable | Yes (fuzzy search) | Yes (`examine object`) |
 | Bindable | Yes (keybindings) | Possible |
 | Scriptable | Limited | Yes (verbs are code) |
-| Context-aware | No (global list) | Yes (verbs on objects) |
+| Context-aware | Rarely (usually global) | Yes (verbs on objects) |
 | Cross-app | No | Yes (same MOO everywhere) |
 | Persistent | Yes (verbs saved in DB) |
 
