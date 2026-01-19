@@ -1917,6 +1917,21 @@ Same opportunity exists for:
 
 Someone - or multiple someones - can get into the mindset, study deeply, and document. The tacit becomes explicit through analysis, not just through the expert articulating it.
 
+**Meta: LLMs might actually help here.**
+
+LLMs have absorbed a lot of domain knowledge from training - design principles, tool patterns, what works, what doesn't. The knowledge is in there, but compressed/latent.
+
+What's needed:
+- Token space to reason (context window)
+- Guidance to reason through it (prompts, conversation)
+- Someone to push back, correct, refine ("not quite, what about X?")
+
+This conversation is literally that process. Human provides direction and correction. LLM draws on absorbed knowledge. Together: distill insights, document them.
+
+Not "LLM replaces expert" - but "LLM as reasoning partner with broad (if shallow) knowledge, human as guide with deep (if narrow) knowledge." The combination surfaces things neither would alone.
+
+The document we're building right now is the output. Whether it's *good* is a different question - but the process is: guided reasoning over latent knowledge → explicit documentation.
+
 **Maybe the honest answer:**
 
 1. Accept that most things will be mediocre (including your own work)
