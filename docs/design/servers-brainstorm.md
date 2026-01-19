@@ -1217,6 +1217,25 @@ This is good decomposition - the substrate (reactivity) is independent of the la
 
 The pattern again: **good primitives, loosely coupled, compose upward.**
 
+**Aside: Lua vs JavaScript accumulation**
+
+Feature-wise, they're pretty close. But:
+- Lua's stdlib is intentionally barren
+- JS's stdlib exists but... isn't even that good? Weird historical baggage, inconsistencies, `typeof null === "object"`
+
+The difference is accumulation:
+- Lua: stays small, 5.1 → 5.4 is incremental, LuaJIT still on 5.1 and that's fine
+- JS: keeps adding - classes, async/await, optional chaining, nullish coalescing, private fields, decorators, temporal, records & tuples...
+
+Each JS addition makes:
+- The spec bigger
+- Implementations harder
+- The "minimum viable JS engine" more work
+
+Lua's barren stdlib is a *feature* - you add what you need via FFI/C, not via spec committee. JS's stdlib is a historical accident that keeps growing.
+
+QuickJS is impressive (~80k lines for near-full ES2023) but it's fighting uphill against a spec designed by committee for browsers. LuaJIT is small because Lua is small.
+
 **Other examples**:
 - Moment.js (~300KB) vs day.js (~2KB)
 - Lodash (~70KB) vs native JS + tiny helpers
