@@ -1,0 +1,37 @@
+# About Flora
+
+Flora is a Rhizome ecosystem monorepo containing Lua projects, seeds, and documentation.
+
+## Naming
+
+The Rhizome ecosystem uses botanical naming. Flora (this repo) contains flowering projects:
+
+### Iris
+
+Agent-authored insights from coding sessions.
+
+Named for the flower, but also the part of the eye that controls how much light enters - fitting for a tool that helps "see" what happened in sessions and controls what insights come through.
+
+### Wisteria
+
+Autonomous task execution agent.
+
+Named for the climbing vine that grows persistently and finds its way around obstacles - fitting for an agent that works through complex tasks step by step, adapting as it goes.
+
+### Seeds
+
+Project templates for nursery scaffolding.
+
+Seeds grow into new projects, naturally.
+
+## Ecosystem
+
+Flora is part of the Rhizome ecosystem:
+
+- **rhizome** - The root system connecting everything
+- **spore** - Lua runtime (spores spread and germinate)
+- **moss** - Code intelligence (moss grows on and understands its substrate)
+- **nursery** - Project scaffolding (where seeds are planted)
+- **flora** - Flowering applications (iris, wisteria)
+
+All botanical. All connected underground.

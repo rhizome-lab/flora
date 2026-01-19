@@ -319,6 +319,44 @@ Could feed into:
 - Recurring themes - what topics keep coming up?
 - Productivity patterns - time of day/week analysis
 
+### Publishing Workflow
+- Draft → Review → Publish pipeline
+- Human-in-the-loop approval
+- Auto-PR to docs repo
+- Scheduled publishing (drip content over time)
+
+### Personalization
+- Per-project voice/style
+- Learning reader preferences over time
+- Adapting technical depth to audience
+
+### Extractors as First-Class
+- Each extractor as a separate "lens" on sessions
+- `iris --extract corrections` vs `iris --extract qa-pairs`
+- Pluggable extractor system
+
+### Connection to Rhizome Tools
+- wisteria sessions → iris insights
+- moss code intelligence → richer context
+- nursery templates → iris config templates
+
+### Insight Lifecycle
+- Generate → Store → Index → Query → Update
+- Should insights be immutable or evolve?
+- Versioning? "I said X before, but now I think Y"
+
+### Naming/Slugs for Flat Storage
+- Content hash (dedupes but opaque)
+- LLM-generated slug ("auth-session-management")
+- Timestamp + random (simple but meaningless)
+- Hybrid: timestamp + LLM slug?
+
+### Insight Generation Triggers
+- Manual (`iris --recent 5`)
+- Post-session hook (auto-run after session ends)
+- Scheduled (daily/weekly digest via cron/CI)
+- On-demand query that notices gaps
+
 ## Open Questions
 
 - Where does the agent draft live before publishing? PR-based review? Staging area?
