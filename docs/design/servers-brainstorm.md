@@ -1742,6 +1742,72 @@ Command palettes solve this: Ctrl+K surfaces the interaction graph, makes it sea
 
 **Graphs aren't innately clunky. Graph tools just don't try on affordances/discoverability.**
 
+---
+
+## What Even Are Interactions?
+
+Bigger question: what *are* interactions? What makes them *good*? How do we design them? How do we diagnose when they're bad?
+
+**What is an interaction?**
+
+Simple model: user does thing → system responds.
+
+But really it's a loop:
+```
+Perceive → Interpret → Decide → Act → Perceive result → ...
+```
+
+System presents state + affordances. User perceives, decides, acts. System responds with new state + affordances. Repeat.
+
+The "interaction graph" is: what actions are available, when, and what do they lead to?
+
+**What makes an interaction good?**
+
+| Property | What it means |
+|----------|--------------|
+| **Discoverable** | You can find what's possible |
+| **Predictable** | You can anticipate results before acting |
+| **Reversible** | You can undo mistakes |
+| **Responsive** | Feedback is immediate |
+| **Efficient** | Low effort for common tasks |
+| **Learnable** | You get better over time |
+| **Honest** | System does what it says, no dark patterns |
+
+Bad interactions fail on these. Hidden features (not discoverable). Surprising results (not predictable). Can't undo (not reversible). Lag (not responsive). Tedious (not efficient). Confusing (not learnable). Manipulative (not honest).
+
+**How do we design good interactions?**
+
+- Start with tasks/goals, not interface elements ("what are people trying to do?")
+- Progressive disclosure (simple surface, depth available)
+- Consistency (similar things work similarly)
+- Make common case easy, edge cases possible
+- Prototype and test with real people
+- Steal from things that work
+
+**How do we diagnose bad interactions?**
+
+Watch people use it. Where do they:
+- Get stuck?
+- Make errors?
+- Ask "how do I...?"
+- Give up?
+- Do something unexpected (they had a different mental model)?
+
+The gap between what users expect and what happens = the diagnosis.
+
+**Relating this back to graphs:**
+
+Graph tools fail on discoverability ("what can I do?") and predictability ("what happens if I click this?"). The data is fine. The interaction loop is bad.
+
+Good graph interaction would be:
+- Clear affordances (this is expandable, this is clickable, this leads somewhere)
+- Predictable navigation (click = go there, right-click = options, drag = rearrange)
+- Discoverable actions (help, command palette, contextual hints)
+- Reversible (undo, back, collapse)
+- Responsive (instant feedback on hover, click, expand)
+
+This is just... basic interaction design. Applied to graphs. Nobody does it?
+
 **What's actually interesting right now?**
 
 Hard to say. Depends on mood, energy, what's frustrating at the moment. The honest answer: probably whatever's in front of you when you sit down to code.
