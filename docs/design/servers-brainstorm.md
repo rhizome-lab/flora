@@ -515,6 +515,19 @@ Counter-arguments:
 - Yes, abstraction is limited. But everything is a tradeoff.
 - The question: what are the *right* abstractions? We clearly haven't found them yet.
 
+**Maybe there is no single "right" abstraction:**
+- Different problems want different abstractions
+- The meta-skill is knowing which abstraction fits which problem
+- So: tools that let you work with *multiple* abstractions, not tools that force one paradigm
+
+**This is why hyper-modularity matters. See: Bevy's mindset.**
+- Everything is a plugin
+- ECS as composable substrate
+- "Bring your own" for most features
+- Pick the pieces you need, leave the rest
+- Rhizome's decomposition (pith, spore, reed, etc.) aims for this too
+- MOO's "substrate only, user-space everything else" is the same idea
+
 **Unresolved**: Is there a way to make programmable systems *actually* simple, not just LLM-assisted? Or is complexity irreducible and the best we can do is better interfaces to it?
 
 **Other experiments in "making programming easier":**
