@@ -480,10 +480,14 @@ Maybe the core value is: **make things findable and structured so you don't have
 - This explains the ecosystem scope: not hubris, but exploration
 
 **Vibe-coding style**:
-- "Holding reins loosely" - limited technical knowledge, so focus on architecture
+- "Holding reins loosely" - but *not* zero technical knowledge (contrast with "pure vibe coders")
+- Background: years of golfing, language design/impl (not compilers), frontend, Rust for AoC
+- Knows what I'm looking at, understands perf characteristics at a basic level
+- Don't read every line of 90k LOC - a lot is busywork
+- Have *some* domain knowledge; LLMs have *all* the domain knowledge at a basic level
+- The combination: I can evaluate/steer, LLM handles volume
 - Prefer discussing SRP, generality, decomposition into fundamental concepts
 - Hyper-modularity as a design goal
-- Let the AI handle implementation details, steer on structure
 
 **Revisiting Notes/FS in MOO**:
 - This insight (notes/fs as views into tag-based entity store) was already explored in lotus design phases
