@@ -23,6 +23,14 @@ Everything else in rhizome is in service of this question:
 
 It's absurdly ambitious. But the exploration itself is valuable, even if the destination is unreachable.
 
+**Why this conversation exists:**
+
+Infinite things we *can* do. Finite time per week. Also infinite ways to spend too much time doing things wrong.
+
+So it doesn't hurt to sit down and just... plan. Refine. Question assumptions. Backpropagate insights. Figure out what we actually care about before building the wrong thing.
+
+This document is that: thinking before doing. Not because doing is bad, but because doing *the wrong thing* is expensive.
+
 ---
 
 ## Backpropagating Insights
