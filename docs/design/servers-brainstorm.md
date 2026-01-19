@@ -771,6 +771,51 @@ Instead: professional developers vs everyone else. The gap widened, not narrowed
 - No financial incentive (users as creators don't pay subscription fees?)
 - Complexity creep (modern apps are too complex to build simply?)
 
+**The early internet was neat. How do we bring it back?**
+
+It's 2026. We have much more mature ecosystems. What can we do?
+
+What the early web had:
+- Personal pages (GeoCities, Angelfire) - *your* space
+- View source → learn → make your own
+- Low barrier to creation (HTML in notepad)
+- Weird, personal, messy creativity
+- Links to other weird personal pages (webrings!)
+- No algorithm deciding what you see
+
+What killed it:
+- Platforms (post *on* Facebook, not *on your site*)
+- Professional expectations ("your site looks amateur")
+- Complexity creep (modern web dev is intimidating)
+- Mobile (apps, not sites)
+- Attention economy (feeds, not pages)
+
+What 2026 has that 1996 didn't:
+- LLMs can bridge the knowledge gap ("help me make a website about X")
+- Static hosting is free (GitHub Pages, Netlify, Cloudflare Pages)
+- Static site generators (Hugo, Eleventy, Astro)
+- Federated protocols exist (ActivityPub, AT Protocol)
+- Indieweb movement (webmentions, microformats)
+- Personal wikis/gardens (Obsidian Publish, TiddlyWiki)
+
+**The gap**: The tools exist, but the *culture* shifted. People don't think "I'll make a website." They think "I'll post on [platform]."
+
+Can the culture shift back? Maybe:
+- Platforms getting worse (Twitter/X, Reddit API, etc.)
+- Growing distrust of algorithms
+- Nostalgia (Neocities exists, people use it)
+- AI making creation easier (but also making content worthless?)
+
+**What would Rhizome's angle be?**
+- Not "make a website" but "make a *world*"
+- Collaborative, not just personal
+- Structured, not just text/HTML
+- Programmable, not just static
+- Discord as entry point (barrier to entry)
+- Federatable (Hypha - authoritative handoff)
+
+Maybe the early web's spirit isn't about *websites* specifically. It's about: **personal creative spaces that you own and control, connected to others.** That could be pages, or worlds, or objects, or whatever.
+
 **The adoption cliff**:
 Maybe the reason things don't take off is brutal economics:
 - You need to be **nigh-impossibly better** to overcome switching costs
