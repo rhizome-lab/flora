@@ -167,6 +167,20 @@ These are all "accepted" tradeoffs that maybe shouldn't be accepted.
 
 The question isn't "can we make software" - it's "can we make software that doesn't make these tradeoffs?" Or at least makes *different* ones.
 
+(Note: Notion "kinda worked" at unifying notes/todos/databases because it treats them as the same thing - blocks with properties. Sound familiar? `{ id } & Record<string, unknown>`)
+
+**Excel formulas: a case study in tradeoffs**
+- They "work" - for power users
+- But: documentation is all over the place
+- But: so many functions, how do you find the right one?
+- But: is it discoverable? (No)
+- But: who has the time/ability to become an Excel power user?
+- But: **has anyone tried hunting for bracket mismatches in Excel?**
+
+The formula bar is a single-line text box. No syntax highlighting. No bracket matching. Error messages are cryptic. And this is the world's most-used programming environment.
+
+The tradeoff was "text is universal" but the cost is "text is hostile to non-programmers (and even programmers)."
+
 This is what the minimal entity substrate enables:
 - Small pieces (just `{ id } & Record<string, unknown>`)
 - Conventions (property names everyone understands)
