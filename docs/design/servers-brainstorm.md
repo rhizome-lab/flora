@@ -1584,6 +1584,63 @@ MOO naturally has limited blast radius - you can only affect the room you're in,
 
 The 20% that remains: determined bad actors, novel attacks, edge cases. That still needs humans. But 80% handled by structure is better than 0%.
 
+---
+
+## So What Do We Actually Build?
+
+After all this philosophy - what's the concrete thing?
+
+**The thesis so far:**
+- Build substrate, not platform (but high enough up the stack to be usable)
+- MOO = "social with artifacts" (the missing thing)
+- Self-moderating through structure (capabilities, limited blast radius)
+- Reference implementations matter (not THE destination, but A demo)
+- Discord as entry point (meet people where they are)
+
+**What already exists:**
+- spore - Lua runtime with plugins
+- wisteria - task execution
+- iris - session analysis
+- moss - code intelligence
+- Flora seeds, docs, scaffolding
+
+**What's missing for MOO:**
+- Entity system (objects, props, verbs)
+- Persistence (libsql)
+- Capability system (permissions)
+- Discord frontend (or other entry points)
+- Example world (reference implementation)
+
+**Minimal viable MOO:**
+
+```
+Discord ←→ spore ←→ MOO core ←→ libsql
+              ↓
+         Lua verbs
+```
+
+1. **Entities with props** - objects that have key-value data
+2. **Verbs** - Lua functions attached to objects
+3. **Rooms/containment** - objects can be inside other objects
+4. **Basic permissions** - who can call what verbs
+5. **Discord bridge** - type in Discord, things happen in MOO
+
+**First milestone:** "I can create a room, put a thing in it, give it a description, and look at it from Discord."
+
+That's not a platform. That's not even a community. It's a tool you can poke. But it's usable, demonstrable, and buildable-upon.
+
+**From there:**
+- Add more verbs (move, take, drop, say)
+- Add example world (a few interesting rooms)
+- Add AI context injection (the original itch)
+- Add federation later (Hypha) if it makes sense
+
+**What NOT to build (yet):**
+- Web UI (Discord is enough for now)
+- Perfect moderation (structure first, polish later)
+- Scale (three people and their dog)
+- Everything (scope creep is death)
+
 **How do you fight it?**
 
 - **Intentional constraints** - gives permission to be limited
