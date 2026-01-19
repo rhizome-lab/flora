@@ -839,6 +839,7 @@ Trying to articulate it honestly:
 4. **Scratching itches** - MOO exists because of wanting inventory in Tavern cards. Rescribe exists because pandoc isn't perfect. Real needs, even if niche.
    - Parallel MOO motivation: **collaborative worldbuilding**. ChatMUD gave a taste of this. Exploring things other people built. Creating in the same universe. Being able to interact with *and* create things in a shared persistent world. SillyTavern doesn't have this. Most AI RP sites have multiplayer maybe, but that's not the same thing. Multiplayer is playing together. Collaborative worldbuilding is *building* together, and then the builds persist for others to discover.
    - Maybe this is part of why Minecraft and Terraria are so wildly successful? Not just "play together" but "build together, and it stays." The creations persist. Servers become places with history. You can stumble on something someone else made months ago. That's different from match-based multiplayer where nothing carries over.
+   - **Barrier to entry matters hugely.** Discord as a first-class frontend for MOO wasn't just "a nice option" - it was THE motivating factor. People are *already there*. No client download. No new interface to learn. Just... type in a channel you're already in. That's why text-based interfaces still have value despite being "primitive" - they meet people where they are.
 
 5. **"Should exist"** - Some things just *should* exist and don't. So make them exist.
 
