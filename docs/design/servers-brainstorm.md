@@ -1901,7 +1901,21 @@ Some domains have tried to codify:
 - Software: Design patterns (GoF), principles
 - UX: Nielsen's heuristics, various principles
 
-But codified knowledge is often surface-level. The deep stuff stays tacit. Pattern languages help but don't replace apprenticeship.
+**But here's the thing: the good stuff exists and can be studied.**
+
+You don't need the expert to articulate it. The artifacts exist - the good designs, the good tools, the good interactions. Someone with the right mindset can:
+1. Study the artifacts deeply
+2. Figure out what makes them work
+3. Write it down for others
+
+Christopher Alexander didn't build all those good buildings - he *studied* them and articulated what made them good. The original architects might not have been able to explain it. Doesn't matter. The buildings existed. He could study them.
+
+Same opportunity exists for:
+- Good tools (Aseprite, Blender, VSCode, etc.)
+- Good games (Nintendo polish, game feel)
+- Good interfaces (wherever they exist)
+
+Someone - or multiple someones - can get into the mindset, study deeply, and document. The tacit becomes explicit through analysis, not just through the expert articulating it.
 
 **Maybe the honest answer:**
 
