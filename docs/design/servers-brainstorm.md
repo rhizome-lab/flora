@@ -150,7 +150,7 @@ This is simpler than MOO. MOO has opinions about rooms, containment, verbs. This
 
 **Note:** Lotus originally had a MOO-like entity interface. Then it got gradually picked apart. This isn't theoretical - it's learned from iteration. The "why are these separate concepts" question came from actually building MOO-like structures and realizing the distinctions were artificial.
 
-(Confession: the MOO-like structure was what Gemini suggested. It was never the original goal. Had to iterate back to simplicity. Even AI can over-engineer.)
+(Clarification: MOO as prior art/inspiration was the original idea. But the specific MOO-like *property structure* was what Gemini suggested. Had to iterate back to simplicity. Even AI can over-engineer when interpreting inspiration.)
 
 **Key insight: extra required properties are limitations, not features.**
 
