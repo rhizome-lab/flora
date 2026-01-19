@@ -806,6 +806,18 @@ What it gets right:
 
 This is the MOO/MUD spirit alive in 2026. Small, weird, intentional, atmospheric.
 
+**Also: [Counterfeit Monkey](https://ifdb.org/viewgame?id=aearuuxv83plclpl) by Emily Short**
+
+Interactive fiction, 2012, consistently ranked #1 on IFDB. Set in Anglophone Atlantis where linguistic manipulation reshapes reality. Core mechanic: a letter-remover that transforms objects by removing letters from their names. Apple → ale. It's wordplay as world-mechanic.
+
+What it demonstrates:
+- **Text can be incredibly deep** - 4 years to build, near-inexhaustible combinations
+- **Constraints inspire innovation** - text-only forced creative mechanics
+- **The IF community is alive** - still producing, still ranking, still caring
+- **Systemic mechanics create emergence** - the letter-remover isn't scripted puzzles, it's a *system*
+
+Emily Short's work in general (Galatea, Savoir-Faire, the Versu engine) shows what's possible when you take text-based interaction seriously as a medium, not a limitation.
+
 **What would Rhizome's angle be?**
 - Not "make a website" but "make a *world*"
 - Collaborative, not just personal (the SCP/wiki energy but interactive)
