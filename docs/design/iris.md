@@ -357,6 +357,25 @@ Could feed into:
 - Scheduled (daily/weekly digest via cron/CI)
 - On-demand query that notices gaps
 
+### Session Quality Signals
+- Length (turns, tokens)
+- Tool success rate
+- User interruptions/corrections frequency
+- Task completion (did it actually finish?)
+- Time between turns (user thinking vs instant responses)
+
+### Comparative Analysis
+- Same agent on different projects
+- Same project over time (evolution)
+- Different agents on same task (benchmark-ish)
+- Before/after comparisons (did the fix work?)
+
+### Meta-Iris
+- Can iris analyze its own sessions?
+- Self-improvement loop
+- "What do I struggle with?" introspection
+- Feeding insights back into agent prompts
+
 ## Open Questions
 
 - Where does the agent draft live before publishing? PR-based review? Staging area?
