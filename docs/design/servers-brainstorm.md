@@ -2,6 +2,29 @@
 
 Backend services for the flora ecosystem. UI handled by canopy (~/git/canopy); these are headless servers.
 
+## The Absurd Moonshot
+
+The real, fundamental goal: **subsuming virtually all interaction with a computer.**
+
+- *Of course* it'll never happen
+- *Of course* it won't take off
+- *Of course* there's tradeoffs
+- **But what if? What would it look like?**
+
+This is the "what if?" question carried to its logical extreme. Not "this will win" but "if it did, what would it be?"
+
+Everything else in rhizome is in service of this question:
+- Structure for agents → computers understand themselves
+- Tags not hierarchies → everything findable
+- Interaction graphs → affordances are explicit, not hidden
+- Hyper-modularity → compose what you need
+- MOO substrate → programmable everything
+- Multi-frontend → same model, any interface
+
+It's absurdly ambitious. But the exploration itself is valuable, even if the destination is unreachable.
+
+---
+
 ## Overview
 
 Three distinct projects that could relate:
