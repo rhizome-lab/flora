@@ -812,6 +812,10 @@ Interactive fiction, **2012** - not ancient history, not brand new. Consistently
 
 Importantly: made *during* the "platforms ate everything" era. The IF community kept producing excellent work while the mainstream web was being consumed by Facebook and Twitter. Proof that the spirit never fully died - it just went underground.
 
+**Honest admission**: Part of all this is missing the spirit of an era I never really got to experience. Nostalgia for something I only know secondhand. I'm sure plenty of things sucked (slow connections, bad UX, scams, no search, broken links everywhere). But before megacorps *became* the internet... things were different. More chaotic, more personal, more *yours*.
+
+Maybe it's romanticized. Probably. But the romanticism points at something real that got lost.
+
 What it demonstrates:
 - **Text can be incredibly deep** - 4 years to build, near-inexhaustible combinations
 - **Constraints inspire innovation** - text-only forced creative mechanics
