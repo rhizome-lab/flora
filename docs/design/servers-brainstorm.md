@@ -1325,11 +1325,28 @@ The algorithm still recommends. But you're navigating, not being conveyed. The c
 | Pixiv branching | Both | Choice points at each step |
 | Pure exploration (MOO/wiki) | User | Full (you choose what to look at) |
 
+**But: the feed wins on effort.**
+
+| Mode | Effort | Reward reliability |
+|------|--------|-------------------|
+| Feed scrolling | Zero (just scroll) | Guaranteed (algorithm optimizes for it) |
+| Graph navigation | Active (click, choose, decide) | Gamble (might find gold, might hit dead ends) |
+
+The feed isn't just the default - it's the **path of least resistance**. Graph navigation requires energy, attention, choice. And it's a gamble - you might discover an amazing artist circle, or you might click through five boring profiles.
+
+The feed is passive + guaranteed dopamine. Navigation is active + uncertain reward.
+
+**This is why the feed wins even when alternatives exist on the same platform.** Not UI dark patterns (though those help). Fundamental effort economics.
+
 **Design principle: break linearity, introduce branching.**
 
 If linear feeds enable algorithmic control, then non-linear interfaces might resist it. Give users choice points. Show options, not a stream. Let them navigate rather than scroll.
 
 This doesn't eliminate recommendation algorithms - it changes the power dynamic. Algorithm suggests, user chooses. Collaboration rather than control.
+
+**But the uncomfortable truth:** more agentic interfaces are more effort. And tired people choose low effort. The feed isn't *imposed* - it's *chosen*, because choosing is hard and scrolling is easy.
+
+Can you make navigation as low-effort as scrolling? Or is the effort inherent to agency?
 
 **How do you fight it?**
 
