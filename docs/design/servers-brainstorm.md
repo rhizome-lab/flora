@@ -565,6 +565,20 @@ But then...
 
 The web won partly because "installing things" is broken. Fix installation and the equation changes.
 
+**The "app for everything" problem**:
+- So many windows, so many apps
+- Want to upscale an image? Install Upscayl.
+- Want to convert a video? Install Handbrake.
+- Want to edit a PDF? Install... something?
+- Each task = find app, install app, learn app, context switch
+
+Compare with Unix pipes: `cat file | transform | output`
+- Operations compose
+- No separate "app" per operation
+- But: CLI learning curve, not discoverable
+
+The dream: operations as composable verbs, not siloed apps. (This is partly what cambium is about - pipelines, not apps.)
+
 **But**: web apps still use WIMP-esque paradigms. The web solved *deployment*, not *interaction design*.
 - Same buttons, forms, menus - just in a browser
 - Still implicit interaction graph
