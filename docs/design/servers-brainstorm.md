@@ -1808,6 +1808,35 @@ Good graph interaction would be:
 
 This is just... basic interaction design. Applied to graphs. Nobody does it?
 
+**Good design is invisible.**
+
+When design works, you don't notice it. It just feels natural. The door handle that you instinctively pull correctly. The app that does what you expect without thinking.
+
+Problem: **invisible = hard to copy**.
+
+People copy what they can see. They miss what they can't. Bad copies strip out the "invisible" parts that made the original work:
+
+| Good design | What people copy | What they miss |
+|-------------|-----------------|----------------|
+| Apple | Visual style, materials | Obsessive detail, animation timing, UX research |
+| Nintendo | Characters, genres | Polish, game feel, "juice" |
+| Notion | Blocks, slash commands | Information architecture, progressive disclosure |
+| Original WIMP | Windows, menus, icons | The underlying interaction model, consistency principles |
+
+The visible is surface. The invisible is substance. Copies get the surface, lose the substance.
+
+**Implication for design:**
+
+If good design is invisible:
+- You can't just "look at good examples" - you'll miss what matters
+- You have to *use* things deeply, notice what works, ask *why*
+- Diagnosis requires attention: what did I NOT notice? (because it worked)
+- Documentation matters: write down the invisible decisions
+
+**Implication for copying:**
+
+If you're copying something good, you probably don't know what makes it good. The parts you notice aren't the parts that matter. Be suspicious of your own understanding.
+
 **What's actually interesting right now?**
 
 Hard to say. Depends on mood, energy, what's frustrating at the moment. The honest answer: probably whatever's in front of you when you sit down to code.
