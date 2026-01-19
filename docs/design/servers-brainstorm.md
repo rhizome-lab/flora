@@ -670,6 +670,14 @@ The dismissive framing mistakes *mechanism* for *capability*. Yes, it's "just" p
 - That's not a trivial result.
 - Limitations don't erase outputs. Outputs don't erase limitations.
 - The honest position: "limited but useful" not "magic" or "useless"
+- (Also: "limited but useful" describes lots of people too)
+
+**Underrated LLM strengths:**
+- Will Just Write Tests (people say "good tests are hard" then don't write them)
+- Will do tedious refactoring without complaining
+- Ecosystem knowledge - knows about libraries, APIs, conventions you'd have to learn
+- Doesn't get bored, doesn't cut corners out of laziness
+- Available at 3am when you have an idea
 
 **But:** the same is true for "naturally programmed" codebases. Arguably even *more* true:
 - Tech debt accumulates over time
