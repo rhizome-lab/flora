@@ -1041,6 +1041,42 @@ Roblox proves it's *possible* to get mass creation. It also proves you can do it
 
 Maybe the answer is: not at Roblox scale, because that scale requires VC money, which requires extraction. The good version might only work smaller.
 
+**But we're not trying to be a platform.**
+
+Has anyone tried to make a non-platform creative substrate? Actually... yes, lots of niche things:
+
+| Tool | Domain | What it is |
+|------|--------|-----------|
+| [Strudel](https://strudel.cc/) | Music | Live coding music in browser |
+| [TidalCycles](https://tidalcycles.org/) | Music | Algorithmic pattern-based music |
+| [Processing](https://processing.org/) | Visual art | Creative coding, visual sketches |
+| [p5.js](https://p5js.org/) | Visual art | Processing for the web |
+| [PuzzleScript](https://www.puzzlescript.net/) | Games | Puzzle games in ~100 lines |
+| [Twine](https://twinery.org/) | IF/narrative | Interactive fiction, no code needed |
+| [Ren'Py](https://www.renpy.org/) | Visual novels | Python-based VN engine |
+| [RPG Maker](https://www.rpgmakerweb.com/) | Games | Make JRPGs |
+| [PICO-8](https://www.lexaloffle.com/pico-8.php) | Games | Fantasy console, intentional constraints |
+| [thi.ng/umbrella](https://github.com/thi-ng/umbrella) | Computational design | Massive toolkit for generative art, data structures |
+| [Sonic Pi](https://sonic-pi.net/) | Music | Live coding, education-focused |
+
+These exist! They're not platforms - they're substrates. You make things with them, you own what you make.
+
+Common threads:
+- **Domain-specific** - each is good at one thing
+- **Owned output** - what you make is yours
+- **Community, not platform** - forums, Discord, sharing, no algorithmic feed
+- **Often free/open source** - not extractive
+- **Low floor, high ceiling** - varying degrees, but the pattern is there
+
+What they're NOT:
+- Interconnected (PuzzleScript can't talk to Twine)
+- General-purpose (each is its own silo)
+- Discoverable to normies (niche communities)
+
+**The Rhizome question**: what if the substrate was general? What if the domains could connect? What if the silo walls came down?
+
+Not "one tool to rule them all" - that's impossible. But maybe: shared primitives, interoperable formats, composition across domains?
+
 What it demonstrates:
 - **Text can be incredibly deep** - 4 years to build, near-inexhaustible combinations
 - **Constraints inspire innovation** - text-only forced creative mechanics
