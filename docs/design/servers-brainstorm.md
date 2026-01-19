@@ -148,6 +148,14 @@ But: **start minimal, add structure only when needed.**
 
 This is simpler than MOO. MOO has opinions about rooms, containment, verbs. This has no opinions. It's just... things with properties.
 
+**Note:** Lotus originally had a MOO-like entity interface. Then it got gradually picked apart. This isn't theoretical - it's learned from iteration. The "why are these separate concepts" question came from actually building MOO-like structures and realizing the distinctions were artificial.
+
+**Key insight: extra required properties are limitations, not features.**
+
+Every required field constrains what entities can be. `{ id, parent, children, verbs }` means everything MUST have parent/children/verbs. But what if something doesn't have a parent? What if it's not programmable?
+
+`{ id } & Record<string, unknown>` has no constraints. Anything can be anything. Add structure through conventions, not requirements.
+
 ---
 
 ## Overview
