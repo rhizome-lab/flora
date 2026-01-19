@@ -926,6 +926,33 @@ This removes the "blank canvas terror" in a different way. Not "here's a fragmen
 
 Both approaches work. Fragments lower the starting barrier. Constraints lower the quality expectation. Either way: you get to make something without the pressure of it being Good.
 
+**The bar is SO high now. Maybe that's the real problem.**
+
+The early web: personal pages were janky. That was fine. Expected, even.
+
+Now: you see polished content everywhere. Professional YouTubers. Viral TikToks. AAA games. Your brain calibrates "normal" to the top 0.1%.
+
+Then you try to make something and it's... not that. Of course it's not. But the comparison is internalized. "This isn't good enough to share."
+
+The bar isn't real. It's a collective hallucination created by:
+- Algorithmic feeds showing only hits
+- Survivorship bias (you don't see the 99% that flopped)
+- Professionalization of everything
+- "Content creator" as job title
+
+**How do you fight it?**
+
+- **Intentional constraints** - gives permission to be limited
+- **Communities that celebrate "good enough"** - Neocities, small web, zines
+- **Rejecting polish as a goal** - "done is better than perfect"
+- **Small audiences being okay** - three people and their dog, remember?
+- **Process over product** - sharing WIPs, learning in public
+- **Nostalgia/retro aesthetics** - pixel art, chiptunes, lo-fi as deliberate choice
+
+But honestly? No idea if there's a systemic fix. Might just be: find your corner, ignore the algorithm, make things for yourself and the few who care.
+
+The platform era raised the bar by showing everyone the highlights. Maybe the post-platform era (if it comes) lowers it again by hiding them.
+
 **Personal example: SillyTavern character cards**
 
 Writing character cards is a form of creative output that works this way:
