@@ -56,6 +56,8 @@ Things worth knowing about, learning from, or just appreciating.
 |------|-----------|----------------|
 | [Shadertoy](https://www.shadertoy.com/) | Shader art community | GPU programming accessible, instant feedback, thriving scene |
 | [Dwitter](https://www.dwitter.net/) | JS art in 140 characters | Extreme constraint breeds creativity. Community still active |
+| [Bytebeat](http://canonical.org/~kragen/bytebeat/) | Music from math expressions | One-line formulas → sound. Minimal barrier |
+| [TidalCycles](https://tidalcycles.org/) / [Strudel](https://strudel.cc/) | Live coding music | Pattern-based, immediate feedback, same constraint energy |
 | [PICO-8](https://www.lexaloffle.com/pico-8.php) | Fantasy console | Intentional limits (128x128, 16 colors) → focused creativity |
 | [TIC-80](https://tic80.com/) | Open source fantasy console | Same energy, different tradeoffs |
 | Demoscene | Real-time graphics art | Decades of constraint-driven innovation |
