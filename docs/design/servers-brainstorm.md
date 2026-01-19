@@ -676,8 +676,13 @@ The dismissive framing mistakes *mechanism* for *capability*. Yes, it's "just" p
 - Will Just Write Tests (people say "good tests are hard" then don't write them)
 - Will do tedious refactoring without complaining
 - Ecosystem knowledge - knows about libraries, APIs, conventions you'd have to learn
-- Doesn't get bored, doesn't cut corners out of laziness
 - Available at 3am when you have an idea
+
+**LLMs DO cut corners though:**
+- "I'll batch the rest..." (no you won't, do all 98 grammars)
+- Placeholder code, TODO comments, "similar for the rest"
+- Requires pushing to actually complete tedious work
+- Different laziness, but still laziness
 
 **But:** the same is true for "naturally programmed" codebases. Arguably even *more* true:
 - Tech debt accumulates over time
