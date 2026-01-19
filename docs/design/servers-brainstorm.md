@@ -42,7 +42,7 @@ Flora already contains:
 - **wisteria** - Autonomous tasks (uses spore + moss)
 
 Flora could contain:
-- **MOO** - Programmable objects (uses pith-sql, pith-fs, spore, reed)
+- **MOO** - Programmable objects (uses pith-sql, pith-fs, spore, reed) - *future rebuild of lotus*
 - **Notes** - Knowledge base (uses pith-sql, maybe spore)
 - **FS service** - File operations (uses pith-fs, pith-sql)
 
