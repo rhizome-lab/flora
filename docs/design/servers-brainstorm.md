@@ -484,8 +484,14 @@ Honest concern. Reed exists partly for this - write TS (familiar), compile to Lu
 Counter-arguments:
 - Even bandaids are useful (people ship with bandaids all the time)
 - LLM + human review > human alone for many tasks
-- The alternative is... what? Hope people learn to code?
 - Maybe masking complexity IS solving it for 80% of cases
+
+**Hot take: maybe the alternative IS "hope people learn to code"?**
+- Programming literacy could be like reading/writing literacy
+- Instead of dumbing down tools, improve education
+- Raise the floor of human capability, not lower the ceiling of tools
+- "People can't learn" is a cop-out - people learn hard things all the time
+- The problem might be teaching, not learning capacity
 
 **Unresolved**: Is there a way to make programmable systems *actually* simple, not just LLM-assisted? Or is complexity irreducible and the best we can do is better interfaces to it?
 
