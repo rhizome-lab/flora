@@ -1631,6 +1631,31 @@ Some possibilities from this conversation:
 
 But also just: the existing projects need work. moss needs polish. spore needs features. resin needs... everything.
 
+**Yes, I do want to build a MOO.** But let's be honest: MOOs are one paradigm. They're not the *only* thing missing from 2026.
+
+**What else is missing?**
+
+| Gap | What's wrong | What could exist |
+|-----|-------------|------------------|
+| **Code understanding** | Codebases are huge, opaque | moss addresses this - but needs more |
+| **Format conversion** | Hunt for tools, pray they work | cambium - type-driven pipelines |
+| **Procedural media** | Expert tools only (Houdini, etc.) | resin - composable, accessible |
+| **Federation that works** | Matrix has issues, ActivityPub is limited | hypha - authoritative handoff |
+| **API bindings** | Write boilerplate or hope a lib exists | liana - generate from specs |
+| **Non-linear interfaces** | Everything is feeds | ??? - barely explored |
+| **Creative tools** | Either toy (Scratch) or expert (Blender) | Low floor, high ceiling, missing middle |
+| **Understandable software** | Can't read what you use | 100 Rabbits philosophy, Lua repo energy |
+| **Local-first** | Cloud dependency, no ownership | CRDTs exist, adoption lagging |
+| **"Social with artifacts"** | Platforms are ephemeral posting | MOO-ish thing, wiki-ish thing, ??? |
+| **Connection-surfacing** | Notes are silos, no unexpected links | Graph tools exist but clunky |
+| **View source → learn** | Web is minified blobs now | ??? |
+
+MOO is *one* of these. Not the only one. Each is a rabbit hole.
+
+**What's actually interesting right now?**
+
+Hard to say. Depends on mood, energy, what's frustrating at the moment. The honest answer: probably whatever's in front of you when you sit down to code.
+
 **The question remains genuinely open: what to build?**
 
 **How do you fight it?**
