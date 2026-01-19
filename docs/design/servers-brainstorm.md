@@ -1099,6 +1099,28 @@ The pattern: well-designed general substrates (Godot, Bevy) vs poorly-designed n
 
 **Implication for Rhizome**: Maybe the goal isn't "better than Twine at IF" but "general substrate that makes Twine-like-things easy to build on top." Don't compete with the niches - be the layer they could build on.
 
+**What is a niche tool but an additional layer of abstraction?**
+
+| Niche tool | What it abstracts over |
+|------------|----------------------|
+| RPG Maker | JavaScript/JSON |
+| Twine | HTML/JS |
+| Ren'Py | Python |
+| PuzzleScript | Custom engine |
+| Strudel | Web Audio API |
+
+They're all just... layers. Someone built an abstraction, it stuck, now it's "a tool."
+
+The question: **what's the right substrate to build those abstractions on?**
+
+Current reality: everyone picks their own base (JS, Python, custom). No shared primitives. Each niche tool reinvents persistence, state, UI, etc.
+
+Alternative: shared substrate with good primitives. Niche tools become thin layers on top. The "RPG Maker layer" is just: preconfigured entity types + tile renderer + battle system. The substrate handles persistence, state, networking, etc.
+
+This is the Bevy/Godot insight applied more broadly. They're substrates for games. What's the substrate for... everything?
+
+(Probably impossible. But the question is fun.)
+
 What it demonstrates:
 - **Text can be incredibly deep** - 4 years to build, near-inexhaustible combinations
 - **Constraints inspire innovation** - text-only forced creative mechanics
