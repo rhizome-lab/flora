@@ -1128,6 +1128,63 @@ The model works. At scale. Without toxic engagement dynamics. It's not wishful t
 
 The question shifts from "is this possible?" to "what made these work, and can we learn from them?"
 
+**But what's actually missing?**
+
+Games, fiction, fanworks - those are niches. Platforms succeed because **for their core use cases, there's no alternative.**
+
+| Platform niche | What it serves | Non-platform alternative? |
+|---------------|----------------|--------------------------|
+| General social ("what I'm up to") | Sharing life updates with friends | ...email? group chats? Christmas letters? |
+| News/current events | Real-time information, discussion | RSS? But discovery is gone |
+| Short-form content | Entertainment, quick hits | TikTok-without-TikTok doesn't exist |
+| Professional networking | Jobs, industry connections | LinkedIn has no competitor |
+| Dating | Finding partners | Apps dominate, no alternative |
+| Local community | Events, neighbors, local info | Nextdoor, Facebook groups... still platforms |
+| Marketplace | Buying/selling | Craigslist? Facebook Marketplace? Still platforms |
+| Group coordination | Organizing people | Discord, Slack... arguably platforms |
+
+For most of these, the "alternative" is either:
+- Another platform (just different branding)
+- Something way worse (email chains, phone trees)
+- Nothing
+
+**Why did Minecraft/SCP/AO3 work but "general social" doesn't have an alternative?**
+
+Hypothesis: they have **specific creative outputs**.
+
+| Success | The output |
+|---------|-----------|
+| Minecraft | Builds, worlds, servers |
+| SCP | Articles, canons, tales |
+| AO3 | Fics |
+| Terraria | Worlds, progression |
+
+"General social" has no artifact. You're not *making* something - you're just... posting. Sharing. Reacting. The "output" is ephemeral engagement, not a persistent creation.
+
+Maybe that's the gap? Platforms won "general social" because there's nothing to *build*. The alternatives that work are ones where you're building something together.
+
+**Tumblr as partial exception:**
+
+Tumblr is technically a platform, but it has more creation energy:
+- Blogs are *yours* (customizable, persistent)
+- Reblog culture means content spreads with attribution
+- Fandoms *build* things (headcanons, AUs, art, fic)
+- Less algorithmic (chronological feed, mostly)
+- Community over audience (more conversation, less broadcasting)
+
+It's still a platform, but it's closer to the "creation" end than Twitter/Facebook. Maybe that's why it survived while being "bad at business."
+
+**The uncomfortable question: is "general social" just... platformable by nature?**
+
+If there's no artifact to build, no persistent creation, maybe platforms are the natural solution? And the best we can hope for is:
+- Better platforms (less toxic, less engagement-maximizing)
+- Small communities for those who want out (Discord, group chats)
+- Accept that "general social" will always be platform territory
+
+Or: **invent a new thing.** What if "general social" *did* have artifacts? What if sharing your life wasn't ephemeral posts but... something else?
+
+No idea what that would look like. But maybe that's the actual missing piece.
+
 **How do you fight it?**
 
 - **Intentional constraints** - gives permission to be limited
