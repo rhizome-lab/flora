@@ -4364,3 +4364,177 @@ Linear menus "scale" to 50 items by making all 50 equally hard to find. That's n
 **Radial's limit is honest.** "You get 8. Choose wisely."
 
 Linear menus let you pretend you're not making choices while actually making everything worse.
+
+---
+
+## Node Editors Suck
+
+Resin is a graph-based constructive anything toolkit. The problem: node editors are the standard interaction model for graphs, and they suck.
+
+### The Problems
+
+| Pain point | Description |
+|------------|-------------|
+| Spaghetti | Wire crossings become unreadable at scale |
+| Manual positioning | Placing nodes is busywork |
+| Navigation | Constantly zooming/panning, lost in the graph |
+| Drawing connections | Tedious wire-drawing |
+| Understanding flow | Can't follow which wire goes where |
+| Undo terror | Did I break something? |
+
+Every node editor has these problems. Blender, Houdini, Unreal Blueprints, Substance Designer, ComfyUI. Some mitigate with frames, colors, auto-layout. None solve it.
+
+### The Alternatives All Suck Too
+
+| Approach | Problem |
+|----------|---------|
+| Text/code | Syntax errors, 1D representation of N-D structure |
+| Node editors | Manual wiring tedium, spaghetti |
+| Structural editors (Hazel, Darklang) | Valid but unproven at scale |
+| CyberChef | Works but limited to linear pipelines |
+
+### Code IS a Graph
+
+Wait. Variable references ARE edges.
+
+```
+a = noise(x, y)
+b = threshold(a, 0.5)  // reference to 'a' = edge from a to b
+```
+
+Same with:
+- `import foo` → edge from foo to this module
+- `foo.bar()` → edge to foo
+- Function calls → edges
+
+**Code has always been a graph.** IDEs know this (go to definition, find references). We just serialize it linearly and let the parser reconstruct edges.
+
+| | Text | Nodes |
+|---|------|-------|
+| Underlying structure | Graph | Graph |
+| Serialization | Linear (implicit edges) | 2D spatial (explicit edges) |
+| Edge representation | Names/references | Wires |
+
+The dichotomy is false. Both are views of the same thing.
+
+### Apply the Interaction Graph
+
+Earlier insight: show the RIGHT actions, not ALL actions. Context-aware filtering.
+
+Apply it to nodes:
+- What nodes are relevant *right now*?
+- What connections make sense *from this port*?
+- What's the *next likely* operation?
+
+Radial menu for node creation. Context-filtered. Frecency-ordered.
+Auto-suggest connections based on what's dangling.
+
+**The spaghetti isn't the problem. "Show everything always" is the problem.**
+
+### Abstraction
+
+Node editors are often flat. 200 nodes on one canvas.
+
+Where's the equivalent of "extract function"? Some have it (Houdini HDAs, Blender node groups) but it's clunky, afterthought.
+
+In text: `extract_function()` is reflexive.
+In nodes: select 40 nodes, hope I/O is inferred correctly, manually fix interface...
+
+**Real insight:** If it's a function, it's *already* a subgraph. Call site = node. Definition = expanded graph. You don't need separate "create subgraph" ceremony. That's just compensating for not having real functions.
+
+### Projectional vs Structural
+
+| Structural | Projectional |
+|-----------|--------------|
+| One true representation | Abstract structure, multiple views |
+| You edit the structure | You edit through a projection |
+| What you see IS the data | What you see is ONE VIEW of the data |
+
+The problem with node editors isn't nodes. It's that they're the ONLY view.
+
+If the underlying structure is a graph, why not:
+- Text view for editing
+- Node view for overview
+- Pipeline view for linear parts
+- Table view for data
+
+**One structure. Many projections. Pick the view for the task.**
+
+### Don't Throw Away What Works
+
+CyberChef is proven for pipelines. Why force pipeline-shaped subgraphs into node representation?
+
+A graph isn't uniformly complex. Some parts are linear pipelines. Show those as CyberChef-style chains.
+
+The projection should match the *shape* of that part of the graph:
+- Pipeline-shaped → CyberChef/chain view
+- Branchy/complex → Node view (context-filtered)
+- Dense/algorithmic → Text view
+- Tabular → Table view
+
+All editing the same underlying structure.
+
+### But Broader Than "Match the Shape"
+
+Matching local shape is still structural thinking.
+
+Projection could match:
+- **Task**: Debugging? Editing? Exploring?
+- **User**: Expert wants density, novice wants guidance
+- **Intent**: What am I trying to DO?
+- **Arbitrary**: Whatever makes sense right now
+
+Or projections that aren't graph-shaped at all: forms, wizards, natural language, 3D viewport.
+
+The graph is the truth. The projection is whatever helps right now.
+
+### User-Defined Projections
+
+**The projection is whatever the user chooses it to be. The user can define their own.**
+
+Not "system picks based on heuristics."
+Not "choose from 5 presets."
+
+The user defines projections. Custom sugar. Custom views.
+
+The system provides:
+- The underlying graph/objects
+- Primitives for building projections
+- Good defaults
+
+The user/community provides:
+- Domain-specific projections
+- Personal preferences
+- Novel views nobody anticipated
+
+This is the Emacs model: Emacs doesn't decide how you edit - you define modes. Same here: you define projections.
+
+---
+
+## Canopy Clarified
+
+This is what Canopy was meant to be.
+
+**Lotus:** The object graph. The truth. Objects with state, behavior, connections.
+
+**Canopy:** The projection layer. User-definable views onto the graph.
+
+Not "a notes app" or "a node editor" or "a file manager."
+
+A **platform for building projections** onto an object graph.
+
+- Want CyberChef-style pipelines? Build that projection.
+- Want a 2D desk with drawers? Build that projection.
+- Want spatial Finder? Build that projection.
+- Want node editor for complex parts? Build that projection.
+- Don't like any of them? Build your own.
+
+The system doesn't prescribe how you see your data. It gives you:
+1. Objects (Lotus)
+2. Projection primitives (Canopy)
+3. Good defaults to start
+4. The ability to define your own
+
+**This is the escape from WIMP.**
+
+Not by picking a different paradigm. By making the paradigm user-defined.
