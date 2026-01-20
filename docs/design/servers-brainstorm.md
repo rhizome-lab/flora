@@ -5037,3 +5037,105 @@ More "we're tinkering and writing down what we learn."
 The original hacker spirit, actually. Before it got stolen. Just making things because you can. No grand claims. See what sticks.
 
 Maybe some of it will be useful. Maybe it won't. But the making is the point.
+
+---
+
+## Prior Art Is Everything
+
+It's 2026. We have all the prior art in the world.
+
+Not just research:
+- All shipped software
+- All the code ever written
+- All tutorials, blog posts, Stack Overflow answers
+- All hacky weekend projects and abandoned repos
+- All the Discord messages explaining how to do X
+- All the HN threads arguing about it
+
+The LLM has seen it all. Compressed and queryable.
+
+**But prior art includes the status quo. Which often doesn't work.**
+
+The current broken landscape is ITSELF evidence:
+- "This approach was tried and didn't scale"
+- "This pattern became standard despite being broken"
+- "This decision calcified before anyone questioned it"
+
+WIMP is prior art. Lesson: accidental, calcified, not a solution.
+React churn is prior art. Lesson: state management is unsolved.
+The current mess is data.
+
+Learning from prior art = learning from failures as much as successes. We're swimming in documented failure.
+
+---
+
+## Interaction Graph (Clarified)
+
+**Every affordance is an edge in the graph.**
+
+Not just "actions you can take." EVERYTHING:
+- Button → edge
+- Tab → edge
+- Context menu item → edge
+- Keybind → edge
+- Link → edge
+- Drag target → edge
+- Hover tooltip action → edge
+
+The interaction graph is **affordance structure** - what can you DO at any moment, and what does it lead to.
+
+**This is NOT what Obsidian/Dendron show.**
+
+| Obsidian graph | Interaction graph |
+|----------------|-------------------|
+| Data relationships | Affordance structure |
+| "Your notes connect like this" | "From here, you can DO these things" |
+| Static visualization | Navigational/action structure |
+| Pretty but useless | Actually useful for filtering/discovery |
+
+Obsidian rendered a graph. Cool. And? Visual noise, not insight. "Look, your notes are connected" → okay but what do I DO with that?
+
+The interaction graph is about the UI itself. What's available NOW. What's contextually relevant. What should be surfaced vs hidden.
+
+### Graph Visualization IS Worth Exploring
+
+That said: graphs as visualization (non-scrolling-page) ARE worth exploring.
+
+The problem isn't "graphs are useless." The problem is:
+- Obsidian's graph doesn't help you DO anything
+- It's eye candy, not tool
+- No filtering, no context-awareness, no action
+
+A graph visualization that:
+- Shows what's relevant NOW
+- Lets you navigate by relationship
+- Filters by context
+- Connects to actions
+
+...that would be valuable. Just not "here's all your notes as dots."
+
+---
+
+## Extracting Insights from Prior Art
+
+Specific examples → extract insights → distill patterns.
+
+### Quick Notes on Exemplars
+
+**Excel:** Success in adoption. UX is genuinely problematic though. Not a pure exemplar.
+
+**Blender:** At least they're actively trying. Node improvements, UI overhauls. Credit where due.
+
+**Flash:** Killed ostensibly for "performance/security" but really... Apple controlling app ecosystem? Web standards coalition? Worth digging into as "why good things die."
+
+**Obsidian/Dendron:** They work. Files as truth, plugins. But graph view is just... rendered graph. No insight, no action.
+
+**Pico-8:** Constraints as guardrails. Clear what "done" looks like. Creative success story.
+
+**SQLite:** One person, everywhere, just works. "Do one thing well" taken seriously.
+
+**HyperCard:** Pioneered everything. Why did it die? Apple neglect? Didn't fit the business model?
+
+**Smalltalk:** Invented OOP, GUI, IDE. Why didn't it win? Too different? Licensing? Timing?
+
+(To be expanded with actual extraction work.)
