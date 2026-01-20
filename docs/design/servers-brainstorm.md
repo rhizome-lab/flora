@@ -4945,3 +4945,25 @@ There's no "doodling" for programming. No word that means "I make little program
 "I program" → "for work? a startup? why?"
 
 The vocabulary got colonized. No escape hatch to the hobbyist framing.
+
+**Except we HAD a word.**
+
+*Hacker.*
+
+"Hacker" used to mean exactly this:
+- MIT hacker culture
+- Tinkering with computers for fun
+- Clever solutions, joy of building
+- "I'm a hacker" = "I make things because I love it"
+
+Then it got stolen:
+- Media: "criminal who breaks into systems"
+- Security industry: "penetration testing"
+- Bootcamps: "growth hacker," "hackathon" (career-ified)
+
+**1980:** "I'm a hacker" = I make things with computers for fun
+**2026:** "I'm a hacker" = I break into systems / I do 24-hour startup sprints
+
+The vocabulary didn't fail to exist. It was *taken*.
+
+We lost the word. And with it, the framing.
