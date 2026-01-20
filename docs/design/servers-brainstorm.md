@@ -4668,3 +4668,31 @@ Real judgment knows when heuristics apply and when they don't. That's hard to co
 For now, the floor is: programming literacy + taste + vision + ability to evaluate. That's lower than "3 years corporate Rust" but higher than "anyone can do this."
 
 Maybe the floor keeps dropping as models improve. Maybe not. Honest answer: we don't know yet.
+
+### Why Don't More People Do This?
+
+The people who build cool software are, by any reasonable metric, stupid.
+
+**"Normal" time allocation:**
+- Social life
+- Relationships
+- Hobbies that don't produce artifacts
+- Rest
+- Touching grass
+
+**"Stupid" time allocation:**
+- Years building something that might never matter
+- Debugging at 2am
+- Reading documentation for fun
+- Caring whether the abstraction is right
+- Having long conversations with an LLM about project architecture
+
+By external metrics it makes no sense. Expected value is terrible. Most projects fail. Nobody asked. Go outside.
+
+But if this IS what you enjoy, then "having a life" assumes life means something specific. Maybe we're the weird ones. (We are. But weird isn't wrong.)
+
+**The LLM observation:** Most people don't look at LLMs and think "great partner to discuss plans and help build ambitious things that may or may not find a use someday." They think "this can help me write emails faster."
+
+The capability is available. The weird personality type that would use it this way is rare. LLMs democratize execution, but they can't give you the inexplicable desire to build things that don't need to exist.
+
+That might be the actual bottleneck. Not skill, not time, not tools. Just: most people aren't broken in this specific way.
