@@ -2189,6 +2189,457 @@ If you can't automate eval, your options:
 - Constrained input that's checkable (limits expressiveness)
 - LLMs??? (fuzzy eval, whole can of worms)
 
+**But: non-problem-solving interactivity is still valuable.** Even without eval:
+- Music theory: play notes, hear intervals. No "correct answer," just experience.
+- Design: drag elements, see how it looks. Exploration, not grading.
+- Writing: rearrange paragraphs, see flow change. Sandbox, not test.
+- Color theory: adjust sliders, see results. Immediate feedback without judgment.
+
+The eval barrier only matters for "did you solve it correctly?" Exploration and play don't need eval. Interactive sandbox >> static explanation, even without grading.
+
+Prior art: [Bartosz Ciechanowski](https://ciechanow.ski/mechanical-watch/) - interactive explainers with 3D visualizations. Mechanical watches, GPS, curves, internal combustion engines. Drag things, see how they work. No puzzles, just exploration. Incredible quality - but also one person with all four skills, doing it as a labor of love. Not scalable. Proves it's possible, doesn't prove it's accessible.
+
+---
+
+## Directions Crystallizing
+
+**Interaction graph as first-class citizen.** Not just "UI has actions" but actions-as-data, queryable, composable. Projectional rather than structural - you edit the structure, it projects to views. The graph IS the system; views are projections.
+
+**Unified workspace, not single-responsibility apps.** Don't want: separate todo app, separate notes app, separate calendar, separate timer. Want: everything together, customizable layout, no context switching. FS, notes, calendar, todos, timers - different *sources* of objects, but same space.
+
+This is what Notion/Obsidian try to be. What tiling WMs approximate. What personal computing environments aspire to. What makes this attempt different?
+
+Maybe:
+- Object sources are pluggable (not hardcoded integrations)
+- Views are ALSO pluggable (milkdown vs CodeMirror vs remark+rehype+contenteditable for markdown - don't make users choose, allow all)
+- Interaction graph is explicit (not implicit in UI code)
+- Views are projections (not the source of truth)
+- Layout is user-controlled (not app-dictated)
+
+Connects to Canopy (universal client, control plane for any data source) and the MOO idea (everything is objects with verbs).
+
+**What are notes, in spirit?** Externalized thoughts. Thoughts made persistent, retrievable, connectable.
+
+So in the unified object graph: thoughts aren't a separate app. They're just objects. First-class. Connected to everything else - other thoughts, files, todos, calendar events, MOO entities, whatever. The "notes app" dissolves. There's just the graph, and some objects in it happen to be thoughts.
+
+This reframes everything:
+- Note-taking → adding thought-objects to the graph
+- Linking notes → connecting thoughts to other objects
+- Retrieval → graph traversal (not folder navigation)
+- Organization → tagging/connecting (not filing into hierarchies)
+
+The graph IS your external mind. Zettelkasten intuition, but not siloed in a "notes app" - integrated with everything.
+
+**But: "second brain" is a crowded space.** Tiago Forte, Roam, Obsidian, Notion, Logseq, RemNote... Everyone's selling this. Aren't we reinventing the wheel?
+
+What might actually be different:
+1. **Not just notes** - Most second-brain tools are note-centric. This is everything: files, todos, calendar, MOO entities, notes. Notes aren't special, just one object type.
+2. **Pluggable sources AND views** - Not locked to one editor, one storage, one renderer.
+3. **Interaction graph is explicit** - Actions are data, not implicit in UI code.
+4. **Multiplayer** - MOO integration. Not just personal notes - shared worlds.
+5. **Not selling anything** - Building for ourselves, not for market fit.
+
+Is that enough? Honestly unclear. Maybe we're just doing "Obsidian but more ambitious." Maybe the combination matters. Maybe it doesn't and we're fooling ourselves.
+
+The honest test: would *we* use it? If yes, build it. If it turns out to be just another second-brain app, at least it's ours.
+
+**Fundamental units of popular notes apps:**
+
+| App | Unit | What it means |
+|-----|------|---------------|
+| **Obsidian** | File (markdown) | Everything is a .md file. Links between files. Folders for hierarchy. |
+| **Notion** | Block | Text, heading, todo, database - all blocks. Pages are block collections. |
+| **Roam/Logseq** | Block (bullet) | Outliner. Everything is a bullet. Block-level references. |
+| **Workflowy** | Bullet | Pure outliner. Infinitely nested bullets. That's it. |
+| **Apple Notes/Evernote** | Note (document) | Rich text document. Folders/notebooks. Traditional. |
+| **Google Keep** | Card | Sticky-note sized. Checklists, images. Lightweight. |
+| **Tana** | Node + supertag | Nodes have types. More structured than outliners. |
+
+Observations:
+- Files = filesystem mental model (Obsidian)
+- Blocks = Lego bricks, composable (Notion, Roam)
+- Documents = traditional "note" (Apple, Evernote)
+- Nodes with types = structured data (Tana)
+
+What's ours? **Objects.** Not files, not blocks, not documents. Objects with types, properties, connections. The unit isn't "text I wrote" - it's "thing that exists."
+
+A stopwatch is an object. Data representation is trivial:
+
+```
+stopwatch: { state: running|paused|stopped, startedAt: timestamp, accumulated: duration, laps: [duration, ...] }
+timer: { duration: duration, remaining: duration, state: running|paused|stopped }
+```
+
+Don't store "current time" - store when it started, compute the rest. Laps are recorded moments.
+
+Calendar events are objects. Saved webpages are objects. Tagged images are objects. Bookmarks are objects. Todos are objects.
+
+```
+calendarEvent: { title, start: timestamp, end: timestamp, recurrence?, ... }
+savedWebpage: { url, title, savedAt: timestamp, content?, tags: [...] }
+taggedImage: { path, tags: [...], caption?, ... }
+```
+
+These aren't "apps." They're objects. Different types, different views, same system. No artificial boundaries.
+
+**But: isn't it impossible to render them all?**
+
+If every type needs a custom view, we're back to building infinite apps.
+
+Maybe not. Options:
+1. **Discriminated unions** - objects have a type tag. Pattern match on type → specific view. `{ type: "stopwatch", ... }` vs `{ type: "calendarEvent", ... }`. Exhaustive matching for known types.
+2. **Fallback rendering** - unknown types show as property list (key: value). Not pretty, but works. Covers the long tail. Prior art: [JSON Editor Online](https://jsoneditoronline.org/) - any object as expandable tree. Works for anything.
+3. **Composable view primitives** - text, list, table, progress bar, timestamp, duration. Most types compose from these.
+4. **Pluggable views** - add custom renderers as needed. Don't need all upfront.
+5. **Only build what you use** - not trying to support everything. Just what matters.
+
+A stopwatch view is: state indicator + duration display + lap list. That's primitives. A calendar event is: title + time range + maybe recurrence indicator. Also primitives.
+
+The hard part isn't rendering - it's defining the primitives well.
+
+**Multiple frontends (CLI, TUI, Discord, web):** M types × N frontends = M×N views. Sounds bad.
+
+But:
+- N is small (4-ish frontends)
+- Fallback (property list) works everywhere - even CLI can dump JSON
+- Define views in terms of abstract primitives → each frontend implements primitives once
+- Custom views are progressive enhancement, not requirement
+
+So it's: N implementations of primitives + fallback + optional M×N polish. Tractable.
+
+**Stack?** Rust because might as well?
+
+- Core/backend: Rust (performance, safety, WASM target if needed)
+- Web frontend: TS probably (React/Solid/whatever) - or WASM if ambitious
+- CLI/TUI: Rust (ratatui, clap, etc.)
+- Discord: Rust (serenity) or TS (discord.js)
+
+Rhizome already has Rust (moss, etc.) and Lua (spore, flora). Fits.
+
+But also: stack matters less than architecture. Get the object graph right, frontends can be rewritten. Don't overthink it.
+
+**Storage:** pith-sql (libsql internally). Already in ecosystem. Fine.
+
+**Sync:** MOO model + capability-based security. Server-authoritative, capabilities as access tokens. Niche but proven (MOOs existed, capability security is sound theory).
+
+**Perf characteristics - what do we need?**
+- Read-heavy? Write-heavy? (probably read-heavy for notes/workspace)
+- Real-time sync? (for MOO parts, yes)
+- Update frequency? (not game-level, probably)
+
+**ECS instead?**
+
+ECS (Entity Component System):
+- Entities = IDs
+- Components = data bags attached to entities
+- Systems = logic operating on entities with certain components
+
+Good for:
+- Cache-friendly iteration (tight loops over components)
+- Flexible composition (add/remove components dynamically)
+- Game-like workloads (many entities, frequent updates)
+
+For notes/workspace:
+- Probably overkill
+- Relationships matter more than iteration speed
+- Not updating thousands of entities per frame
+
+For MOO simulation:
+- Maybe? If we have lots of NPCs/objects with behaviors
+- Traditional MOO wasn't ECS... but also had harsh constraints:
+  - Gas limits / tick quotas (can't run expensive code)
+  - Single-threaded (one server, one process)
+  - Scaling limitations (can't easily distribute)
+
+So "MOO worked fine" is misleading - it worked within restrictive limits.
+
+ECS advantages for scale:
+- Parallelization (systems run in parallel over component sets)
+- Distributed simulation (entities can potentially shard)
+- Predictable performance (no runaway user code)
+
+**Verdict:** Depends on ambition.
+- Personal workspace + small multiplayer → libsql is fine
+- Massive shared world → probably need ECS or similar
+- Can start simple, but architecture may need revisiting if scale matters
+
+**What's the actual impl cost of ECS?**
+
+Using existing libraries (bevy_ecs, hecs, legion in Rust):
+- Not much code to integrate
+- Well-tested, performant
+- Learning curve for the mental model
+
+Real costs:
+1. **Mental model shift** - components/systems vs objects/methods. Different way of thinking.
+2. **Relationships are awkward** - ECS is traditionally weak on entity references, parent-child, graphs. Some libs adding this (bevy relations) but not native.
+3. **Persistence** - ECS is usually in-memory. Syncing to DB adds complexity.
+4. **Debugging** - harder to inspect than "here's the object"
+5. **Boilerplate** - registering components, defining systems, queries
+
+For notes/workspace:
+- Costs (relationships, persistence, mental model) hurt
+- Wins (cache efficiency, parallelism) don't matter much
+
+For simulation layer specifically:
+- Could use ECS just for that part
+- Keep object graph for everything else
+- Hybrid: objects in libsql, hot simulation in ECS, sync between
+
+Realistically: ECS is cheap to add via library, expensive to make the right choice for the problem.
+
+**Wait - is notes/workspace really relationship-heavy?**
+
+All stopwatches have the same shape. All timers. All calendar events. That's ECS territory - many similar entities.
+
+But:
+- We don't iterate all stopwatches every frame
+- We query by relationship/tag more than component type
+- "Systems" aren't "update all X" but "render this specific X"
+
+**Weird hybrid?**
+- ECS-like: typed component storage, efficient by-type queries
+- Graph-like: first-class relationships, navigate by reference
+- No tick-based systems, just reactive/on-demand
+
+This is what property graph databases do (Neo4j-ish). Or... what a relational DB already does?
+
+- Tables = component types
+- Rows = entities with that component
+- Foreign keys = relationships
+- Indexes = efficient queries
+
+Maybe the "hybrid" is just SQLite/libsql used well, with a layer that makes it feel like objects. Not novel architecture - just good data modeling.
+
+**Alternative hybrid: lazy promotion**
+
+- Default: everything stored as objects in DB (simple, flexible)
+- When needed: "promote" hot paths to ECS / in-memory / computed views
+
+Like:
+- Cold storage: libsql (all objects)
+- Hot path: ECS or in-memory cache for simulation tick
+- Computed views: materialized queries for common patterns
+
+Promotion could be:
+- Manual (developer marks hot paths)
+- Automatic (based on access patterns)
+- Domain-specific (simulation entities → ECS, notes → stay in DB)
+
+Overkill to build upfront? Yes. But reasonable to design for:
+- Start with everything in DB
+- Profile, find actual hot paths
+- Promote those when needed
+
+For notes/workspace: probably never need it.
+For MOO simulation at scale: might need it.
+
+**But wait - they're the same app.** That's the whole point. Unified object graph. Notes and MOO entities live together.
+
+So it's not "this app needs ECS" - it's "these specific object types / query patterns need optimization." Granular promotion within one system.
+
+Which actually argues FOR the lazy promotion architecture:
+- Same graph, different performance characteristics per region
+- Notes stay cold (DB), simulation entities go hot (ECS) when active
+- Promotion is per-type or per-query, not per-app
+
+Don't build it until you need it, but don't architecture yourself into a corner.
+
+---
+
+## Ready to impl?
+
+What's crystallized:
+- Unified object graph (everything is objects with types)
+- Discriminated unions, fallback rendering
+- Pluggable sources AND views
+- Interaction graph as first-class
+- Storage: libsql (pith-sql)
+- Sync: MOO model + capabilities
+- Lazy promotion for hot paths (design for, build later)
+- Multiple frontends: CLI, TUI, Discord, web
+
+What's still fuzzy:
+- Exact object schema / type system
+- Query/relationship model details
+- How capabilities work in practice
+- First frontend to build
+- Which object types first
+
+**Minimal viable start?**
+
+Frontend-agnostic. Focus on the core:
+- Object storage in libsql
+- Type system (discriminated unions)
+- Relationships / edges / tags
+- Query model
+
+Object types are almost free - they're just data:
+```
+thought: { content, tags, ... }
+stopwatch: { state, startedAt, accumulated, laps }
+timer: { duration, remaining, state }
+calendarEvent: { title, start, end, recurrence? }
+savedWebpage: { url, title, content?, tags }
+```
+
+Define all of them. The interesting work is the infrastructure:
+- How objects are stored
+- How types are discriminated
+- How relationships work
+- How queries find things
+
+**Decisions:**
+
+Storage: **JSON blob**. Not table-per-type. Schema is loose, not all data follows it.
+
+```sql
+CREATE TABLE objects (
+  id TEXT PRIMARY KEY,
+  data JSON NOT NULL
+);
+CREATE INDEX idx_type ON objects(json_extract(data, '$.type'));
+```
+
+Type is just a property. Not special. Everything in the blob.
+
+Timestamps, tags, relationships, type - all in blob. Promote to columns when query patterns demand. Minimal schema = maximum flexibility.
+
+**Is document store on SQLite a bad idea?**
+
+Arguments against:
+- SQLite's strength is relational - ignoring that
+- JSON parsing overhead on every query
+- Indexes on json_extract less efficient than column indexes
+- If you want document store, use a real one (Mongo, Couch)
+- Lose type safety at DB level
+
+Arguments for:
+- SQLite is everywhere, embedded, zero-config, single file
+- JSON support is actually good now (json_extract, json_each)
+- At personal scale, perf difference is negligible
+- Flexibility - schema in code, not migrations
+- Local-first friendly, easy backup
+- Can promote to columns when needed
+- Don't need another dependency
+
+**Verdict:** Tradeoff. Bad if you need relational power at scale. Fine for flexible personal tool. We're not building MongoDB competitor - we're storing objects in a file. SQLite + JSON is pragmatic.
+
+**But: "nothing more permanent than a temporary solution."**
+
+"We'll promote to columns later" → we never will. The JSON blob becomes the architecture. Is that actually fine?
+
+Options:
+1. **Accept it** - JSON blob forever. If it works, it works. Don't pretend we'll migrate.
+2. **Start with columns** - type, created_at, common fields as columns now. Pay the design cost upfront.
+3. **Abstract the storage** - API doesn't expose structure. Can swap implementations without changing callers.
+
+Option 3 might be the honest answer: if the API is `create/get/query/update/delete`, the storage is an implementation detail. JSON blob today, columns tomorrow, who cares. The abstraction protects us.
+
+But also: are we overthinking this? It's a personal tool. If JSON blob works, ship it.
+
+**The real concern: query performance.**
+
+A graph without search is useless. Common queries:
+- Find all objects of type X
+- Find all objects tagged Y
+- Find all children of object Z
+- Full-text search across notes
+- Traverse relationships
+
+If every query parses all JSON blobs, that's O(n) parsing per search. Bad.
+
+Solutions that coexist with JSON blob:
+- **Indexes on json_extract** - helps for simple field queries
+- **Generated/computed columns** - SQLite supports these
+- **Separate index tables** - denormalized for query patterns
+- **FTS5** - SQLite's full-text search for content
+
+So it's not blob OR columns. It's:
+- Blob for storage (flexible, schemaless)
+- Indexes/columns for query (fast, specific)
+
+Blob is source of truth. Indexes are derived. Add indexes for patterns you actually use.
+
+**Remaining downsides of JSON blob:**
+
+1. **No schema at DB level** - can insert malformed data. Enforce in code.
+2. **Partial updates = read-modify-write** - can't `UPDATE objects SET data.title = 'x'`. Have to read blob, modify, write back. Race conditions possible.
+3. **No referential integrity** - relationships in blob aren't enforced. Dangling references possible.
+4. **Migrations are implicit** - old objects have old shapes. Handle in code.
+5. **Joins are awkward** - can't easily join across JSON fields.
+6. **Less compact** - JSON is text. Typed columns are smaller.
+
+Are these dealbreakers? Depends.
+- Schema in code: fine if you're disciplined, validated types
+- Partial updates: problem if concurrent writes matter. For personal tool, probably fine.
+- Referential integrity: problem if you care about consistency. Can check on read/write.
+- Migrations: problem at scale, fine for small data.
+
+For personal object graph: probably all acceptable. For production multi-user: think harder.
+
+**But: concurrency is a solved problem.** Don't invent. Pick from existing solutions:
+
+| Approach | How it works | When to use |
+|----------|--------------|-------------|
+| **Last-write-wins** | Latest timestamp wins | Personal, casual, don't care about lost writes |
+| **Optimistic locking** | Version field, reject stale, retry | Multi-user, low contention |
+| **CRDTs** | Conflict-free types, auto-merge | Real-time collab, offline-first |
+| **OT** | Transform concurrent ops (Google Docs) | Real-time text editing |
+| **Event sourcing** | Store events, derive state | Audit trail, complex merges |
+
+For this project:
+- Single user → last-write-wins (free)
+- Casual multi-user → optimistic locking (version field)
+- Real-time MOO → CRDTs if needed later
+
+The problem isn't unsolvable. We just pick the right solution for the use case.
+
+**Or: this is a userspace decision.**
+
+Don't pick ONE global strategy. Let it be per-object or per-type:
+- Notes (collaborative) → CRDT
+- Stopwatch → last-write-wins (or owner-only)
+- MOO room description → optimistic locking
+- Calendar event → depends on sharing model
+
+Storage layer just provides primitives (version field, timestamps). Application layer picks strategy per object/type. Concurrency policy isn't baked into storage - it's a layer above.
+
+More flexible. Different objects have different consistency needs.
+
+Edges/ownership: **just properties**. All relationships are data in the blob:
+
+```
+{
+  parent: "id",           // ownership/containment
+  children: ["id", ...],  // explicit if needed
+  links: ["id", ...],     // outgoing references
+  backlinks: ["id", ...]  // incoming (computed or stored)
+}
+```
+
+Backlinks could be:
+1. Computed on query (find where `links` contains this id) - expensive
+2. Stored explicitly (denormalized, sync on write) - faster reads
+3. Materialized view / index - best of both
+
+Start with computed, cache/denormalize when perf matters. No separate edge table - edges are just properties.
+
+Tags: **just a component**. `{ tags: ["foo", "bar"] }` in the blob. Computed view or index for efficient tag queries:
+```sql
+-- or use json_each for tag lookups
+CREATE INDEX idx_tags ON objects(json_extract(data, '$.tags'));
+```
+
+API: **capability-based = no raw SQL exposed**. Interface is probably just CRUD:
+- `create(type, data) → id`
+- `get(id) → object`
+- `query(filters) → objects` (by type, by tag, by parent, etc.)
+- `update(id, data)`
+- `delete(id)`
+
+That's probably enough to start. Frontends consume this API.
+
 **But even programming guides don't have interactivity.** Eval is tractable for code. Still mostly blog posts. So eval difficulty isn't the only barrier - there's also:
 - Tooling friction (setting up a runnable environment is work)
 - Format expectations (people expect to write blog posts, not build apps)
