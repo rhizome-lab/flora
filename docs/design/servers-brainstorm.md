@@ -5300,3 +5300,67 @@ This is the Canopy insight, generalized:
 Don't pick the right paradigm. Offer multiple. Let the user switch based on context, task, preference.
 
 This is what Canopy is trying to be: not "the right view" but "the ability to have any view."
+
+### Users Aren't Monolithic
+
+Same user, different moments:
+- Sometimes keyboard, sometimes click
+- Tired vs focused
+- Familiar vs exploring
+- Quick task vs deep work
+
+Different users:
+- Expert wants density
+- Novice wants guidance
+- Different mental models
+
+"Know your user" is wrong. "Support multiple modes of being a user" is right.
+
+One paradigm fails because it assumes one user, one need, one moment. Reality is plural.
+
+### Good Design vs Multiple Paradigms
+
+**Tension:**
+- Multiple paradigms → serves more users/contexts
+- Cohesive design → works smoothly, constraints = clarity
+
+**Resolution:**
+Maybe not "one infinitely flexible thing."
+Maybe "many small cohesive things, with ability to switch."
+
+Each projection is a Pico-8 - constrained, cohesive, good.
+The platform lets you have many Pico-8s.
+
+### Too Connected = Bad Design
+
+If the interaction graph is too connected, the problem isn't filtering. It's architecture.
+
+A well-designed system has a clean graph:
+- Not because you filtered a messy one
+- Because the underlying structure is right
+- Complexity is *appropriate*
+
+If you NEED heavy filtering to make it usable → the design is bad.
+
+**Context filtering isn't a solution for bad design. It's a coping mechanism.**
+
+The real solution: design a graph that doesn't need heroic filtering. Keep connections meaningful. Keep complexity appropriate.
+
+### Case Study: Moss
+
+Moss primitives, filtered down to:
+- **view**
+- **edit**
+- **analyze** (compute metrics)
+
+All using unified fuzzy search syntax.
+
+Not 50 commands. Three verbs. One syntax. Clean graph.
+
+The complexity went down not by runtime filtering, but by **reducing the primitive set at design time.**
+
+### The Ask
+
+"I just *like* when my software isn't exotic and opaque. Is that too much to ask?"
+
+Apparently yes, given the state of things. But it shouldn't be.
