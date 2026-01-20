@@ -5240,3 +5240,63 @@ Process:
 6. What's the next iteration?
 
 **The goal:** Diagnose → propose → check prior art → iterate.
+
+---
+
+## The Meta-Pattern: Multiple Paradigms
+
+### "Showing Relationships" Isn't UI
+
+Putting a data structure on screen ≠ good design.
+
+- Obsidian's graph: "Look! Nodes and edges!" → okay, and?
+- File tree: "Look! Hierarchy!" → okay, and?
+
+vs.
+
+- "This is most important → big, top-left"
+- "This is secondary → smaller, below"
+- "These relate → visually connected"
+
+**Structure informs design. It doesn't replace it.**
+
+The interaction graph isn't "render the relationship data." It's "use relationship data to determine importance, placement, affordances."
+
+### Finding Things: Not One Strategy
+
+How do you find a friend's apartment in a building?
+
+- Ask the doorman (query a person/system)
+- Check the directory (index/map)
+- Call your friend (direct query to source)
+- Remember "3rd floor, end of hall" (spatial memory)
+- Wander and look at numbers (browse)
+- Combination of all of the above
+
+Not spatial OR search. Not spatial THEN search.
+
+**Whatever works for this moment.** Fluid switching between strategies.
+
+Real life gives you: spatial, ask, remember, browse, index, shortcut...
+Filesystem gives you: hierarchy + search. That's it.
+
+The poverty isn't "wrong paradigm." It's "only one paradigm."
+
+### The Meta-Pattern
+
+This is the Canopy insight, generalized:
+
+| Domain | One paradigm (bad) | Multiple paradigms (good) |
+|--------|-------------------|---------------------------|
+| Viewing data | One fixed view | Multiple projections, user-chosen |
+| Finding things | Just search OR just browse | Spatial, search, browse, ask, remember... |
+| Editing graphs | Just nodes OR just text | Nodes, text, CyberChef, whatever fits |
+| Navigation | Just hierarchy | Spatial, shortcuts, search, recents... |
+
+**The insight that keeps applying:**
+
+"One paradigm" is always wrong. The answer is always "multiple, fluid, user-chosen."
+
+Don't pick the right paradigm. Offer multiple. Let the user switch based on context, task, preference.
+
+This is what Canopy is trying to be: not "the right view" but "the ability to have any view."
