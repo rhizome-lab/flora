@@ -4612,15 +4612,21 @@ The ceiling moved. The dream was blocked by "requires a type of mind that doesn'
 Technically possible. For someone:
 - Right genetic lottery
 - Right upbringing and education
-- Financial stability (time to learn)
+- Financial stability
 - No major life disruptions
 - Chose this problem specifically
 - Sustained drive over years
 - Didn't burn out or get comfortable
 
-Each filter removes 90%+. Stack them: one-in-billions. That person probably exists but got hit by a filter, became a specialist, gave up, or never started.
+Each filter removes 90%+. Stack them: one-in-billions.
 
-LLMs sidestep the life-circumstance lottery. You don't need to have been born into the right conditions. You just need access.
+**On "free time":** Tons of people theoretically have the time. 100k+ messages on Discord. 10k+ hours on WoW. The time exists. Not judging - just noting that "lack of time" is often misattributed. The resource exists. The *allocation* doesn't.
+
+The bottleneck isn't time. It's motivation and direction. Knowing what to build, caring enough to build it, sustaining that over years.
+
+That person who could do it probably exists but got hit by a filter: became a specialist, chose different priorities, gave up, or never started. All valid choices. The dream just doesn't get built.
+
+LLMs sidestep the skill-accumulation lottery. You don't need decades of cross-domain learning. But you still need the motivation. That part doesn't change.
 
 ### What Skill Is Still Required?
 
