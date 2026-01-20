@@ -3905,3 +3905,88 @@ This is the core insight: **structured world state becomes LLM context**.
 - Is context injection the actual value? (Test with POC before building MOO)
 - Do I want to build MOO again, or was lotus enough exploration?
 - What's the minimal thing that would actually get used?
+
+---
+
+## The State of Software (2026)
+
+### Why Good Things Don't Exist
+
+Most missing tools are **bridge problems** - they require crossing between specializations, and specialists rarely cross.
+
+Example: Trellis (composable derive macros) needs:
+- Proc macro expertise (notoriously hard, most Rust devs avoid it)
+- Deep understanding of HTTP, WebSocket, gRPC, CLI, MCP conventions
+- API design taste (what's the right abstraction level?)
+- The vision that this *should* exist
+
+Interactive learning needs: domain expertise + pedagogy + interaction design + implementation. Four disciplines, one person (or a team that actually communicates).
+
+The Venn diagram of "can build it" and "will build it" and "has time to build it" is nearly empty.
+
+**Plus incentives:**
+- Open source maintainers burn out
+- Companies optimize for features, not polish
+- Academia rewards novelty, not accessibility
+- "Quality of life" improvements don't get funded
+
+### LLMs Change the Equation
+
+LLMs collapse the skill barrier - you don't need to *be* a proc macro expert if you can collaborate with one. The "bridge" becomes walkable.
+
+But motivation is still the bottleneck:
+- Who *sees* that it should exist?
+- Who cares enough to start?
+- Who follows through past the prototype?
+
+LLMs help with execution, not vision. The person still needs to notice the gap, believe it's worth filling, and sustain effort through the unglamorous parts.
+
+**The new scarcity isn't skill, it's *taste* + *drive*.** Knowing what's worth building, and actually shipping it.
+
+### The Graveyard of Incomplete Implementations
+
+OOXML is a perfect example. Many libraries exist. How many are complete? How many authors are competent? How many gain traction?
+
+**Failure modes stack:**
+1. **Started but abandoned** - hit the hard parts, gave up
+2. **Complete but wrong** - implemented the spec, not the behavior (Word doesn't follow its own spec)
+3. **Correct but obscure** - good work nobody finds
+4. **Found but untrusted** - no proven track record, so nobody adopts, so no track record
+
+The gap isn't "nobody tried." It's that trying isn't enough. You need skill + domain knowledge + completion + distribution. Each step filters out 90% of attempts.
+
+### Incumbents Aren't Competent
+
+The uncomfortable truth: incumbents often won by showing up first, not by being good.
+
+So the bar is actually low - but it *looks* high because:
+- Incumbents seem authoritative (they're everywhere)
+- Newcomers assume they need to be better to compete
+- In reality, "finished and marketed" beats "better but obscure"
+
+**The real filter is:**
+1. Showing up
+2. Finishing
+3. Telling people
+
+Most projects fail at step 2 or 3, not step 1. The competition isn't as scary as it looks - they're just further along the "actually shipped it" axis.
+
+### How Good Is Software Actually?
+
+**The median software experience:**
+- Buggy (even flagship products)
+- Bloated (Electron chat apps at 500MB)
+- Half-finished (features that almost work)
+- User-hostile (dark patterns, subscriptions, telemetry)
+- Fragile (breaks on updates, dependency nightmares)
+
+**The stuff that's actually good:**
+- Core infrastructure (SQLite, PostgreSQL, Linux kernel)
+- Focused tools by obsessives (ffmpeg, imagemagick, pandoc)
+- Things with decades of polish
+
+**The uncomfortable truth:** Most software we use daily is mediocre. We've just normalized it. "Good enough" captures the market and then coasts. Nobody rewrites Jira because Jira exists.
+
+2026 and we still can't copy-paste reliably between apps.
+
+So when building "silly projects" - the bar you're competing against is often shockingly low. The incumbent is a mass of tech debt held together by inertia and network effects.
