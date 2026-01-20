@@ -5139,3 +5139,104 @@ Specific examples → extract insights → distill patterns.
 **Smalltalk:** Invented OOP, GUI, IDE. Why didn't it win? Too different? Licensing? Timing?
 
 (To be expanded with actual extraction work.)
+
+---
+
+## WIMP: What Actually Sucks
+
+Not just "paper analogy." Specific problems:
+
+1. Paper skeuomorphism
+2. Single cursor - one point of interaction
+3. Rectangles compete for space - zero-sum
+4. Hidden functionality - menus, hunting
+5. Mode-heavy - each app is isolated world
+6. No spatial memory - windows move, forget position
+7. Focus is binary - one active, rest background
+8. Apps don't know about each other - copy-paste only integration
+9. File-centric - everything must be a file
+10. Discoverability is terrible
+11. **Everything neatly partitioned** - is this optimal?
+
+### Neatly Partitioned Critique
+
+Windows are isolated boxes. They don't:
+- Overlap meaningfully
+- Flow into each other
+- Share context
+- Relate visually
+
+"Neat partition" solves: "where do I put this thing"
+Doesn't solve: "how do these relate" / "what's my context" / "what spawned what"
+
+**What would "structured but not partitioned" look like?**
+
+---
+
+## Alternatives Beyond First Step
+
+Not just "what was tried" but "what's the NEXT iteration?"
+
+### Tiling Evolution
+- Tiling WMs: windows don't overlap
+- Workspaces: groups of windows, switch between
+- PaperWM/Niri: horizontal scroll, spatial + infinite line
+- **Niri gaining traction** - middle ground that works
+
+### Infinite Canvas (InfiniteGlass, etc.)
+Tried: 2D infinite canvas with zoom.
+**Why didn't it stick?**
+- Lost snapping (efficient placement matters)
+- Lost efficient navigation (how to FIND things?)
+- Niri works because it keeps structure
+
+### Spatial Memory / 2D Desk
+
+**The appeal:**
+Not `/documents/homework/2012/mar/10/`
+But "upstairs next to the aquarium"
+
+Different mental model. Spatial memory is real - humans remember WHERE things are.
+
+**The problems:**
+- Limited space
+- Doesn't scale
+- Not guaranteed to be better
+- Might just be a gimmick
+
+**The pragmatic alternative:** Fuzzy search
+- Don't remember WHERE, search for WHAT
+- Works, but loses spatial/relational context
+
+**Maybe the answer is hybrid:**
+- Spatial for small, frequent, current
+- Hierarchical for archive/organization
+- Search for retrieval when you forget
+- Structure that aids search (tags, relationships)
+
+### Prior Art: iTunes Coverflow
+Not a grid, not a list. Spatial, scrollable, depth-based.
+Browse by feel, not coordinates.
+Beautiful but... actually useful? Or just pretty?
+
+### Rusty Lake / Escape Room UX
+You're IN a space. Drawers you open. Objects you find and combine.
+Spatial memory matters. The desk IS the interface.
+
+This exists in games. Why not productivity software?
+
+---
+
+## Contrarian When Things Visibly Suck
+
+Not contrarian for contrarian's sake.
+
+Process:
+1. This specific thing sucks → why?
+2. What would not-sucking look like?
+3. Has anyone tried that?
+4. If yes, why didn't it work?
+5. If no, why not?
+6. What's the next iteration?
+
+**The goal:** Diagnose → propose → check prior art → iterate.
