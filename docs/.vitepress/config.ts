@@ -27,6 +27,8 @@ export default withMermaid(
             text: 'Design',
             items: [
               { text: 'Iris', link: '/design/iris' },
+              { text: 'Servers Brainstorm', link: '/design/servers-brainstorm' },
+              { text: 'Distilled Insights', link: '/design/distilled-insights' },
             ]
           },
         ]
