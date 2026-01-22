@@ -681,27 +681,22 @@ export function listBindings(schema) {
  * store.save({ delete: { keys: ['$mod+d'] } })
  */
 export class BindingsStore extends EventTarget {
-  /** @type {T} */ #bindings
-  /** @type {BindingOverrides} */ #overrides
-  /** @type {T} */ #schema
-  /** @type {string} */ #storageKey
-
   /**
    * @param {T} schema - Default bindings schema
    * @param {string} storageKey - localStorage key
    */
   constructor(schema, storageKey) {
     super()
-    this.#schema = schema
-    this.#storageKey = storageKey
-    this.#overrides = this.#loadOverrides()
-    this.#bindings = /** @type {T} */ (mergeBindings(schema, this.#overrides))
+    /** @type {T} */ this.schema = schema
+    /** @type {string} */ this.storageKey = storageKey
+    /** @type {BindingOverrides} */ this.overrides = this.loadOverrides()
+    /** @type {T} */ this.bindings = /** @type {T} */ (mergeBindings(schema, this.overrides))
   }
 
   /** @returns {BindingOverrides} */
-  #loadOverrides() {
+  loadOverrides() {
     try {
-      return JSON.parse(localStorage.getItem(this.#storageKey) || '{}')
+      return JSON.parse(localStorage.getItem(this.storageKey) || '{}')
     } catch {
       return {}
     }
@@ -709,24 +704,24 @@ export class BindingsStore extends EventTarget {
 
   /** Get current bindings (schema merged with overrides) */
   get() {
-    return this.#bindings
+    return this.bindings
   }
 
   /** Get current overrides only */
   getOverrides() {
-    return this.#overrides
+    return this.overrides
   }
 
   /**
    * Save new overrides and dispatch 'change' event
-   * @param {BindingOverrides} overrides
+   * @param {BindingOverrides} newOverrides
    */
-  save(overrides) {
-    this.#overrides = overrides
-    localStorage.setItem(this.#storageKey, JSON.stringify(overrides))
-    this.#bindings = /** @type {T} */ (mergeBindings(this.#schema, this.#overrides))
+  save(newOverrides) {
+    this.overrides = newOverrides
+    localStorage.setItem(this.storageKey, JSON.stringify(newOverrides))
+    this.bindings = /** @type {T} */ (mergeBindings(this.schema, this.overrides))
     this.dispatchEvent(new CustomEvent('change', {
-      detail: { bindings: this.#bindings, overrides: this.#overrides }
+      detail: { bindings: this.bindings, overrides: this.overrides }
     }))
   }
 }
