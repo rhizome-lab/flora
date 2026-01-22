@@ -97,6 +97,7 @@ From ecosystem-wide session analysis:
 - **Implement fully:** No silent arbitrary caps, incomplete pagination, or unexposed trait methods
 - **Name for purpose:** Avoid names that describe one consumer
 - **Verify before stating:** Don't assert API behavior or codebase facts without checking
+- **Prefer simplicity:** Regular properties over private fields, unless encapsulation is truly needed. Simpler code is easier to debug
 
 ## Negative Constraints
 
