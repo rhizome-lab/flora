@@ -6,12 +6,51 @@
  */
 
 /**
+ * @typedef {Object} Modifiers
+ * @property {boolean} ctrl
+ * @property {boolean} alt
+ * @property {boolean} shift
+ * @property {boolean} meta
+ */
+
+/**
+ * @typedef {Object} ParsedKey
+ * @property {Modifiers} mods
+ * @property {string} key
+ */
+
+/**
+ * @typedef {Object} ParsedMouse
+ * @property {Modifiers} mods
+ * @property {number} button
+ */
+
+/**
+ * @typedef {Object} Command
+ * @property {string} id - Unique identifier
+ * @property {string} label - Display name
+ * @property {string} [category] - Group for command palette
+ * @property {string[]} [keys] - Keyboard triggers
+ * @property {string[]} [mouse] - Mouse triggers
+ * @property {(ctx: Record<string, unknown>) => boolean} [when] - Activation condition
+ * @property {(ctx: Record<string, unknown>, event?: Event) => unknown} execute - Action
+ * @property {boolean} [hidden] - Hide from search
+ * @property {boolean} [captureInput] - Fire even in input fields
+ */
+
+/**
+ * @typedef {Command & { active: boolean, score: number }} ScoredCommand
+ */
+
+/**
  * Detect Mac platform
  */
 const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform)
 
 /**
  * Parse modifiers from a binding string
+ * @param {string[]} parts
+ * @returns {{ mods: Modifiers, remaining: string[] }}
  */
 function parseMods(parts) {
   const mods = { ctrl: false, alt: false, shift: false, meta: false }
@@ -34,6 +73,9 @@ function parseMods(parts) {
 
 /**
  * Check if event modifiers match
+ * @param {KeyboardEvent | MouseEvent} event
+ * @param {Modifiers} mods
+ * @returns {boolean}
  */
 function modsMatch(event, mods) {
   return event.ctrlKey === mods.ctrl &&
@@ -64,6 +106,8 @@ const VALID_MOUSE = new Set([
 
 /**
  * Parse a key string like "Ctrl+Shift+K" into normalized form
+ * @param {string} keyStr
+ * @returns {ParsedKey}
  * @throws {Error} if key binding is invalid
  */
 function parseKey(keyStr) {
@@ -78,14 +122,13 @@ function parseKey(keyStr) {
 
   const { mods, remaining } = parseMods(parts)
 
-  if (remaining.length === 0) {
+  const key = remaining[0]
+  if (key === undefined) {
     throw new Error(`Key binding has no key (only modifiers): "${keyStr}"`)
   }
   if (remaining.length > 1) {
     throw new Error(`Key binding has multiple keys: "${keyStr}" (got: ${remaining.join(', ')})`)
   }
-
-  const key = remaining[0]
   if (!VALID_KEYS.has(key)) {
     throw new Error(`Unknown key "${key}" in binding "${keyStr}"`)
   }
@@ -96,6 +139,8 @@ function parseKey(keyStr) {
 /**
  * Parse a mouse binding like "$mod+Click" or "MiddleClick"
  * Supported: Click/LeftClick, RightClick, MiddleClick
+ * @param {string} binding
+ * @returns {ParsedMouse}
  * @throws {Error} if mouse binding is invalid
  */
 function parseMouse(binding) {
@@ -110,14 +155,13 @@ function parseMouse(binding) {
 
   const { mods, remaining } = parseMods(parts)
 
-  if (remaining.length === 0) {
+  const btn = remaining[0]
+  if (btn === undefined) {
     throw new Error(`Mouse binding has no button (only modifiers): "${binding}"`)
   }
   if (remaining.length > 1) {
     throw new Error(`Mouse binding has multiple buttons: "${binding}"`)
   }
-
-  const btn = remaining[0]
   if (!VALID_MOUSE.has(btn)) {
     throw new Error(`Unknown mouse button "${btn}" in binding "${binding}". Valid: Click, RightClick, MiddleClick`)
   }
@@ -131,6 +175,9 @@ function parseMouse(binding) {
 
 /**
  * Check if a keyboard event matches a parsed key
+ * @param {KeyboardEvent} event
+ * @param {ParsedKey} parsed
+ * @returns {boolean}
  */
 function matchesKey(event, parsed) {
   const keyMatch = event.key.toLowerCase() === parsed.key ||
@@ -142,6 +189,9 @@ function matchesKey(event, parsed) {
 
 /**
  * Check if a mouse event matches a parsed mouse binding
+ * @param {MouseEvent} event
+ * @param {ParsedMouse} parsed
+ * @returns {boolean}
  */
 function matchesMouse(event, parsed) {
   return event.button === parsed.button && modsMatch(event, parsed.mods)
@@ -149,6 +199,9 @@ function matchesMouse(event, parsed) {
 
 /**
  * Check if a command is active given current context
+ * @param {Command} command
+ * @param {Record<string, unknown>} context
+ * @returns {boolean}
  */
 function isActive(command, context) {
   if (!command.when) return true
@@ -158,11 +211,9 @@ function isActive(command, context) {
 /**
  * Create keybind handler
  *
- * @param {Array} commands - Array of command definitions
- * @param {Function} getContext - Returns current context state
- * @param {Object} options - Options
- * @param {HTMLElement} options.target - Element to listen on (default: window)
- * @param {Function} options.onExecute - Called after command executes
+ * @param {Command[]} commands - Array of command definitions
+ * @param {() => Record<string, unknown>} [getContext] - Returns current context state
+ * @param {{ target?: EventTarget, onExecute?: (cmd: Command, ctx: Record<string, unknown>) => void }} [options] - Options
  *
  * Command shape:
  *   id: string           - unique identifier
@@ -196,10 +247,17 @@ function isActive(command, context) {
  *   hasSelection: selectedId() !== null,
  *   isEditing: editingId() !== null
  * }))
+ * @returns {() => void} Cleanup function
  */
 export function keybinds(commands, getContext = () => ({}), options = {}) {
   const { target = window, onExecute } = options
 
+  /**
+   * @param {Command} cmd
+   * @param {Record<string, unknown>} context
+   * @param {KeyboardEvent | MouseEvent} event
+   * @returns {boolean}
+   */
   function tryExecute(cmd, context, event) {
     const result = cmd.execute(context, event)
     // Return false from execute to propagate (not consume)
@@ -212,11 +270,14 @@ export function keybinds(commands, getContext = () => ({}), options = {}) {
     return false
   }
 
-  function handleKeyDown(event) {
+  /** @param {Event} e */
+  function handleKeyDown(e) {
+    const event = /** @type {KeyboardEvent} */ (e)
+    const target = /** @type {Element | null} */ (event.target)
     // Don't capture when typing in inputs (unless command explicitly allows it)
-    const inInput = event.target.tagName === 'INPUT' ||
-                    event.target.tagName === 'TEXTAREA' ||
-                    event.target.isContentEditable
+    const inInput = target?.tagName === 'INPUT' ||
+                    target?.tagName === 'TEXTAREA' ||
+                    (target instanceof HTMLElement && target.isContentEditable)
 
     const context = getContext()
 
@@ -233,7 +294,9 @@ export function keybinds(commands, getContext = () => ({}), options = {}) {
     }
   }
 
-  function handleMouseDown(event) {
+  /** @param {Event} e */
+  function handleMouseDown(e) {
+    const event = /** @type {MouseEvent} */ (e)
     const context = getContext()
 
     for (const cmd of commands) {
@@ -261,10 +324,10 @@ export function keybinds(commands, getContext = () => ({}), options = {}) {
 /**
  * Search commands for command palette
  *
- * @param {Array} commands - Array of command definitions
+ * @param {Command[]} commands - Array of command definitions
  * @param {string} query - Search query
- * @param {Object} context - Current context
- * @returns {Array} Matching commands sorted by relevance (active first, then by score)
+ * @param {Record<string, unknown>} [context] - Current context
+ * @returns {ScoredCommand[]} Matching commands sorted by relevance (active first, then by score)
  */
 export function searchCommands(commands, query, context = {}) {
   const q = query.toLowerCase()
@@ -292,7 +355,7 @@ export function searchCommands(commands, query, context = {}) {
   }
 
   return results.sort((a, b) => {
-    if (a.active !== b.active) return b.active - a.active
+    if (a.active !== b.active) return (b.active ? 1 : 0) - (a.active ? 1 : 0)
     return b.score - a.score
   })
 }
@@ -300,11 +363,12 @@ export function searchCommands(commands, query, context = {}) {
 /**
  * Group commands by category
  *
- * @param {Array} commands - Array of command definitions
- * @param {Object} context - Current context (for active state)
- * @returns {Object} Commands grouped by category { [category]: Command[] }
+ * @param {Command[]} commands - Array of command definitions
+ * @param {Record<string, unknown>} [context] - Current context (for active state)
+ * @returns {Record<string, (Command & { active: boolean })[]>} Commands grouped by category
  */
 export function groupByCategory(commands, context = {}) {
+  /** @type {Record<string, (Command & { active: boolean })[]>} */
   const groups = {}
 
   for (const cmd of commands) {
@@ -322,6 +386,8 @@ export function groupByCategory(commands, context = {}) {
 
 /**
  * Validate all commands upfront (call on init to catch typos early)
+ * @param {Command[]} commands
+ * @returns {true}
  * @throws {Error} if any binding is invalid
  */
 export function validateCommands(commands) {
@@ -334,7 +400,8 @@ export function validateCommands(commands) {
         try {
           parseKey(key)
         } catch (e) {
-          throw new Error(`Command "${cmd.id}": ${e.message}`)
+          const msg = e instanceof Error ? e.message : String(e)
+          throw new Error(`Command "${cmd.id}": ${msg}`)
         }
       }
     }
@@ -343,7 +410,8 @@ export function validateCommands(commands) {
         try {
           parseMouse(binding)
         } catch (e) {
-          throw new Error(`Command "${cmd.id}": ${e.message}`)
+          const msg = e instanceof Error ? e.message : String(e)
+          throw new Error(`Command "${cmd.id}": ${msg}`)
         }
       }
     }
@@ -353,6 +421,10 @@ export function validateCommands(commands) {
 
 /**
  * Execute a command by id
+ * @param {Command[]} commands
+ * @param {string} id
+ * @param {Record<string, unknown>} [context]
+ * @returns {boolean}
  */
 export function executeCommand(commands, id, context = {}) {
   const cmd = commands.find(c => c.id === id)
@@ -365,6 +437,8 @@ export function executeCommand(commands, id, context = {}) {
 
 /**
  * Format key for display (e.g., "$mod+k" -> "⌘K" on Mac)
+ * @param {string} key
+ * @returns {string}
  */
 export function formatKey(key) {
   return key
