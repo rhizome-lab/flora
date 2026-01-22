@@ -106,3 +106,6 @@ Do not:
 - Leave work uncommitted
 - Modify seeds without testing with nursery
 - Modify Lua projects without testing with spore
+- Use path dependencies in Cargo.toml - causes clippy to stash changes across repos
+- Use `--no-verify` - fix the issue or fix the hook
+- Assume tools are missing - check if `nix develop` is available for the right environment
