@@ -1,4 +1,5 @@
-import { createSignal, onMount, For, Show } from 'solid-js';
+import { createSignal, onMount, onCleanup, For, Show } from 'solid-js';
+import { keybinds } from 'keybinds';
 import './App.css';
 
 export default function App() {
@@ -138,34 +139,44 @@ export default function App() {
     setEditingId(null);
   }
 
-  function handleKeyDown(e) {
-    if (e.key === 'Escape') {
-      setEditingId(null);
-      setSelectedId(null);
-    } else if (e.key === 'Delete' || e.key === 'Backspace') {
-      if (selectedId() && editingId() !== selectedId()) {
-        deleteObject(selectedId());
+  // Commands as data
+  const commands = [
+    {
+      id: 'deselect',
+      label: 'Deselect',
+      keys: ['Escape'],
+      execute: () => {
+        setEditingId(null);
+        setSelectedId(null);
+      }
+    },
+    {
+      id: 'delete',
+      label: 'Delete selected',
+      keys: ['Backspace', 'Delete'],
+      when: ctx => ctx.hasSelection && !ctx.isEditing,
+      execute: () => deleteObject(selectedId())
+    },
+    {
+      id: 'selectAll',
+      label: 'Select all',
+      keys: ['$mod+a'],
+      when: ctx => !ctx.isEditing,
+      execute: () => {
+        // TODO: implement multi-select
       }
     }
-  }
-
-  // Autofocus directive - defer to next frame so DOM is ready
-  function autofocus(el) {
-    requestAnimationFrame(() => {
-      el.focus();
-      const range = document.createRange();
-      range.selectNodeContents(el);
-      range.collapse(false);
-      const sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-    });
-  }
+  ];
 
   onMount(() => {
     fetchObjects();
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+
+    const cleanup = keybinds(commands, () => ({
+      hasSelection: selectedId() !== null,
+      isEditing: editingId() !== null
+    }));
+
+    onCleanup(cleanup);
   });
 
   return (
