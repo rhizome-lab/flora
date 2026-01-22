@@ -659,26 +659,15 @@ export function listBindings(schema) {
  */
 
 /**
- * @template {Schema} T
- * @typedef {Object} BindingsStore
- * @property {() => T} get - Get current bindings
- * @property {(overrides: BindingOverrides) => void} save - Save overrides and dispatch 'change' event
- * @property {() => BindingOverrides} getOverrides - Get current overrides only
- * @property {(type: 'change', listener: (ev: BindingsChangeEvent<T>) => void, options?: boolean | AddEventListenerOptions) => void} addEventListener
- * @property {(type: 'change', listener: (ev: BindingsChangeEvent<T>) => void, options?: boolean | EventListenerOptions) => void} removeEventListener
- * @property {(event: BindingsChangeEvent<T>) => boolean} dispatchEvent
- */
-
-/**
- * Create a reactive bindings store with localStorage persistence
+ * Reactive bindings store with localStorage persistence
+ *
+ * Extends EventTarget - dispatches 'change' events when bindings are saved.
  *
  * @template {Schema} T
- * @param {T} schema - Default bindings schema
- * @param {string} storageKey - localStorage key
- * @returns {BindingsStore<T>}
+ * @extends {EventTarget}
  *
  * @example
- * const store = createBindingsStore(schema, 'myapp:keybinds')
+ * const store = new BindingsStore(schema, 'myapp:keybinds')
  *
  * // Get current bindings (merged schema + overrides)
  * const bindings = store.get()
@@ -691,41 +680,54 @@ export function listBindings(schema) {
  * // Save new overrides (dispatches 'change' event)
  * store.save({ delete: { keys: ['$mod+d'] } })
  */
-export function createBindingsStore(schema, storageKey) {
-  const target = new EventTarget()
+export class BindingsStore extends EventTarget {
+  /** @type {T} */ #bindings
+  /** @type {BindingOverrides} */ #overrides
+  /** @type {T} */ #schema
+  /** @type {string} */ #storageKey
+
+  /**
+   * @param {T} schema - Default bindings schema
+   * @param {string} storageKey - localStorage key
+   */
+  constructor(schema, storageKey) {
+    super()
+    this.#schema = schema
+    this.#storageKey = storageKey
+    this.#overrides = this.#loadOverrides()
+    this.#bindings = /** @type {T} */ (mergeBindings(schema, this.#overrides))
+  }
 
   /** @returns {BindingOverrides} */
-  function loadOverrides() {
+  #loadOverrides() {
     try {
-      return JSON.parse(localStorage.getItem(storageKey) || '{}')
+      return JSON.parse(localStorage.getItem(this.#storageKey) || '{}')
     } catch {
       return {}
     }
   }
 
-  /** @type {BindingOverrides} */
-  let overrides = loadOverrides()
-  /** @type {T} */
-  let bindings = /** @type {T} */ (mergeBindings(schema, overrides))
+  /** Get current bindings (schema merged with overrides) */
+  get() {
+    return this.#bindings
+  }
 
-  return {
-    get: () => bindings,
-    getOverrides: () => overrides,
-    addEventListener: /** @type {BindingsStore<T>['addEventListener']} */ (
-      (type, listener, options) => target.addEventListener(type, /** @type {EventListener} */ (listener), options)
-    ),
-    removeEventListener: /** @type {BindingsStore<T>['removeEventListener']} */ (
-      (type, listener, options) => target.removeEventListener(type, /** @type {EventListener} */ (listener), options)
-    ),
-    dispatchEvent: (event) => target.dispatchEvent(event),
-    save(newOverrides) {
-      overrides = newOverrides
-      localStorage.setItem(storageKey, JSON.stringify(overrides))
-      bindings = /** @type {T} */ (mergeBindings(schema, overrides))
-      target.dispatchEvent(new CustomEvent('change', {
-        detail: { bindings, overrides }
-      }))
-    }
+  /** Get current overrides only */
+  getOverrides() {
+    return this.#overrides
+  }
+
+  /**
+   * Save new overrides and dispatch 'change' event
+   * @param {BindingOverrides} overrides
+   */
+  save(overrides) {
+    this.#overrides = overrides
+    localStorage.setItem(this.#storageKey, JSON.stringify(overrides))
+    this.#bindings = /** @type {T} */ (mergeBindings(this.#schema, this.#overrides))
+    this.dispatchEvent(new CustomEvent('change', {
+      detail: { bindings: this.#bindings, overrides: this.#overrides }
+    }))
   }
 }
 

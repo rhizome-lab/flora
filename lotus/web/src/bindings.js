@@ -2,7 +2,7 @@
  * Command bindings schema - source of truth for all commands
  * Settings UI reads this; components provide handlers
  */
-import { defineSchema, createBindingsStore } from 'keybinds';
+import { defineSchema, BindingsStore } from 'keybinds';
 
 export const schema = defineSchema({
   // Selection
@@ -45,4 +45,4 @@ export const schema = defineSchema({
 });
 
 // Reactive bindings store
-export const bindingsStore = createBindingsStore(schema, 'lotus:keybinds');
+export const bindingsStore = new BindingsStore(schema, 'lotus:keybinds');
