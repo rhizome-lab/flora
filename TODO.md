@@ -6,7 +6,13 @@
 
 ## Backlog
 
-(empty)
+### Lotus (object canvas)
+
+- Selection box (click and drag on empty space to select multiple objects)
+- WebSocket subscriptions for real-time updates
+- Object resize handles
+- Object links visualization (draw lines between linked objects)
+- Keyboard shortcuts (arrow keys to nudge, cmd+a to select all)
 
 ## Future Projects
 
