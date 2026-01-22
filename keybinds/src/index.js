@@ -71,19 +71,6 @@ function parseMods(parts) {
   return { mods, remaining }
 }
 
-/**
- * Check if event modifiers match
- * @param {KeyboardEvent | MouseEvent} event
- * @param {Modifiers} mods
- * @returns {boolean}
- */
-function modsMatch(event, mods) {
-  return event.ctrlKey === mods.ctrl &&
-    event.altKey === mods.alt &&
-    event.shiftKey === mods.shift &&
-    event.metaKey === mods.meta
-}
-
 // Valid key names (subset - common ones)
 const VALID_KEYS = new Set([
   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -174,27 +161,105 @@ function parseMouse(binding) {
 }
 
 /**
- * Check if a keyboard event matches a parsed key
- * @param {KeyboardEvent} event
- * @param {ParsedKey} parsed
- * @returns {boolean}
+ * Normalize modifiers to canonical string
+ * @param {Modifiers} mods
+ * @returns {string}
  */
-function matchesKey(event, parsed) {
-  const keyMatch = event.key.toLowerCase() === parsed.key ||
-                   event.code.toLowerCase() === parsed.key ||
-                   event.code.toLowerCase() === `key${parsed.key}`
-
-  return keyMatch && modsMatch(event, parsed.mods)
+function modsToString(mods) {
+  let s = ''
+  if (mods.ctrl) s += 'c'
+  if (mods.alt) s += 'a'
+  if (mods.shift) s += 's'
+  if (mods.meta) s += 'm'
+  return s
 }
 
 /**
- * Check if a mouse event matches a parsed mouse binding
- * @param {MouseEvent} event
- * @param {ParsedMouse} parsed
- * @returns {boolean}
+ * Convert parsed key to lookup key
+ * @param {ParsedKey} parsed
+ * @returns {string}
  */
-function matchesMouse(event, parsed) {
-  return event.button === parsed.button && modsMatch(event, parsed.mods)
+function keyToLookup(parsed) {
+  return `${modsToString(parsed.mods)}:${parsed.key}`
+}
+
+/**
+ * Convert keyboard event to lookup keys (returns multiple for key/code variants)
+ * @param {KeyboardEvent} event
+ * @returns {string[]}
+ */
+function eventToKeyLookups(event) {
+  const mods = modsToString({
+    ctrl: event.ctrlKey,
+    alt: event.altKey,
+    shift: event.shiftKey,
+    meta: event.metaKey
+  })
+  const key = event.key.toLowerCase()
+  const code = event.code.toLowerCase()
+  const codeKey = code.startsWith('key') ? code.slice(3) : null
+
+  const lookups = [`${mods}:${key}`]
+  if (code !== key) lookups.push(`${mods}:${code}`)
+  if (codeKey && codeKey !== key) lookups.push(`${mods}:${codeKey}`)
+  return lookups
+}
+
+/**
+ * Convert parsed mouse binding to lookup key
+ * @param {ParsedMouse} parsed
+ * @returns {string}
+ */
+function mouseToLookup(parsed) {
+  return `m${modsToString(parsed.mods)}:${parsed.button}`
+}
+
+/**
+ * Convert mouse event to lookup key
+ * @param {MouseEvent} event
+ * @returns {string}
+ */
+function eventToMouseLookup(event) {
+  const mods = modsToString({
+    ctrl: event.ctrlKey,
+    alt: event.altKey,
+    shift: event.shiftKey,
+    meta: event.metaKey
+  })
+  return `m${mods}:${event.button}`
+}
+
+/**
+ * Build lookup tables for O(1) dispatch
+ * @param {Command[]} commands
+ * @returns {{ keys: Map<string, Command[]>, mouse: Map<string, Command[]> }}
+ */
+function buildLookupTables(commands) {
+  /** @type {Map<string, Command[]>} */
+  const keys = new Map()
+  /** @type {Map<string, Command[]>} */
+  const mouse = new Map()
+
+  for (const cmd of commands) {
+    if (cmd.keys) {
+      for (const key of cmd.keys) {
+        const lookup = keyToLookup(parseKey(key))
+        const list = keys.get(lookup)
+        if (list) list.push(cmd)
+        else keys.set(lookup, [cmd])
+      }
+    }
+    if (cmd.mouse) {
+      for (const binding of cmd.mouse) {
+        const lookup = mouseToLookup(parseMouse(binding))
+        const list = mouse.get(lookup)
+        if (list) list.push(cmd)
+        else mouse.set(lookup, [cmd])
+      }
+    }
+  }
+
+  return { keys, mouse }
 }
 
 /**
@@ -252,6 +317,9 @@ function isActive(command, context) {
 export function keybinds(commands, getContext = () => ({}), options = {}) {
   const { target = window, onExecute } = options
 
+  // Build lookup tables for O(1) dispatch
+  const lookup = buildLookupTables(commands)
+
   /**
    * @param {Command} cmd
    * @param {Record<string, unknown>} context
@@ -273,41 +341,42 @@ export function keybinds(commands, getContext = () => ({}), options = {}) {
   /** @param {Event} e */
   function handleKeyDown(e) {
     const event = /** @type {KeyboardEvent} */ (e)
-    const target = /** @type {Element | null} */ (event.target)
+    const tgt = /** @type {Element | null} */ (event.target)
     // Don't capture when typing in inputs (unless command explicitly allows it)
-    const inInput = target?.tagName === 'INPUT' ||
-                    target?.tagName === 'TEXTAREA' ||
-                    (target instanceof HTMLElement && target.isContentEditable)
+    const inInput = tgt?.tagName === 'INPUT' ||
+                    tgt?.tagName === 'TEXTAREA' ||
+                    (tgt instanceof HTMLElement && tgt.isContentEditable)
+
+    // O(1) lookup - try all key variants (key, code, codeKey)
+    const lookups = eventToKeyLookups(event)
+    /** @type {Command[] | undefined} */
+    let candidates
+    for (const l of lookups) {
+      candidates = lookup.keys.get(l)
+      if (candidates) break
+    }
+    if (!candidates) return
 
     const context = getContext()
-
-    for (const cmd of commands) {
-      if (!cmd.keys || cmd.keys.length === 0) continue
+    for (const cmd of candidates) {
       if (inInput && !cmd.captureInput) continue
       if (!isActive(cmd, context)) continue
-
-      for (const key of cmd.keys) {
-        if (matchesKey(event, parseKey(key))) {
-          if (tryExecute(cmd, context, event)) return
-        }
-      }
+      if (tryExecute(cmd, context, event)) return
     }
   }
 
   /** @param {Event} e */
   function handleMouseDown(e) {
     const event = /** @type {MouseEvent} */ (e)
+
+    // O(1) lookup
+    const candidates = lookup.mouse.get(eventToMouseLookup(event))
+    if (!candidates) return
+
     const context = getContext()
-
-    for (const cmd of commands) {
-      if (!cmd.mouse || cmd.mouse.length === 0) continue
+    for (const cmd of candidates) {
       if (!isActive(cmd, context)) continue
-
-      for (const binding of cmd.mouse) {
-        if (matchesMouse(event, parseMouse(binding))) {
-          if (tryExecute(cmd, context, event)) return
-        }
-      }
+      if (tryExecute(cmd, context, event)) return
     }
   }
 
