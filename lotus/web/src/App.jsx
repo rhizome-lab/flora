@@ -5,26 +5,46 @@ import CommandPalette from './CommandPalette';
 import Settings from './Settings';
 import './App.css';
 
+/**
+ * @typedef {Object} ObjectData
+ * @property {string} [type]
+ * @property {string} [content]
+ * @property {number} [x]
+ * @property {number} [y]
+ * @property {number} [width]
+ * @property {number} [height]
+ */
+
+/**
+ * @typedef {Object} CanvasObject
+ * @property {string} id
+ * @property {ObjectData} [data]
+ */
+
 export default function App() {
-  const [offset, setOffset] = createSignal({ x: 0, y: 0 });
+  const [offset, setOffset] = createSignal(/** @type {{ x: number, y: number }} */ ({ x: 0, y: 0 }));
   const [scale, setScale] = createSignal(1);
   const [isPanning, setIsPanning] = createSignal(false);
-  const [panStart, setPanStart] = createSignal({ x: 0, y: 0 });
+  const [panStart, setPanStart] = createSignal(/** @type {{ x: number, y: number }} */ ({ x: 0, y: 0 }));
 
-  const [objects, setObjects] = createSignal([]);
-  const [selectedId, setSelectedId] = createSignal(null);
-  const [editingId, setEditingId] = createSignal(null);
-  const [draggedId, setDraggedId] = createSignal(null);
-  const [dragOffset, setDragOffset] = createSignal({ x: 0, y: 0 });
+  const [objects, setObjects] = createSignal(/** @type {CanvasObject[]} */ ([]));
+  const [selectedId, setSelectedId] = createSignal(/** @type {string | null} */ (null));
+  const [editingId, setEditingId] = createSignal(/** @type {string | null} */ (null));
+  const [draggedId, setDraggedId] = createSignal(/** @type {string | null} */ (null));
+  const [dragOffset, setDragOffset] = createSignal(/** @type {{ x: number, y: number }} */ ({ x: 0, y: 0 }));
   const [paletteOpen, setPaletteOpen] = createSignal(false);
   const [settingsOpen, setSettingsOpen] = createSignal(false);
 
   // API helpers
   async function fetchObjects() {
     const res = await fetch('/api/objects');
-    setObjects(await res.json());
+    setObjects(/** @type {CanvasObject[]} */ (await res.json()));
   }
 
+  /**
+   * @param {number} x
+   * @param {number} y
+   */
   async function createObject(x, y) {
     const canvasX = (x - offset().x) / scale();
     const canvasY = (y - offset().y) / scale();
@@ -43,12 +63,16 @@ export default function App() {
         }
       })
     });
-    const obj = await res.json();
+    const obj = /** @type {CanvasObject} */ (await res.json());
     setObjects([...objects(), obj]);
     setEditingId(obj.id);
     return obj;
   }
 
+  /**
+   * @param {string} id
+   * @param {ObjectData} data
+   */
   async function updateObject(id, data) {
     await fetch(`/api/objects/${id}`, {
       method: 'PUT',
@@ -58,6 +82,7 @@ export default function App() {
     setObjects(objects().map(o => o.id === id ? { ...o, data } : o));
   }
 
+  /** @param {string} id */
   async function deleteObject(id) {
     await fetch(`/api/objects/${id}`, { method: 'DELETE' });
     setObjects(objects().filter(o => o.id !== id));
@@ -66,6 +91,7 @@ export default function App() {
   }
 
   // Event handlers
+  /** @param {WheelEvent} e */
   function handleWheel(e) {
     e.preventDefault();
 
@@ -73,7 +99,7 @@ export default function App() {
     const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
     const newScale = Math.min(Math.max(scale() * zoomFactor, 0.1), 5);
 
-    const rect = e.currentTarget.getBoundingClientRect();
+    const rect = /** @type {Element} */ (e.currentTarget).getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
@@ -84,8 +110,10 @@ export default function App() {
     setScale(newScale);
   }
 
+  /** @param {MouseEvent} e */
   function handleMouseDown(e) {
-    if (e.target.closest('.object')) return;
+    const target = /** @type {Element} */ (e.target);
+    if (target.closest('.object')) return;
 
     // Left click on empty space to pan
     if (e.button === 0) {
@@ -94,15 +122,19 @@ export default function App() {
     }
   }
 
+  /** @param {MouseEvent} e */
   function handleMouseMove(e) {
     if (isPanning()) {
       setOffset({ x: e.clientX - panStart().x, y: e.clientY - panStart().y });
-    } else if (draggedId()) {
-      const obj = objects().find(o => o.id === draggedId());
-      if (obj) {
-        const newX = (e.clientX - offset().x) / scale() - dragOffset().x;
-        const newY = (e.clientY - offset().y) / scale() - dragOffset().y;
-        updateObject(draggedId(), { ...obj.data, x: newX, y: newY });
+    } else {
+      const id = draggedId();
+      if (id) {
+        const obj = objects().find(o => o.id === id);
+        if (obj) {
+          const newX = (e.clientX - offset().x) / scale() - dragOffset().x;
+          const newY = (e.clientY - offset().y) / scale() - dragOffset().y;
+          updateObject(id, { ...obj.data, x: newX, y: newY });
+        }
       }
     }
   }
@@ -112,12 +144,18 @@ export default function App() {
     setDraggedId(null);
   }
 
+  /** @param {MouseEvent} e */
   function handleDoubleClick(e) {
-    if (e.target.closest('.object')) return;
-    const rect = e.currentTarget.getBoundingClientRect();
+    const target = /** @type {Element} */ (e.target);
+    if (target.closest('.object')) return;
+    const rect = /** @type {Element} */ (e.currentTarget).getBoundingClientRect();
     createObject(e.clientX - rect.left, e.clientY - rect.top);
   }
 
+  /**
+   * @param {MouseEvent} e
+   * @param {CanvasObject} obj
+   */
   function handleObjectMouseDown(e, obj) {
     e.stopPropagation();
     setSelectedId(obj.id);
@@ -133,13 +171,22 @@ export default function App() {
     }
   }
 
+  /**
+   * @param {MouseEvent} e
+   * @param {CanvasObject} obj
+   */
   function handleObjectDoubleClick(e, obj) {
     e.stopPropagation();
     setEditingId(obj.id);
   }
 
+  /**
+   * @param {FocusEvent} e
+   * @param {CanvasObject} obj
+   */
   function handleContentBlur(e, obj) {
-    const newContent = e.target.innerText;
+    const target = /** @type {HTMLElement} */ (e.target);
+    const newContent = target.innerText;
     updateObject(obj.id, { ...obj.data, content: newContent });
     setEditingId(null);
   }
@@ -150,11 +197,12 @@ export default function App() {
       setEditingId(null);
       setSelectedId(null);
     },
-    delete: () => deleteObject(selectedId()),
+    delete: () => { const id = selectedId(); if (id) deleteObject(id); },
     selectAll: () => {
       // TODO: implement multi-select
     },
-    pan: (_ctx, event) => {
+    pan: (/** @type {Record<string, unknown>} */ _ctx, /** @type {Event | undefined} */ event) => {
+      if (!event || !(event instanceof MouseEvent)) return;
       setIsPanning(true);
       setPanStart({ x: event.clientX - offset().x, y: event.clientY - offset().y });
     },
@@ -168,8 +216,8 @@ export default function App() {
 
   // Build commands from global bindings + local handlers
   const commands = fromBindings(bindings, handlers, {
-    delete: { when: ctx => ctx.hasSelection && !ctx.isEditing },
-    selectAll: { when: ctx => !ctx.isEditing }
+    delete: { when: ctx => Boolean(ctx['hasSelection']) && !ctx['isEditing'] },
+    selectAll: { when: ctx => !ctx['isEditing'] }
   });
 
   // Validate (catches binding typos early)
@@ -231,7 +279,7 @@ export default function App() {
                   <div
                     class="object__content object__content--editable"
                     contentEditable={true}
-                    ref={(el) => {
+                    ref={(/** @type {HTMLElement} */ el) => {
                       el.textContent = content();
                       requestAnimationFrame(() => {
                         el.focus();
@@ -239,8 +287,10 @@ export default function App() {
                         range.selectNodeContents(el);
                         range.collapse(false);
                         const sel = window.getSelection();
-                        sel.removeAllRanges();
-                        sel.addRange(range);
+                        if (sel) {
+                          sel.removeAllRanges();
+                          sel.addRange(range);
+                        }
                       });
                     }}
                     onBlur={(e) => handleContentBlur(e, obj)}

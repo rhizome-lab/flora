@@ -1,4 +1,4 @@
-import { createSignal, createEffect, For, Show, onMount, onCleanup } from 'solid-js';
+import { createSignal, createEffect, For, Show, onMount } from 'solid-js';
 import { searchCommands, formatKey } from 'keybinds';
 
 /**
@@ -8,6 +8,7 @@ import { searchCommands, formatKey } from 'keybinds';
 export default function CommandPalette(props) {
   const [query, setQuery] = createSignal('');
   const [selectedIndex, setSelectedIndex] = createSignal(0);
+  /** @type {HTMLInputElement | undefined} */
   let inputRef;
 
   const results = () => searchCommands(props.commands, query(), props.context());
@@ -18,6 +19,7 @@ export default function CommandPalette(props) {
     setSelectedIndex(0);
   });
 
+  /** @param {KeyboardEvent} e */
   function handleKeyDown(e) {
     switch (e.key) {
       case 'ArrowDown':
@@ -84,7 +86,7 @@ export default function CommandPalette(props) {
                   <span class="palette__item-category">{cmd.category}</span>
                 </Show>
                 <Show when={cmd.keys?.[0]}>
-                  <span class="palette__item-key">{formatKey(cmd.keys[0])}</span>
+                  <span class="palette__item-key">{formatKey(/** @type {string} */ (cmd.keys?.[0]))}</span>
                 </Show>
               </button>
             )}

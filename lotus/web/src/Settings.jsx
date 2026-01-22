@@ -3,6 +3,12 @@ import { listBindings, formatKey } from 'keybinds';
 import { schema, saveUserBindings } from './bindings';
 
 /**
+ * @typedef {{ keys?: string[], mouse?: string[] }} BindingOverride
+ * @typedef {Record<string, BindingOverride>} Overrides
+ * @typedef {{ id: string, type: string } | null} CaptureState
+ */
+
+/**
  * Settings modal for rebinding keys
  * @param {{ onClose: () => void, onSave: () => void }} props
  */
@@ -11,30 +17,41 @@ export default function Settings(props) {
 
   // Track overrides (only modified bindings)
   const [overrides, setOverrides] = createSignal(
-    JSON.parse(localStorage.getItem('lotus:keybinds') || '{}')
+    /** @type {Overrides} */ (JSON.parse(localStorage.getItem('lotus:keybinds') || '{}'))
   );
-  const [capturing, setCapturing] = createSignal(null); // id being captured
+  const [capturing, setCapturing] = createSignal(/** @type {CaptureState} */ (null));
 
+  /** @param {string} id */
   function getCurrentKeys(id) {
-    return overrides()[id]?.keys ?? schema[id]?.keys ?? [];
+    const s = /** @type {Record<string, { keys?: string[], mouse?: string[] }>} */ (schema);
+    return overrides()[id]?.keys ?? s[id]?.keys ?? [];
   }
 
+  /** @param {string} id */
   function getCurrentMouse(id) {
-    return overrides()[id]?.mouse ?? schema[id]?.mouse ?? [];
+    const s = /** @type {Record<string, { keys?: string[], mouse?: string[] }>} */ (schema);
+    return overrides()[id]?.mouse ?? s[id]?.mouse ?? [];
   }
 
+  /**
+   * @param {string} id
+   * @param {string} type
+   */
   function startCapture(id, type) {
     setCapturing({ id, type });
   }
 
+  /** @param {KeyboardEvent} e */
   function handleKeyCapture(e) {
-    if (!capturing()) return;
+    const cap = capturing();
+    if (!cap) return;
 
     e.preventDefault();
     e.stopPropagation();
 
     // Build key string
-    let parts = [];
+    /** @type {string[]} */
+    const parts = [];
     if (e.ctrlKey || e.metaKey) parts.push('$mod');
     else {
       if (e.ctrlKey) parts.push('Ctrl');
@@ -49,7 +66,7 @@ export default function Settings(props) {
     parts.push(e.key.length === 1 ? e.key.toUpperCase() : e.key);
     const keyStr = parts.join('+');
 
-    const { id } = capturing();
+    const { id } = cap;
     setOverrides(prev => ({
       ...prev,
       [id]: { ...prev[id], keys: [keyStr] }
@@ -57,6 +74,10 @@ export default function Settings(props) {
     setCapturing(null);
   }
 
+  /**
+   * @param {string} id
+   * @param {'keys' | 'mouse'} type
+   */
   function clearBinding(id, type) {
     setOverrides(prev => ({
       ...prev,
@@ -64,6 +85,7 @@ export default function Settings(props) {
     }));
   }
 
+  /** @param {string} id */
   function resetBinding(id) {
     setOverrides(prev => {
       const next = { ...prev };
@@ -80,6 +102,7 @@ export default function Settings(props) {
 
   // Group by category
   const grouped = () => {
+    /** @type {Record<string, Array<import('keybinds').BindingSchema & { id: string }>>} */
     const groups = {};
     for (const binding of allBindings) {
       const cat = binding.category || 'Other';

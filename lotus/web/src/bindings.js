@@ -54,6 +54,7 @@ function loadUserBindings() {
 }
 
 // Save user overrides
+/** @param {Record<string, { keys?: string[], mouse?: string[] }>} overrides */
 export function saveUserBindings(overrides) {
   localStorage.setItem('lotus:keybinds', JSON.stringify(overrides))
 }
