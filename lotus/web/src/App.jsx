@@ -1,6 +1,8 @@
 import { createSignal, onMount, onCleanup, For, Show } from 'solid-js';
 import { keybinds, fromBindings, validateCommands } from 'keybinds';
 import { bindings } from './bindings';
+import CommandPalette from './CommandPalette';
+import Settings from './Settings';
 import './App.css';
 
 export default function App() {
@@ -14,6 +16,8 @@ export default function App() {
   const [editingId, setEditingId] = createSignal(null);
   const [draggedId, setDraggedId] = createSignal(null);
   const [dragOffset, setDragOffset] = createSignal({ x: 0, y: 0 });
+  const [paletteOpen, setPaletteOpen] = createSignal(false);
+  const [settingsOpen, setSettingsOpen] = createSignal(false);
 
   // API helpers
   async function fetchObjects() {
@@ -153,6 +157,12 @@ export default function App() {
     pan: (_ctx, event) => {
       setIsPanning(true);
       setPanStart({ x: event.clientX - offset().x, y: event.clientY - offset().y });
+    },
+    commandPalette: () => {
+      setPaletteOpen(true);
+    },
+    settings: () => {
+      setSettingsOpen(true);
     }
   };
 
@@ -165,14 +175,15 @@ export default function App() {
   // Validate (catches binding typos early)
   validateCommands(commands);
 
+  // Context getter for keybinds
+  const getContext = () => ({
+    hasSelection: selectedId() !== null,
+    isEditing: editingId() !== null
+  });
+
   onMount(() => {
     fetchObjects();
-
-    const cleanup = keybinds(commands, () => ({
-      hasSelection: selectedId() !== null,
-      isEditing: editingId() !== null
-    }));
-
+    const cleanup = keybinds(commands, getContext);
     onCleanup(cleanup);
   });
 
@@ -244,8 +255,27 @@ export default function App() {
       <div class="canvas__info">
         <span>Objects: {objects().length}</span>
         <span>Zoom: {Math.round(scale() * 100)}%</span>
-        <span>Double-click to create | Scroll to zoom | Drag to pan</span>
+        <span>$mod+K for commands | Double-click to create | Scroll to zoom</span>
       </div>
+
+      <Show when={paletteOpen()}>
+        <CommandPalette
+          commands={commands}
+          context={getContext}
+          onClose={() => setPaletteOpen(false)}
+        />
+      </Show>
+
+      <Show when={settingsOpen()}>
+        <Settings
+          onClose={() => setSettingsOpen(false)}
+          onSave={() => {
+            // Reload page to pick up new bindings
+            // (bindings are evaluated at module load time)
+            window.location.reload();
+          }}
+        />
+      </Show>
     </div>
   );
 }

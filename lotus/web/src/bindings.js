@@ -29,6 +29,18 @@ export const schema = defineSchema({
     label: 'Pan canvas',
     category: 'Canvas',
     mouse: ['MiddleClick']
+  },
+
+  // UI
+  commandPalette: {
+    label: 'Command palette',
+    category: 'UI',
+    keys: ['$mod+k']
+  },
+  settings: {
+    label: 'Keyboard shortcuts',
+    category: 'UI',
+    keys: ['$mod+,']
   }
 })
 
