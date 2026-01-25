@@ -5,6 +5,7 @@ export default withMermaid(
   defineConfig({
     title: 'Zone',
     description: 'Full-stack Lua applications for the rhi.zone ecosystem',
+    base: '/zone/',
 
     themeConfig: {
       nav: [
