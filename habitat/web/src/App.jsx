@@ -1,9 +1,9 @@
 import { createSignal, onMount, onCleanup, For, Show } from 'solid-js';
-import { keybinds, fromBindings, validateCommands } from 'keybinds';
+import { keybinds, fromBindings, validateCommands, registerComponents, fuzzyMatcher } from 'keybinds';
 import { bindingsStore } from './bindings';
-import CommandPalette from './CommandPalette';
 import Settings from './Settings';
 import './App.css';
+import 'keybinds/styles/palette.css';
 
 /**
  * @typedef {Object} ObjectData
@@ -235,6 +235,7 @@ export default function App() {
   });
 
   onMount(() => {
+    registerComponents();
     fetchObjects();
 
     let cleanupKeybinds = keybinds(commands, getContext);
@@ -326,13 +327,14 @@ export default function App() {
         <span>$mod+K for commands | Double-click to create | Scroll to zoom</span>
       </div>
 
-      <Show when={paletteOpen()}>
-        <CommandPalette
-          commands={commands}
-          context={getContext}
-          onClose={() => setPaletteOpen(false)}
-        />
-      </Show>
+      {/* @ts-ignore - Solid's prop:/on: syntax for web components */}
+      <command-palette
+        prop:commands={commands}
+        prop:context={getContext()}
+        prop:matcher={fuzzyMatcher}
+        attr:open={paletteOpen() ? '' : null}
+        on:close={() => setPaletteOpen(false)}
+      />
 
       <Show when={settingsOpen()}>
         <Settings onClose={() => setSettingsOpen(false)} />
