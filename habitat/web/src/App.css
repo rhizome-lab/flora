@@ -186,6 +186,12 @@
   flex: 1;
 }
 
+.palette__item-label-match {
+  background: transparent;
+  color: var(--fg);
+  font-weight: 600;
+}
+
 .palette__item-category {
   color: var(--fg-muted);
   font-size: 12px;

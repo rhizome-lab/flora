@@ -1,5 +1,29 @@
-import { createSignal, createEffect, For, Show, onMount } from 'solid-js';
-import { searchCommands, formatKey } from 'keybinds';
+import { createSignal, createEffect, For, Show, onMount, Index } from 'solid-js';
+import { searchCommands, formatKey, fuzzyMatcher } from 'keybinds';
+
+/**
+ * Render label with highlighted positions
+ * @param {{ label: string, positions?: number[] }} props
+ */
+function HighlightedLabel(props) {
+  const chars = () => {
+    const positions = new Set(props.positions || []);
+    return props.label.split('').map((char, i) => ({
+      char,
+      highlighted: positions.has(i)
+    }));
+  };
+
+  return (
+    <Index each={chars()}>
+      {(item) => (
+        <Show when={item().highlighted} fallback={item().char}>
+          <mark class="palette__item-label-match">{item().char}</mark>
+        </Show>
+      )}
+    </Index>
+  );
+}
 
 /**
  * Command palette component
@@ -11,7 +35,7 @@ export default function CommandPalette(props) {
   /** @type {HTMLInputElement | undefined} */
   let inputRef;
 
-  const results = () => searchCommands(props.commands, query(), props.context());
+  const results = () => searchCommands(props.commands, query(), props.context(), { matcher: fuzzyMatcher });
 
   // Reset selection when results change
   createEffect(() => {
@@ -81,7 +105,9 @@ export default function CommandPalette(props) {
                 }}
                 onMouseEnter={() => setSelectedIndex(index())}
               >
-                <span class="palette__item-label">{cmd.label}</span>
+                <span class="palette__item-label">
+                  <HighlightedLabel label={cmd.label} positions={cmd.positions} />
+                </span>
                 <Show when={cmd.category}>
                   <span class="palette__item-category">{cmd.category}</span>
                 </Show>
