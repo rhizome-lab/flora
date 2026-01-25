@@ -60,11 +60,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1769250490,
-        "narHash": "sha256-yzNj1EHMqy/K1r4fNSSGDCGYTIy9eJRYYeX8OSyj9+8=",
+        "lastModified": 1769260841,
+        "narHash": "sha256-LFIzkyJCQqzEbjHgfmKkqm8OcodM4sh/embywKgWUHI=",
         "owner": "rhi-zone",
         "repo": "moonlet",
-        "rev": "bd9df69bf5506245ed8a45612371128a4a048da0",
+        "rev": "333f6ac17e060db9dcb1fdd4a8609010562a9780",
         "type": "github"
       },
       "original": {
@@ -79,11 +79,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1769258219,
-        "narHash": "sha256-rB/foTcjV3cP127EB3Wq7qkwkXgsF4Wx/gV6Ts6OCdw=",
+        "lastModified": 1769260066,
+        "narHash": "sha256-dB2YnBdNgPrsWJ35goHNhhhQPA+MydJMyB8oAjKomx0=",
         "owner": "rhi-zone",
         "repo": "myenv",
-        "rev": "80ea7dde9ff4addba565db0a0c0efe0a2b6ace3e",
+        "rev": "c4b8adece68406bb6ebffa731756a7e3feaf5a20",
         "type": "github"
       },
       "original": {
