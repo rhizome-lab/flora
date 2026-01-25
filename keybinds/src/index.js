@@ -590,15 +590,6 @@ export function formatKeyParts(key) {
 }
 
 /**
- * Format key for display (e.g., "$mod+k" -> "⌘K" on Mac)
- * @param {string} key
- * @returns {string}
- */
-export function formatKey(key) {
-  return formatKeyParts(key).join('')
-}
-
-/**
  * @typedef {Object} BindingSchema
  * @property {string} label - Display name
  * @property {string | undefined} [category] - Group for command palette
@@ -1363,17 +1354,8 @@ function formatMousePart(part) {
  * @param {string} binding
  * @returns {string[]}
  */
-function formatMouseParts(binding) {
+export function formatMouseParts(binding) {
   return binding.split('+').map(formatMousePart)
-}
-
-/**
- * Format mouse binding for display (legacy, returns string)
- * @param {string} binding
- * @returns {string}
- */
-function formatMouse(binding) {
-  return formatMouseParts(binding).join(' ')
 }
 
 /**

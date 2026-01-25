@@ -304,15 +304,20 @@
 
 .settings__keys {
   display: flex;
-  gap: 4px;
+  gap: 6px;
+}
+
+.settings__binding {
+  display: flex;
+  gap: 2px;
 }
 
 .settings__key {
-  padding: 4px 8px;
+  padding: 3px 6px;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  border-radius: 4px;
-  font-size: 12px;
+  border-radius: 3px;
+  font-size: 11px;
   font-family: monospace;
   color: var(--fg);
 }

@@ -1,5 +1,5 @@
 import { createSignal, For, Show } from 'solid-js';
-import { listBindings, formatKey } from 'keybinds';
+import { listBindings, formatKeyParts, formatMouseParts } from 'keybinds';
 import { schema, bindingsStore } from './bindings';
 
 /**
@@ -136,14 +136,22 @@ export default function Settings(props) {
                         <Show when={getCurrentKeys(binding.id).length > 0}>
                           <For each={getCurrentKeys(binding.id)}>
                             {(key) => (
-                              <span class="settings__key">{formatKey(key)}</span>
+                              <span class="settings__binding">
+                                <For each={formatKeyParts(key)}>
+                                  {(part) => <kbd class="settings__key">{part}</kbd>}
+                                </For>
+                              </span>
                             )}
                           </For>
                         </Show>
                         <Show when={getCurrentMouse(binding.id).length > 0}>
                           <For each={getCurrentMouse(binding.id)}>
                             {(mouse) => (
-                              <span class="settings__key settings__key--mouse">{mouse}</span>
+                              <span class="settings__binding">
+                                <For each={formatMouseParts(mouse)}>
+                                  {(part) => <kbd class="settings__key settings__key--mouse">{part}</kbd>}
+                                </For>
+                              </span>
                             )}
                           </For>
                         </Show>
