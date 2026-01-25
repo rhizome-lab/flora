@@ -33,6 +33,7 @@ export default function App() {
   const [draggedId, setDraggedId] = createSignal(/** @type {string | null} */ (null));
   const [dragOffset, setDragOffset] = createSignal(/** @type {{ x: number, y: number }} */ ({ x: 0, y: 0 }));
   const [paletteOpen, setPaletteOpen] = createSignal(false);
+  const [cheatsheetOpen, setCheatsheetOpen] = createSignal(false);
   const [settingsOpen, setSettingsOpen] = createSignal(false);
 
   // API helpers
@@ -209,6 +210,9 @@ export default function App() {
     commandPalette: () => {
       setPaletteOpen(true);
     },
+    cheatsheet: () => {
+      setCheatsheetOpen(o => !o);
+    },
     settings: () => {
       setSettingsOpen(true);
     }
@@ -324,7 +328,7 @@ export default function App() {
       <div class="canvas__info">
         <span>Objects: {objects().length}</span>
         <span>Zoom: {Math.round(scale() * 100)}%</span>
-        <span>$mod+K for commands | Double-click to create | Scroll to zoom</span>
+        <span>$mod+K commands | $mod+/ keybinds | Double-click to create</span>
       </div>
 
       {/* @ts-ignore - Solid's prop:/on: syntax for web components */}
@@ -334,6 +338,14 @@ export default function App() {
         prop:matcher={fuzzyMatcher}
         attr:open={paletteOpen() ? '' : null}
         on:close={() => setPaletteOpen(false)}
+      />
+
+      {/* @ts-ignore */}
+      <keybind-cheatsheet
+        prop:commands={commands}
+        prop:context={getContext()}
+        attr:open={cheatsheetOpen() ? '' : null}
+        on:close={() => setCheatsheetOpen(false)}
       />
 
       <Show when={settingsOpen()}>

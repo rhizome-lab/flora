@@ -37,6 +37,11 @@ export const schema = defineSchema({
     category: 'UI',
     keys: ['$mod+k']
   },
+  cheatsheet: {
+    label: 'Show keybindings',
+    category: 'UI',
+    keys: ['$mod+/']
+  },
   settings: {
     label: 'Keyboard shortcuts',
     category: 'UI',
