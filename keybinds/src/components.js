@@ -17,6 +17,7 @@ import { searchCommands, groupByCategory, formatKey, executeCommand } from './in
  * Properties:
  *   commands: Command[]     - Array of command definitions
  *   context: object         - Context for `when` checks
+ *   matcher: Matcher        - Custom matcher function (from keybinds/matchers)
  *   open: boolean           - Show/hide the palette
  *
  * Events:
@@ -33,6 +34,7 @@ import { searchCommands, groupByCategory, formatKey, executeCommand } from './in
  *   .palette__item--active
  *   .palette__item--disabled
  *   .palette__item-label
+ *   .palette__item-label-match (highlight)
  *   .palette__item-category
  *   .palette__item-key
  *   .palette__empty
@@ -48,6 +50,8 @@ export class CommandPalette extends HTMLElement {
     this._commands = []
     /** @type {Record<string, unknown>} */
     this._context = {}
+    /** @type {import('./index.js').Matcher | undefined} */
+    this._matcher = undefined
     /** @type {import('./index.js').ScoredCommand[]} */
     this._results = []
     /** @type {number} */
@@ -96,6 +100,12 @@ export class CommandPalette extends HTMLElement {
   get context() { return this._context }
   set context(val) {
     this._context = val || {}
+    if (this.open) this._search()
+  }
+
+  get matcher() { return this._matcher }
+  set matcher(val) {
+    this._matcher = val
     if (this.open) this._search()
   }
 
@@ -166,7 +176,7 @@ export class CommandPalette extends HTMLElement {
   _search() {
     const query = this._input.value
     this._results = query
-      ? searchCommands(this._commands, query, this._context)
+      ? searchCommands(this._commands, query, this._context, { matcher: this._matcher })
       : this._getAllVisible()
     this._activeIndex = Math.min(this._activeIndex, Math.max(0, this._results.length - 1))
     this._render()
@@ -207,7 +217,24 @@ export class CommandPalette extends HTMLElement {
       const label = document.createElement('span')
       label.className = 'palette__item-label'
       label.setAttribute('part', 'item-label')
-      label.textContent = cmd.label
+
+      if (cmd.positions && cmd.positions.length > 0) {
+        // Render with highlights
+        const posSet = new Set(cmd.positions)
+        for (let i = 0; i < cmd.label.length; i++) {
+          if (posSet.has(i)) {
+            const mark = document.createElement('mark')
+            mark.className = 'palette__item-label-match'
+            mark.setAttribute('part', 'item-label-match')
+            mark.textContent = cmd.label[i]
+            label.appendChild(mark)
+          } else {
+            label.appendChild(document.createTextNode(cmd.label[i]))
+          }
+        }
+      } else {
+        label.textContent = cmd.label
+      }
 
       li.appendChild(label)
 

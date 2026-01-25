@@ -39,7 +39,10 @@
  */
 
 /**
- * @typedef {Command & { active: boolean, score: number }} ScoredCommand
+ * @typedef {{ score: number, positions?: number[] }} MatchResult
+ * @typedef {(query: string, text: string) => MatchResult | null} Matcher
+ * @typedef {{ matcher?: Matcher }} SearchOptions
+ * @typedef {Command & { active: boolean, score: number, positions?: number[] }} ScoredCommand
  */
 
 /**
@@ -424,31 +427,46 @@ function dedupeCommands(commands) {
  * @param {Command[]} commands - Array of command definitions
  * @param {string} query - Search query
  * @param {Record<string, unknown>} [context] - Current context
+ * @param {SearchOptions} [options] - Search options (e.g., custom matcher)
  * @returns {ScoredCommand[]} Matching commands sorted by relevance (active first, then by score)
  */
-export function searchCommands(commands, query, context = {}) {
+export function searchCommands(commands, query, context = {}, options = {}) {
+  const { matcher } = options
   const q = query.toLowerCase()
+  /** @type {ScoredCommand[]} */
   const results = []
 
   for (const cmd of dedupeCommands(commands)) {
     if (cmd.hidden) continue
     if (!hasBoundKeys(cmd)) continue  // hide unbound
 
-    const label = cmd.label.toLowerCase()
-    const id = cmd.id.toLowerCase()
-    const category = (cmd.category || '').toLowerCase()
+    /** @type {MatchResult | null} */
+    let match = null
 
-    let score = 0
-    if (label.startsWith(q)) score = 3
-    else if (id.startsWith(q)) score = 2
-    else if (category.startsWith(q)) score = 2
-    else if (label.includes(q) || id.includes(q) || category.includes(q)) score = 1
-    else continue
+    if (matcher) {
+      // Custom matcher: try label, then id, then category
+      match = matcher(query, cmd.label)
+        ?? matcher(query, cmd.id)
+        ?? (cmd.category ? matcher(query, cmd.category) : null)
+    } else {
+      // Default: simple substring matching
+      const label = cmd.label.toLowerCase()
+      const id = cmd.id.toLowerCase()
+      const category = (cmd.category || '').toLowerCase()
+
+      if (label.startsWith(q)) match = { score: 3 }
+      else if (id.startsWith(q)) match = { score: 2 }
+      else if (category.startsWith(q)) match = { score: 2 }
+      else if (label.includes(q) || id.includes(q) || category.includes(q)) match = { score: 1 }
+    }
+
+    if (!match) continue
 
     results.push({
       ...cmd,
       active: isActive(cmd, context),
-      score
+      score: match.score,
+      positions: match.positions
     })
   }
 
