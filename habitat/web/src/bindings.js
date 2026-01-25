@@ -45,4 +45,4 @@ export const schema = defineSchema({
 });
 
 // Reactive bindings store
-export const bindingsStore = new BindingsStore(schema, 'lotus:keybinds');
+export const bindingsStore = new BindingsStore(schema, 'habitat:keybinds');

@@ -1,17 +1,17 @@
 [package]
-name = "rhi-zone-lotus-server"
+name = "rhi-zone-habitat-server"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
-description = "HTTP + WebSocket server for Lotus object store"
+description = "HTTP + WebSocket server for Habitat object store"
 repository = "https://github.com/rhi-zone/zone"
 
 [[bin]]
-name = "lotus"
+name = "habitat"
 path = "src/main.rs"
 
 [dependencies]
-rhi-zone-lotus-core = { path = "../rhi-zone-lotus-core" }
+rhi-zone-habitat-core = { path = "../rhi-zone-habitat-core" }
 trellis = { git = "https://github.com/rhi-zone/server-less", features = ["http", "ws"] }
 axum = "0.8"
 tokio = { version = "1", features = ["full"] }

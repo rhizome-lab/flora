@@ -1,14 +1,14 @@
-//! Lotus server - HTTP + WebSocket interface to the object store.
+//! Habitat server - HTTP + WebSocket interface to the object store.
 
 use std::sync::Arc;
 
 use axum::Router;
-use rhi_zone_lotus_core::{Object, Query, Store};
+use rhi_zone_habitat_core::{Object, Query, Store};
 use serde_json::Value;
 use trellis::prelude::*;
 use tower_http::cors::{Any, CorsLayer};
 
-/// Service wrapping the lotus store
+/// Service wrapping the habitat store
 #[derive(Clone)]
 pub struct ObjectService {
     store: Arc<Store>,
@@ -100,7 +100,7 @@ impl ObjectService {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let db_path = std::env::var("LOTUS_DB").unwrap_or_else(|_| "lotus.db".to_string());
+    let db_path = std::env::var("HABITAT_DB").unwrap_or_else(|_| "habitat.db".to_string());
 
     println!("Opening database at: {}", db_path);
     let store = Store::open(&db_path).await?;
@@ -113,7 +113,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let app: Router = service.http_router().layer(cors);
 
-    let addr = std::env::var("LOTUS_ADDR").unwrap_or_else(|_| "0.0.0.0:3000".to_string());
+    let addr = std::env::var("HABITAT_ADDR").unwrap_or_else(|_| "0.0.0.0:3000".to_string());
     println!("Starting server on http://{}", addr);
     println!("\nEndpoints:");
     println!("  GET    /api/objects         - list objects");
