@@ -8,59 +8,67 @@ keybinds is a declarative, contextual keybinding system for web applications.
 npm install keybinds
 ```
 
-## Quick Start
-
-```js
-import { keybinds } from 'keybinds'
-
-const commands = [
-  {
-    id: 'save',
-    label: 'Save document',
-    category: 'File',
-    keys: ['$mod+s'],
-    execute: () => saveDocument()
-  },
-  {
-    id: 'delete',
-    label: 'Delete selected',
-    category: 'Edit',
-    keys: ['Backspace', 'Delete'],
-    when: ctx => ctx.hasSelection,
-    execute: () => deleteSelected()
-  }
-]
-
-// Start listening
-const cleanup = keybinds(commands, () => ({
-  hasSelection: selection.length > 0
-}))
-
-// Stop listening
-cleanup()
-```
-
-## Zero-config UI
-
-For instant discoverability, add the web components:
+## Minimal Setup
 
 ```html
 <command-palette auto-trigger></command-palette>
 <keybind-cheatsheet auto-trigger></keybind-cheatsheet>
 
 <script type="module">
-  import { registerComponents } from 'keybinds'
+  import { keybinds, registerComponents } from 'keybinds'
   import 'keybinds/styles/palette.css'
 
-  registerComponents()
+  const commands = [
+    {
+      id: 'save',
+      label: 'Save document',
+      category: 'File',
+      keys: ['$mod+s'],
+      execute: () => console.log('save')
+    },
+    {
+      id: 'open',
+      label: 'Open file',
+      category: 'File',
+      keys: ['$mod+o'],
+      execute: () => console.log('open')
+    }
+  ]
 
+  // Register keybinds
+  keybinds(commands)
+
+  // Register and connect UI components
+  registerComponents()
   document.querySelector('command-palette').commands = commands
   document.querySelector('keybind-cheatsheet').commands = commands
 </script>
 ```
 
-- `auto-trigger` on palette: `$mod+K` toggles it
-- `auto-trigger` on cheatsheet: hold Control for 400ms
+That's it. You get:
+- `$mod+S` / `$mod+O` keybinds working
+- `$mod+K` opens command palette with search
+- Hold `Control` for 400ms shows cheatsheet
+
+## Going Further
+
+Add context for conditional commands:
+
+```js
+keybinds(commands, () => ({
+  hasSelection: selection.length > 0
+}))
+```
+
+```js
+{
+  id: 'delete',
+  label: 'Delete selected',
+  keys: ['Backspace'],
+  when: ctx => ctx.hasSelection,  // Only active when something is selected
+  execute: () => deleteSelected()
+}
+```
 
 ## Key Concepts
 
