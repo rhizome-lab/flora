@@ -48,7 +48,7 @@ npm install keybinds
 That's it. You get:
 - `$mod+S` / `$mod+O` keybinds working
 - `$mod+K` opens command palette with search
-- Hold `Control` for 400ms shows cheatsheet
+- Hold `Control` for 200ms shows cheatsheet
 
 ## Going Further
 
