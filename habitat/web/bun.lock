@@ -5,7 +5,7 @@
     "": {
       "name": "lotus-web",
       "dependencies": {
-        "keybinds": "file:../../keybinds",
+        "keybinds": "github:pterror/keybinds",
         "solid-js": "^1.9.0",
       },
       "devDependencies": {
@@ -213,7 +213,7 @@
 
     "json5": ["json5@2.2.3", "", { "bin": { "json5": "lib/cli.js" } }, "sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg=="],
 
-    "keybinds": ["keybinds@file:../../keybinds", {}],
+    "keybinds": ["keybinds@github:pterror/keybinds#803224c", {}, "pterror-keybinds-803224c"],
 
     "lru-cache": ["lru-cache@5.1.1", "", { "dependencies": { "yallist": "^3.0.2" } }, "sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w=="],
 
